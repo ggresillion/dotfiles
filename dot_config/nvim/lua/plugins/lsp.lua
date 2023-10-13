@@ -2,41 +2,8 @@ return {
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
-    },
-    {
-        'hrsh7th/nvim-cmp',
-        event = 'InsertEnter',
-        config = function()
-            local cmp = require('cmp')
-            cmp.setup({
-                mapping = cmp.mapping.preset.insert({
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback()
-                        end
-                    end, {
-                            "i",
-                            "s",
-                        }),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        else
-                            fallback()
-                        end
-                    end, {
-                            "i",
-                            "s",
-                        }),
-                })
-            })
-        end,
-        dependencies = {
-            {'L3MON4D3/LuaSnip'},
-        },
+        lazy = true,
+        config = false
     },
 
     -- LSP
@@ -46,22 +13,54 @@ return {
         event = {'BufReadPre', 'BufNewFile'},
         dependencies = {
             {'hrsh7th/cmp-nvim-lsp'},
-            {
-                'williamboman/mason-lspconfig.nvim',
-                config = function()
-                    require('mason-lspconfig').setup({
-                        handlers = {
-                            require('lsp-zero').default_setup,
-                        }
-                    })
-                end
-            },
-            {
-                'williamboman/mason.nvim',
-                config = function()
-                    require('mason').setup({})
-                end
-            },
         },
+        config = function()
+            local lsp_zero = require('lsp-zero')
+            lsp_zero.extend_lspconfig()
+            lsp_zero.default_keymaps({buffer = bufnr})
+        end
+    },
+    -- LSP install
+    {
+        'williamboman/mason.nvim',
+        config = function()
+            require('mason').setup({})
+        end
+    },
+    {
+        'williamboman/mason-lspconfig.nvim',
+        config = function()
+            local lsp_zero = require('lsp-zero')
+            require('mason-lspconfig').setup({
+                handlers = {
+                    lsp_zero.default_setup,
+                }
+            })
+        end
+    },
+    -- Autocompletion
+    {
+        'hrsh7th/nvim-cmp',
+        event = 'InsertEnter',
+        dependencies = {
+            {'L3MON4D3/LuaSnip'},
+        },
+        config = function()
+            local cmp = require('cmp')
+            local cmp_action = require('lsp-zero').cmp_action()
+            cmp.setup({
+                mapping = cmp.mapping.preset.insert({
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+                    ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    ['<Tab>'] = cmp_action.tab_complete(),
+                    ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
+                })
+            })
+        end,
     },
 }
+
