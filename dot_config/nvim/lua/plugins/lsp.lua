@@ -3,40 +3,43 @@ return {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
         lazy = true,
-        config = false
+        config = false,
+        init = function ()
+            vim.g.lsp_zero_extend_cmp = 0
+            vim.g.lsp_zero_extend_lspconfig = 0
+        end
     },
 
     -- LSP
     {
         'neovim/nvim-lspconfig',
-        cmd = 'LspInfo',
+        cmd = {'LspInfo', 'LspInstall', 'LspStart'},
         event = {'BufReadPre', 'BufNewFile'},
         dependencies = {
-            {'hrsh7th/cmp-nvim-lsp'},
+            {
+                'williamboman/mason-lspconfig.nvim',
+            },
         },
         config = function()
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_lspconfig()
-            lsp_zero.default_keymaps({buffer = bufnr})
-        end
-    },
-    -- LSP install
-    {
-        'williamboman/mason.nvim',
-        config = function()
-            require('mason').setup({})
-        end
-    },
-    {
-        'williamboman/mason-lspconfig.nvim',
-        config = function()
-            local lsp_zero = require('lsp-zero')
+            lsp_zero.on_attach(function(client, bufnr)
+                lsp_zero.default_keymaps({
+                    buffer = bufnr,
+                    preserve_mappings = false,
+                })
+            end)
             require('mason-lspconfig').setup({
                 handlers = {
                     lsp_zero.default_setup,
+                    gopls = lsp_zero.noop,
                 }
             })
         end
+    },
+    {
+        'williamboman/mason.nvim',
+        config = true
     },
     -- Autocompletion
     {
@@ -44,9 +47,12 @@ return {
         event = 'InsertEnter',
         dependencies = {
             {'L3MON4D3/LuaSnip'},
+            {'hrsh7th/cmp-nvim-lsp'},
         },
         config = function()
             local cmp = require('cmp')
+            local lsp_zero = require('lsp-zero')
+            lsp_zero.extend_cmp()
             local cmp_action = require('lsp-zero').cmp_action()
             cmp.setup({
                 mapping = cmp.mapping.preset.insert({
