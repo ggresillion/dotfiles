@@ -7,7 +7,10 @@ return {
   ft = { "go", "gomod" },
   build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   config = function()
-        require('go').setup()
+        require('go').setup({
+            lsp_cfg= false,
+            lsp_keymaps = false,
+        })
         local cfg = require'go.lsp'.config() -- config() return the go.nvim gopls setup
 
         require('lspconfig').gopls.setup(cfg)
