@@ -1,5 +1,5 @@
 -- Colorscheme
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("tokyonight")
 
 -- Line numbers
 vim.opt.nu = true
