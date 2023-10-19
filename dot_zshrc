@@ -51,6 +51,28 @@ alias dc=docker-compose
 alias c=pygmentize -g
 alias open=explorer.exe
 
+# Enable custom theme
+export DEFAULT_USER=$USER
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Theme customization
+
+# Current directory background color.
+typeset -g POWERLEVEL9K_DIR_BACKGROUND=117
+# Default current directory foreground color.
+typeset -g POWERLEVEL9K_DIR_FOREGROUND=16
+# Color of the shortened directory segments.
+typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=16
+# Color of the anchor directory segments. Anchor segments are never shortened. The first
+# segment is always an anchor.
+typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=16
+
+# Green prompt symbol if the last command succeded.
+typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=7
+
+# The right end of left prompt.
+typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
+# The left end of right prompt.
+typeset -g POWERLEVEL9K_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''

@@ -1,12 +1,10 @@
 return {
     'nvim-lualine/lualine.nvim',
-    options = function()
---        local tokyonight = require('lualine.themes.tokyonight')
---        tokyonight.normal.c.bg = nil
-        require('lualine').setup({
-            options = {
-                theme = 'tokyonight',
-            }
-        })
-    end
+    opts = {
+        options = {
+            theme = 'catppuccin',
+            component_separators = { left = '', right = '' },
+            section_separators = { left = '', right = '' },
+        }
+    }
 }
