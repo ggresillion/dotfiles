@@ -27,6 +27,9 @@ return {
                 lsp_zero.default_keymaps({
                     buffer = bufnr,
                     preserve_mappings = false,
+                    exclude = {
+                        'gr',
+                    },
                 })
             end)
             require('mason-lspconfig').setup({
