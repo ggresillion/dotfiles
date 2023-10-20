@@ -4,7 +4,7 @@ return {
         branch = 'v3.x',
         lazy = true,
         config = false,
-        init = function ()
+        init = function()
             vim.g.lsp_zero_extend_cmp = 0
             vim.g.lsp_zero_extend_lspconfig = 0
         end
@@ -13,8 +13,8 @@ return {
     -- LSP
     {
         'neovim/nvim-lspconfig',
-        cmd = {'LspInfo', 'LspInstall', 'LspStart'},
-        event = {'BufReadPre', 'BufNewFile'},
+        cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
+        event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             {
                 'williamboman/mason-lspconfig.nvim',
@@ -46,8 +46,8 @@ return {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
         dependencies = {
-            {'L3MON4D3/LuaSnip'},
-            {'hrsh7th/cmp-nvim-lsp'},
+            { 'L3MON4D3/LuaSnip' },
+            { 'hrsh7th/cmp-nvim-lsp' },
         },
         config = function()
             local cmp = require('cmp')
@@ -69,4 +69,3 @@ return {
         end,
     },
 }
-
