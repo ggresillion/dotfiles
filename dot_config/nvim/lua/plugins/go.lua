@@ -9,11 +9,8 @@ return {
         require('go').setup({
             lsp_cfg= false,
             lsp_keymaps = false,
+
         })
-        local cfg = require'go.lsp'.config() -- config() return the go.nvim gopls setup
-
-        require('lspconfig').gopls.setup(cfg)
-
         -- auto format
         local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
         vim.api.nvim_create_autocmd("BufWritePre", {

@@ -33,7 +33,7 @@ return {
             require('mason-lspconfig').setup({
                 handlers = {
                     lsp_zero.default_setup,
-                    gopls = lsp_zero.noop,
+                    -- gopls = lsp_zero.noop,
                     jdtls = function()
                         require('lspconfig').jdtls.setup({
                             cmd = {
