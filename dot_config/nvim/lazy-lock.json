@@ -4,6 +4,7 @@
   "catppuccin": { "branch": "main", "commit": "b359f3eec32dcc6b7c9a26901dc235bbb6cd8a0b" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "44b16d11215dce86f253ce0c30949813c0a90765" },
   "cmp-nvim-lsp-signature-help": { "branch": "main", "commit": "3d8912ebeb56e5ae08ef0906e3a54de1c66b92f1" },
+  "gitsigns.nvim": { "branch": "main", "commit": "af0f583cd35286dd6f0e3ed52622728703237e50" },
   "glow.nvim": { "branch": "main", "commit": "5b38fb7b6e806cac62707a4aba8c10c5f14d5bb5" },
   "go.nvim": { "branch": "master", "commit": "8732792d9c30a113188f85f75c19f0effd199881" },
   "guihua.lua": { "branch": "master", "commit": "9c3e3ba03ac65782e950bd21434bbbfe8dfb6f50" },
