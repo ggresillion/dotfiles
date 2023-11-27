@@ -1,7 +1,7 @@
 return {
     {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
+        "VonHeikemen/lsp-zero.nvim",
+        branch = "v3.x",
         lazy = true,
         config = false,
         init = function()
@@ -10,32 +10,32 @@ return {
         end
     },
     {
-        'neovim/nvim-lspconfig',
-        cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
-        event = { 'BufReadPre', 'BufNewFile' },
+        "neovim/nvim-lspconfig",
+        cmd = { "LspInfo", "LspInstall", "LspStart" },
+        event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             {
-                'williamboman/mason-lspconfig.nvim',
+                "williamboman/mason-lspconfig.nvim",
             },
         },
         config = function()
-            local lsp_zero = require('lsp-zero')
+            local lsp_zero = require("lsp-zero")
             lsp_zero.extend_lspconfig()
             lsp_zero.on_attach(function(client, bufnr)
                 lsp_zero.default_keymaps({
                     buffer = bufnr,
                     preserve_mappings = false,
                     exclude = {
-                        'gr',
+                        "gr",
                     },
                 })
             end)
-            require('mason-lspconfig').setup({
+            require("mason-lspconfig").setup({
                 handlers = {
                     lsp_zero.default_setup,
                     -- gopls = lsp_zero.noop,
                     jdtls = function()
-                        require('lspconfig').jdtls.setup({
+                        require("lspconfig").jdtls.setup({
                             cmd = {
                                 "jdtls",
                                 "--jvm-arg=" ..
@@ -48,7 +48,7 @@ return {
         end
     },
     {
-        'williamboman/mason.nvim',
+        "williamboman/mason.nvim",
         config = true
     },
 }

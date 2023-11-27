@@ -12,11 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Set space bar as Leader Key
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 -- Imports
-require('lazy').setup('plugins')
-require("remap")
 require("settings")
+require("remap")
+require("lazy").setup("plugins")
