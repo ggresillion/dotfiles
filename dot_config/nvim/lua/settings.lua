@@ -1,11 +1,12 @@
--- Colorscheme
+local vim          = vim
+local opt          = vim.opt
 
 -- Line numbers
-vim.opt.nu = true
-vim.opt.relativenumber = true
+opt.nu             = true
+opt.relativenumber = true
 
 -- Indent
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+opt.tabstop        = 4
+opt.softtabstop    = 4
+opt.shiftwidth     = 4
+opt.expandtab      = true
