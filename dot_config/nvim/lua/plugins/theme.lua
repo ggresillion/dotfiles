@@ -4,9 +4,16 @@ return {
     priority = 1000,
     init = function()
         vim.cmd.colorscheme("catppuccin")
+        vim.o.cursorline = true
+        vim.o.cursorlineopt="number"
     end,
     opts = {
         transparent_background = true,
+        custom_highlights = function(colors)
+            return {
+                CursorLineNr = { fg = colors.text },
+            }
+        end,
         integrations = {
             aerial = true,
             alpha = true,
