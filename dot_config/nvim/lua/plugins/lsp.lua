@@ -26,7 +26,8 @@ return {
             { "<c-k>",      vim.lsp.buf.signature_help,                                                             desc = "Signature Help",        mode = "i", },
             { "<leader>ca", vim.lsp.buf.code_action,                                                                desc = "Code Action",           mode = { "n", "v" } },
             { "<leader>cf", function() vim.lsp.buf.format({ async = true }) end,                                    desc = "Format Buffer",         mode = { "n", "v" } },
-            { "<leader>cr", vim.lsp.buf.rename,                                                                     desc = "Rename",                mode = { "n" } },
+            { "<leader>cr", vim.lsp.buf.rename,                                                                     desc = "Rename", },
+            { "<leader>cd", vim.diagnostic.open_float,                                                              desc = "Line Diagnostic" },
         },
         config = function()
             -- workaround to prevent lsp-zero to set handlers and conflict with noice

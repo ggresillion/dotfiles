@@ -10,16 +10,18 @@ return {
 
         -- set termguicolors to enable highlight groups
         vim.opt.termguicolors = true
-
-        -- open nvim-tree
-        vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<cr>")
     end,
+    keys = {
+        { "<leader>e", ":NvimTreeToggle<cr>", desc = "Open File Tree" }
+    },
     opts = {
         actions = {
             open_file = {
                 quit_on_open = true,
             },
         },
+        renderer = {
+            group_empty = true,
+        },
     },
 }
-

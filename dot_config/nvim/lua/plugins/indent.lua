@@ -5,8 +5,8 @@ return {
         event = "BufEnter",
         opts = {
             indent = {
-                char = "│",
-                tab_char = "│",
+                char = "▏",
+                tab_char = "▏",
             },
             scope = { enabled = false },
             exclude = {
@@ -35,8 +35,8 @@ return {
         version = false,
         event = "BufEnter",
         opts = {
-            -- symbol = "▏",
-            symbol = "│",
+            symbol = "▏",
+            --symbol = "│",
             options = { try_as_border = true },
         },
         init = function()
@@ -53,6 +53,7 @@ return {
                     "notify",
                     "toggleterm",
                     "lazyterm",
+                    "NvimTree",
                 },
                 callback = function()
                     vim.b.miniindentscope_disable = true
