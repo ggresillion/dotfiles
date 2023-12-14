@@ -12,7 +12,7 @@ return {
         vim.opt.termguicolors = true
     end,
     keys = {
-        { "<leader>e", ":NvimTreeToggle<cr>", desc = "Open File Tree" }
+        { "<leader>e", function() require "nvim-tree.api".tree.toggle({find_file=true}) end, desc = "Open File Tree" }
     },
     opts = {
         actions = {
