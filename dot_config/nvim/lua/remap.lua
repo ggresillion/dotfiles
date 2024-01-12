@@ -1,5 +1,5 @@
 -- Global
 vim.g.mapleader = " "
 
-vim.keymap.set('t', 'jk', [[<C-\><C-n>]])
-vim.keymap.set('t', 'kj', [[<C-\><C-n>]])
+vim.keymap.set("i", "jk", "<Esc>")
+vim.keymap.set("i", "kj", "<Esc>")
