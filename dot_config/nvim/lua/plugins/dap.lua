@@ -67,12 +67,6 @@ return {
                     },
                 },
             },
-
-            -- go integration
-            {
-                "leoluz/nvim-dap-go",
-                opts = {},
-            }
         },
         lazy = true,
         keys = {
@@ -151,6 +145,11 @@ return {
                 "<leader>dt",
                 function() require("dap").terminate() end,
                 desc = "Terminate",
+            },
+            {
+                "<leader>dx",
+                function() require("dap").clear_breakpoints() end,
+                desc = "Clear all breakpoints",
             },
         },
     },
