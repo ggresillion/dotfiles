@@ -20,7 +20,7 @@ return {
         { "<leader>cl", "<cmd>LspInfo<cr>",                                                                     desc = "Lsp Info" },
         { "gd",         function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end,      desc = "Goto Definition", },
         { "gD",         vim.lsp.buf.declaration,                                                                desc = "Goto Declaration" },
-        { "gr",         function() require("telescope.builtin").lsp_references() end,                           desc = "References" },
+        { "gr",         function() require("telescope.builtin").lsp_references({include_declaration = false}) end,                           desc = "References" },
         { "gi",         function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end,  desc = "Goto Implementation" },
         { "go",         function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
         { "K",          vim.lsp.buf.hover,                                                                      desc = "Hover" },
