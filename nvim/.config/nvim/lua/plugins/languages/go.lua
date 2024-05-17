@@ -12,13 +12,16 @@ return {
                 lsp_keymaps = false,
                 dap_debug_keymap = false,
                 icons = false,
+		gofmt = "gofumpt",
+                tag_transform = "camelcase",
+                tag_options = "",
             })
             -- auto format
             local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
             vim.api.nvim_create_autocmd("BufWritePre", {
                 pattern = "*.go",
                 callback = function()
-                    require("go.format").goimport()
+                    require("go.format").goimports()
                 end,
                 group = format_sync_grp,
             })
@@ -28,9 +31,9 @@ return {
         "leoluz/nvim-dap-go",
         lazy = false,
         opts = {
-            -- delve = {
-            --     port = 40000,
-            -- },
+            delve = {
+                port = 40000,
+            },
             dap_configurations = {
                 {
                     type = "go",
