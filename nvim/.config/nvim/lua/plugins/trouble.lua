@@ -1,12 +1,28 @@
 return {
     "folke/trouble.nvim",
     keys = {
-        { "<leader>xx", function() require("trouble").toggle() end,                        desc = "Open trouble" },
-        { "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end, desc = "Workspace diagnostics" },
-        { "<leader>xd", function() require("trouble").toggle("document_diagnostics") end,  desc = "Document diagnostics"},
-        { "<leader>xq", function() require("trouble").toggle("quickfix") end,              desc = "Quickfix" },
-        { "<leader>xl", function() require("trouble").toggle("loclist") end,               desc = "Loclist" },
-        { "gR",         function() require("trouble").toggle("lsp_references") end,        desc = "Open trouble" },
+        { "<leader>xx", function() require("trouble").toggle("diagnostics_by_severity") end, desc = "Diagnostics" },
     },
-    opts = {},
+    opts = {
+        modes = {
+            diagnostics_by_severity = {
+                mode = "diagnostics",
+                filter = function(items)
+                    local severity = vim.diagnostic.severity.HINT
+                    for _, item in ipairs(items) do
+                        severity = math.min(severity, item.severity)
+                    end
+                    return vim.tbl_filter(function(item)
+                        return item.severity == severity
+                    end, items)
+                end,
+                preview = {
+                    type = "split",
+                    relative = "win",
+                    position = "right",
+                    size = 0.5,
+                },
+            },
+        },
+    },
 }

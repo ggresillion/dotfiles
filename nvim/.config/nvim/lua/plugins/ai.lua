@@ -1,14 +1,38 @@
 return {
+    -- {
+    --     "Exafunction/codeium.nvim",
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim",
+    --         "hrsh7th/nvim-cmp",
+    --     },
+    --     config = function(_, opts)
+    --         require("codeium").setup(opts)
+    --     end
+    -- },
     {
-        "Exafunction/codeium.vim",
+        "monkoose/neocodeium",
+        event = "VeryLazy",
         config = function()
-            vim.g.codeium_disable_bindings = 1
-            vim.keymap.set('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
-            vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end,
-                { expr = true, silent = true })
-            vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end,
-                { expr = true, silent = true })
-            vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
-        end
+            local neocodeium = require("neocodeium")
+            neocodeium.setup()
+            vim.keymap.set("i", "<A-f>", function()
+                require("neocodeium").accept()
+            end)
+            vim.keymap.set("i", "<A-w>", function()
+                require("neocodeium").accept_word()
+            end)
+            vim.keymap.set("i", "<A-a>", function()
+                require("neocodeium").accept_line()
+            end)
+            vim.keymap.set("i", "<A-e>", function()
+                require("neocodeium").cycle_or_complete()
+            end)
+            vim.keymap.set("i", "<A-r>", function()
+                require("neocodeium").cycle_or_complete(-1)
+            end)
+            vim.keymap.set("i", "<A-c>", function()
+                require("neocodeium").clear()
+            end)
+        end,
     }
 }

@@ -65,6 +65,15 @@ return {
                 opts = {
                     background_colour = "#000000",
                 },
+                keys = {
+                    {
+                        "<leader>un",
+                        function()
+                            require("notify").dismiss({ silent = true, pending = true })
+                        end,
+                        desc = "Delete all Notifications",
+                    },
+                }
             },
         },
         opts = {

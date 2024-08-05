@@ -1,6 +1,5 @@
 return {
     "hrsh7th/nvim-cmp",
-    version = false, -- last release is way too old
     event = "InsertEnter",
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
@@ -53,8 +52,21 @@ return {
             Variable      = "󰀫 ",
         }
 
+        -- local neocodeium = require("neocodeium")
+        -- local commands = require("neocodeium.commands")
+        --
+        -- cmp.event:on("menu_opened", function()
+        --     commands.disable()
+        --     neocodeium.clear()
+        -- end)
+        --
+        -- cmp.event:on("menu_closed", function()
+        --     commands.enable()
+        -- end)
+
         return {
             completion = {
+                -- autocomplete = false,
                 completeopt = "menu,menuone,noinsert",
             },
             mapping = cmp.mapping.preset.insert({

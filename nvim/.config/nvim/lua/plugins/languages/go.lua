@@ -1,32 +1,17 @@
+-- Function to convert all errors to warnings
+local function convert_errors_to_warnings(_, result, ctx, config)
+    if result.diagnostics then
+        for _, diagnostic in ipairs(result.diagnostics) do
+            if diagnostic.severity == vim.lsp.protocol.DiagnosticSeverity.Error then
+                diagnostic.severity = vim.lsp.protocol.DiagnosticSeverity.Warning
+            end
+        end
+    end
+    -- Call the default handler
+    vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+end
+
 return {
-    {
-        "ray-x/go.nvim",
-        dependencies = {
-            "ray-x/guihua.lua",
-        },
-        ft = { "go", "gomod" },
-        build = ":lua require(\"go.install\").update_all_sync()", -- if you need to install/update all binaries
-        config = function()
-            require("go").setup({
-                lsp_cfg = false,
-                lsp_keymaps = false,
-                dap_debug_keymap = false,
-                icons = false,
-		gofmt = "gofumpt",
-                tag_transform = "camelcase",
-                tag_options = "",
-            })
-            -- auto format
-            local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                pattern = "*.go",
-                callback = function()
-                    require("go.format").goimports()
-                end,
-                group = format_sync_grp,
-            })
-        end,
-    },
     {
         "leoluz/nvim-dap-go",
         lazy = false,
@@ -52,5 +37,17 @@ return {
         keys = {
             { "<leader>dg", function() require("dap-go").debug_test() end, desc = "Debug test (Go)" },
         },
+    },
+    {
+        "neovim/nvim-lspconfig",
+        lazy = false,
+        config = function()
+            local lspconfig = require("lspconfig")
+            lspconfig.golangci_lint_ls.setup {
+                handlers = {
+                    ["textDocument/publishDiagnostics"] = convert_errors_to_warnings
+                }
+            }
+        end,
     }
 }
