@@ -1,3 +1,16 @@
+-- Function to convert all errors to warnings
+local function convert_errors_to_warnings(_, result, ctx, config)
+    if result.diagnostics then
+        for _, diagnostic in ipairs(result.diagnostics) do
+            if diagnostic.severity == vim.lsp.protocol.DiagnosticSeverity.Error then
+                diagnostic.severity = vim.lsp.protocol.DiagnosticSeverity.Warning
+            end
+        end
+    end
+    -- Call the default handler
+    vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+end
+
 return {
     {
         "leoluz/nvim-dap-go",
@@ -24,5 +37,16 @@ return {
         keys = {
             { "<leader>dg", function() require("dap-go").debug_test() end, desc = "Debug test (Go)" },
         },
-    }
+        {
+            "neovim/nvim-lspconfig",
+            opts = {
+                gopls = {},
+                golangci_lint_ls = {
+                    handlers = {
+                        ["textDocument/publishDiagnostics"] = convert_errors_to_warnings
+                    }
+                },
+            }
+        }
+    },
 }

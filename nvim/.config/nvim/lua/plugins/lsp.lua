@@ -1,34 +1,27 @@
--- Function to convert all errors to warnings
-local function convert_errors_to_warnings(_, result, ctx, config)
-    if result.diagnostics then
-        for _, diagnostic in ipairs(result.diagnostics) do
-            if diagnostic.severity == vim.lsp.protocol.DiagnosticSeverity.Error then
-                diagnostic.severity = vim.lsp.protocol.DiagnosticSeverity.Warning
-            end
-        end
-    end
-    -- Call the default handler
-    vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
-end
-
 return {
+    -- "neovim/nvim-lspconfig",
     "neovim/nvim-lspconfig",
     cmd = { "LspInfo", "LspInstall", "LspStart" },
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         {
-            {
-                "williamboman/mason-lspconfig.nvim",
-                opts = {
-                    ensure_installed = {},
+            "williamboman/mason-lspconfig.nvim",
+            dependencies = {
+                {
+                    "williamboman/mason.nvim",
+                    opts = {},
                 },
             },
-            {
-                "williamboman/mason.nvim",
-                opts = {},
+            opts = {
+                automatic_installation = true,
             },
-        },
+        }
     },
+    config = function(_, opts)
+        for k, v in pairs(opts) do
+            require("lspconfig")[k].setup(v)
+        end
+    end,
     keys = {
         { "<leader>cl", "<cmd>LspInfo<cr>",      desc = "Lsp Info" },
         {
@@ -80,19 +73,4 @@ return {
         { "<leader>cr", vim.lsp.buf.rename,                                  desc = "Rename", },
         { "<leader>cd", vim.diagnostic.open_float,                           desc = "Line Diagnostic" },
     },
-    config = function()
-        require("mason-lspconfig").setup_handlers {
-            function(server_name)
-                require("lspconfig")[server_name].setup {}
-            end,
-            ["golangci_lint_ls"] = function()
-                local lspconfig = require("lspconfig")
-                lspconfig.golangci_lint_ls.setup {
-                    handlers = {
-                        ["textDocument/publishDiagnostics"] = convert_errors_to_warnings
-                    }
-                }
-            end,
-        }
-    end,
 }
