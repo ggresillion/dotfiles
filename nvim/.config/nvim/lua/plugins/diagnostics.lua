@@ -28,7 +28,12 @@ return {
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         init = function()
-            local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+            local signs = {
+                Error = '󰅚 ',
+                Warn = '󰀪 ',
+                Info = '󰋽 ',
+                Hint = '󰌶 ',
+            }
             for type, icon in pairs(signs) do
                 local hl = "DiagnosticSign" .. type
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
