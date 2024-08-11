@@ -80,14 +80,14 @@ return {
                 desc = "Toggle Breakpoint",
             },
             {
+                "<leader>dl",
+                function() require("dap").run_last() end,
+                desc = "Run Last",
+            },
+            {
                 "<leader>dc",
                 function() require("dap").continue() end,
                 desc = "Continue",
-            },
-            {
-                "<leader>da",
-                function() require("dap").continue({ before = get_args }) end,
-                desc = "Run with Args",
             },
             {
                 "<leader>dC",
@@ -105,17 +105,6 @@ return {
                 desc = "Step Into",
             },
             {
-                "<leader>dj",
-                function() require("dap").down() end,
-                desc = "Down",
-            },
-            { "<leader>dk", function() require("dap").up() end, desc = "Up" },
-            {
-                "<leader>dl",
-                function() require("dap").run_last() end,
-                desc = "Run Last",
-            },
-            {
                 "<leader>do",
                 function() require("dap").step_out() end,
                 desc = "Step Out",
@@ -126,19 +115,24 @@ return {
                 desc = "Step Over",
             },
             {
-                "<leader>dp",
-                function() require("dap").pause() end,
-                desc = "Pause",
+                "<leader>du",
+                function() require("dap").up() end,
+                desc = "Go up in the stack",
             },
             {
-                "<leader>dr",
+                "<leader>dd",
+                function() require("dap").down() end,
+                desc = "Go down in the stack",
+            },
+            {
+                "<leader>dv",
                 function() require("dap").repl.toggle() end,
                 desc = "Toggle REPL",
             },
             {
-                "<leader>ds",
-                function() require("dap").session() end,
-                desc = "Session",
+                "<leader>dv",
+                function() require('dap.ui.widgets').hover() end,
+                desc = "Display the value of the variable under the cursor",
             },
             {
                 "<leader>dt",

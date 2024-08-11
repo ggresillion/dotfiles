@@ -1,26 +1,28 @@
 return {
-    "folke/trouble.nvim",
-    keys = {
-        { "<leader>xx", function() require("trouble").toggle("diagnostics_by_severity") end, desc = "Diagnostics" },
-    },
-    opts = {
-        modes = {
-            diagnostics_by_severity = {
-                mode = "diagnostics",
-                filter = function(items)
-                    local severity = vim.diagnostic.severity.HINT
-                    for _, item in ipairs(items) do
-                        severity = math.min(severity, item.severity)
-                    end
-                    return vim.tbl_filter(function(item)
-                        return item.severity == severity
-                    end, items)
-                end,
-                preview = {
-                    type = "split",
-                    relative = "win",
-                    position = "right",
-                    size = 0.5,
+    {
+        "folke/trouble.nvim",
+        keys = {
+            { "<leader>xx", function() require("trouble").toggle("diagnostics_by_severity") end, desc = "Diagnostics" },
+        },
+        opts = {
+            modes = {
+                diagnostics_by_severity = {
+                    mode = "diagnostics",
+                    filter = function(items)
+                        local severity = vim.diagnostic.severity.HINT
+                        for _, item in ipairs(items) do
+                            severity = math.min(severity, item.severity)
+                        end
+                        return vim.tbl_filter(function(item)
+                            return item.severity == severity
+                        end, items)
+                    end,
+                    preview = {
+                        type = "split",
+                        relative = "win",
+                        position = "right",
+                        size = 0.5,
+                    },
                 },
             },
         },
