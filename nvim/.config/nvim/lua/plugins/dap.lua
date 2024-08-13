@@ -1,6 +1,14 @@
 return {
     {
         "jay-babu/mason-nvim-dap.nvim",
+        init = function()
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "dap-float",
+                callback = function()
+                    vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close!<CR>", { noremap = true, silent = true })
+                end
+            })
+        end,
         opts = {
             automatic_installation = true,
         },
@@ -21,42 +29,11 @@ return {
                     end
                 end,
             },
-            -- fancy UI for the debugger
-            -- {
-            --     "rcarriga/nvim-dap-ui",
-            --     dependencies = {
-            --         "nvim-neotest/nvim-nio",
-            --     },
-            --     -- stylua: ignore
-            --     keys = {
-            --         { "<leader>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
-            --         { "<leader>de", function() require("dapui").eval() end,     desc = "Eval",  mode = { "n", "v" } },
-            --     },
-            --     opts = {},
-            --     config = function(_, opts)
-            --         -- setup dap config by VsCode launch.json file
-            --         -- require("dap.ext.vscode").load_launchjs()
-            --         local dap = require("dap")
-            --         local dapui = require("dapui")
-            --         dapui.setup(opts)
-            --         dap.listeners.after.event_initialized["dapui_config"] = function()
-            --             dapui.open({})
-            --         end
-            --         dap.listeners.before.event_terminated["dapui_config"] = function()
-            --             dapui.close({})
-            --         end
-            --         dap.listeners.before.event_exited["dapui_config"] = function()
-            --             dapui.close({})
-            --         end
-            --     end,
-            -- },
-
             -- virtual text for the debugger
             {
                 "theHamsta/nvim-dap-virtual-text",
                 opts = {},
             },
-
             -- which key integration
             {
                 "folke/which-key.nvim",
@@ -105,12 +82,12 @@ return {
                 desc = "Step Into",
             },
             {
-                "<leader>do",
+                "<leader>dO",
                 function() require("dap").step_out() end,
                 desc = "Step Out",
             },
             {
-                "<leader>dO",
+                "<leader>do",
                 function() require("dap").step_over() end,
                 desc = "Step Over",
             },
