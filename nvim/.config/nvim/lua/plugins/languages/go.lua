@@ -16,27 +16,43 @@ return {
         "neovim/nvim-lspconfig",
         opts = {
             gopls = {},
-            golangci_lint_ls = {
-                handlers = {
-                    ["textDocument/publishDiagnostics"] = convert_errors_to_warnings
-                }
-            },
+            -- golangci_lint_ls = {
+            --     handlers = {
+            --         ["textDocument/publishDiagnostics"] = convert_errors_to_warnings
+            --     }
+            -- },
         }
     },
-    -- {
-    --     "jay-babu/mason-nvim-dap.nvim",
-    --     opts = {
-    --         ensure_installed = { "delve" },
-    --     },
-    -- },
     {
         "mfussenegger/nvim-dap",
         opts = {
+            setup = function()
+                local dap = require('dap')
+                local function debug_go_file(file)
+                    dap.run({
+                        type = 'delve',
+                        name = 'Debug Go File',
+                        request = 'launch',
+                        program = file,
+                    })
+                end
+                vim.api.nvim_create_user_command('GoDebug', function(opts)
+                    debug_go_file(opts.args)
+                end, { nargs = 1, complete = 'file' })
+            end,
             adapters = {
                 delve = {
+                    type = 'server',
+                    port = '${port}',
+                    executable = {
+                        command = 'dlv',
+                        args = { 'dap', '-l', '127.0.0.1:${port}' },
+                    }
+                },
+                delve_remote = {
                     type = "server",
                     host = "127.0.0.1",
-                    port = 38697,
+                    port = 38698,
                 },
             },
             configurations = {
@@ -66,30 +82,4 @@ return {
             },
         },
     },
-    -- {
-    --     "leoluz/nvim-dap-go",
-    --     lazy = false,
-    --     opts = {
-    --         delve = {
-    --             port = 40000,
-    --         },
-    --         dap_configurations = {
-    --             {
-    --                 type = "go",
-    --                 name = "Attach remote",
-    --                 mode = "remote",
-    --                 request = "attach",
-    --                 substitutePath = {
-    --                     {
-    --                         from = "${workspaceFolder}",
-    --                         to = "/go/src/github.com/thetreep/thetreep-api",
-    --                     },
-    --                 },
-    --             },
-    --         },
-    --     },
-    --     keys = {
-    --         { "<leader>dg", function() require("dap-go").debug_test() end, desc = "Debug test (Go)" },
-    --     },
-    -- },
 }

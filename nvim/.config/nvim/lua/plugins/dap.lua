@@ -2,11 +2,29 @@ return {
     {
         "jay-babu/mason-nvim-dap.nvim",
         init = function()
+            -- keybind to close the dap floating window
             vim.api.nvim_create_autocmd("FileType", {
                 pattern = "dap-float",
                 callback = function()
                     vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close!<CR>", { noremap = true, silent = true })
                 end
+            })
+
+            -- highlight signs
+            vim.fn.sign_define('DapBreakpoint',
+                { text = '', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+            vim.fn.sign_define('DapBreakpointCondition',
+                { text = 'ﳁ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+            vim.fn.sign_define('DapBreakpointRejected',
+                { text = '', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+            vim.fn.sign_define('DapLogPoint',
+                { text = '', texthl = 'DapLogPoint', linehl = 'DapLogPoint', numhl = 'DapLogPoint' })
+            vim.fn.sign_define('DapStopped', {
+                text = '',
+                texthl = 'DapStopped',
+                linehl = 'DapStopped',
+                numhl =
+                'DapStopped'
             })
         end,
         opts = {
@@ -26,6 +44,9 @@ return {
                     end
                     for k, v in pairs(opts.configurations) do
                         dap.configurations[k] = v
+                    end
+                    if opts.setup then
+                        opts.setup()
                     end
                 end,
             },
@@ -102,7 +123,7 @@ return {
                 desc = "Go down in the stack",
             },
             {
-                "<leader>dv",
+                "<leader>dr",
                 function() require("dap").repl.toggle() end,
                 desc = "Toggle REPL",
             },

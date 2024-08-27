@@ -1,38 +1,60 @@
 return {
     -- {
-    --     "Exafunction/codeium.nvim",
-    --     dependencies = {
-    --         "nvim-lua/plenary.nvim",
-    --         "hrsh7th/nvim-cmp",
+    --     "monkoose/neocodeium",
+    --     event = "VeryLazy",
+    --     opts = {
+    --         silent = true,
     --     },
-    --     config = function(_, opts)
-    --         require("codeium").setup(opts)
-    --     end
+    --     keys = {
+    --         { "<A-f>", function() require("neocodeium").accept() end,              mode = "i" },
+    --         { "<A-w>", function() require("neocodeium").accept_word() end,         mode = "i" },
+    --         { "<A-a>", function() require("neocodeium").accept_line() end,         mode = "i" },
+    --         { "<A-e>", function() require("neocodeium").cycle_or_complete() end,   mode = "i" },
+    --         { "<A-r>", function() require("neocodeium").cycle_or_complete(-1) end, mode = "i" },
+    --         { "<A-c>", function() require("neocodeium").clear() end,               mode = "i" },
+    --     },
     -- },
     {
-        "monkoose/neocodeium",
-        event = "VeryLazy",
-        config = function()
-            local neocodeium = require("neocodeium")
-            neocodeium.setup()
-            vim.keymap.set("i", "<A-f>", function()
-                require("neocodeium").accept()
-            end)
-            vim.keymap.set("i", "<A-w>", function()
-                require("neocodeium").accept_word()
-            end)
-            vim.keymap.set("i", "<A-a>", function()
-                require("neocodeium").accept_line()
-            end)
-            vim.keymap.set("i", "<A-e>", function()
-                require("neocodeium").cycle_or_complete()
-            end)
-            vim.keymap.set("i", "<A-r>", function()
-                require("neocodeium").cycle_or_complete(-1)
-            end)
-            vim.keymap.set("i", "<A-c>", function()
-                require("neocodeium").clear()
-            end)
-        end,
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-telescope/telescope.nvim", -- Optional
+            {
+                "stevearc/dressing.nvim",    -- Optional: Improves the default Neovim UI
+                opts = {},
+            },
+        },
+        opts = {
+            adapters = {
+                custom = function()
+                    return require("codecompanion.adapters").extend("ollama", {
+                        name = "custom",
+                        schema = {
+                            model = {
+                                default = "mistral",
+                            },
+                            -- num_ctx = {
+                            --     default = 16384,
+                            -- },
+                            -- num_predict = {
+                            --     default = -1,
+                            -- },
+                        },
+                    })
+                end,
+            },
+            strategies = {
+                chat = {
+                    adapter = "custom",
+                },
+                inline = {
+                    adapter = "custom",
+                },
+                agent = {
+                    adapter = "custom",
+                },
+            },
+        },
     }
 }

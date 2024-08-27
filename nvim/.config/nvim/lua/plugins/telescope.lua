@@ -38,5 +38,6 @@ return {
         { "<leader>fh", function() require("telescope.builtin").help_tags() end,                        desc = "Help Pages" },
         { "<leader>fd", function() require("telescope.builtin").diagnostics() end,                      desc = "Workspace diagnostics" },
         { "<leader>fs", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end,    desc = "Find symbols" },
+        { "<leader>gf", function() require("telescope.builtin").git_status() end,                       desc = "Git Status" },
     },
 }
