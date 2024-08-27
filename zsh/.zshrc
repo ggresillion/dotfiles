@@ -1,5 +1,7 @@
 export ZSH="$HOME/.oh-my-zsh"
 
+DOTFILES_DIR=$(dirname "$(dirname "$(readlink -f "${(%):-%x}")")")
+
 # Theme
 ZSH_THEME="robbyrussell"
 
@@ -36,6 +38,7 @@ export LANG=en_US.UTF-8
 
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/scripts
+export PATH=$PATH:$DOTFILES_DIR/scripts
 
 # Tmux
 if [ -z "$TMUX" ]
