@@ -21,6 +21,7 @@ return {
             --         ["textDocument/publishDiagnostics"] = convert_errors_to_warnings
             --     }
             -- },
+            templ = {},
         }
     },
     {

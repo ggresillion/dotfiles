@@ -8,6 +8,7 @@ return {
                 typescript = { "prettier" },
                 javascriptreact = { "prettier" },
                 typescriptreact = { "prettier" },
+                templ = { "templ" },
             },
             format_on_save = {
                 timeout_ms = 500,

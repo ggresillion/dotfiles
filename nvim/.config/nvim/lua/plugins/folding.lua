@@ -52,7 +52,11 @@ return {
         provider_selector = function()
             return { "treesitter", "indent" }
         end,
-        close_fold_kinds_for_ft = { "imports" },
+        close_fold_kinds_for_ft = {
+            default = { 'imports', 'comment' },
+            json = { 'array' },
+            c = { 'comment', 'region' }
+        },
         fold_virt_text_handler = handler,
         preview = {
             win_config = {
