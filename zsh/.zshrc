@@ -14,6 +14,8 @@ plugins=(
     zsh-syntax-highlighting
     zsh-autosuggestions
     direnv
+    kubectl
+    gcloud
 )
 
 # Autocompletion
@@ -29,6 +31,7 @@ alias vim="nvim"
 alias d="docker"
 alias cd="z"
 alias dc="docker compose"
+eval $(thefuck --alias)
 
 # Environment variables
 export XDG_CONFIG_HOME="$HOME/.config"

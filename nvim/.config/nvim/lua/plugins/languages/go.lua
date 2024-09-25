@@ -16,11 +16,11 @@ return {
         "neovim/nvim-lspconfig",
         opts = {
             gopls = {},
-            -- golangci_lint_ls = {
-            --     handlers = {
-            --         ["textDocument/publishDiagnostics"] = convert_errors_to_warnings
-            --     }
-            -- },
+            golangci_lint_ls = {
+                handlers = {
+                    ["textDocument/publishDiagnostics"] = convert_errors_to_warnings
+                }
+            },
             templ = {},
         }
     },
