@@ -15,6 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Imports
 require("settings")
 require("remap")
+require("utils")
 require("lazy").setup({
     { import = "plugins" },
     { import = "plugins.languages" },

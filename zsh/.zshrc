@@ -49,3 +49,11 @@ then
     tmux attach -t TMUX || tmux new -s TMUX
 fi
 
+
+# pnpm
+export PNPM_HOME="/Users/guillaume/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

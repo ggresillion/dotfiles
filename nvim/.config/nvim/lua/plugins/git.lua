@@ -41,5 +41,16 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
+    },
+    {
+        "sindrets/diffview.nvim",
+        opts = {},
+    },
+    {
+        "tpope/vim-fugitive",
+        cmd = {
+            "Git",
+            "G",
+        },
     }
 }
