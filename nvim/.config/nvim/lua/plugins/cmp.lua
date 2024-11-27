@@ -50,6 +50,7 @@ return {
             Unit          = " ",
             Value         = " ",
             Variable      = "󰀫 ",
+            Supermaven    = "",
         }
 
         -- local neocodeium = require("neocodeium")
@@ -89,6 +90,7 @@ return {
             sources = cmp.config.sources({
                 { name = "nvim_lsp" },
                 { name = "path" },
+                { name = "supermaven", priority = 10 },
             }, {
                 { name = "buffer" },
             }),

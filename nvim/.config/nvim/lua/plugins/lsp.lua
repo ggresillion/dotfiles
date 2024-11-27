@@ -28,7 +28,6 @@ return {
             "gd",
             function()
                 require("telescope.builtin").lsp_definitions({
-                    reuse_win = true,
                     file_ignore_patterns = {},
                 })
             end,
@@ -49,7 +48,6 @@ return {
             "gi",
             function()
                 require("telescope.builtin").lsp_implementations({
-                    reuse_win = true,
                     file_ignore_patterns = {},
                 })
             end,
@@ -59,7 +57,6 @@ return {
             "go",
             function()
                 require("telescope.builtin").lsp_type_definitions({
-                    reuse_win = true,
                     file_ignore_patterns = {},
                 })
             end,

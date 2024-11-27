@@ -1,6 +1,6 @@
 return {
     "neovim/nvim-lspconfig",
     opts = {
-        bufls = {},
+        buf_ls = {},
     },
 }
