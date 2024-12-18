@@ -52,5 +52,21 @@ return {
             "Git",
             "G",
         },
+    },
+
+    -- {
+    --     "NeogitOrg/neogit",
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim",
+    --         "sindrets/diffview.nvim",
+    --         "nvim-telescope/telescope.nvim",
+    --     },
+    --     opts = {
+    --         kind = "replace",
+    --     },
+    -- },
+    {
+        "almo7aya/openingh.nvim",
+        opts = {},
     }
 }

@@ -31,8 +31,25 @@ return {
             end, {
                 desc = "Re-enable autoformat-on-save",
             })
+            -- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+            --     pattern = "*.http",
+            --     command = "set filetype=http"
+            -- })
+        end,
+        build = function()
+            vim.fn.system({ 'wget',
+                'https://github.com/mistweaverco/kulala-fmt/releases/latest/download/kulala-fmt-macos', '-O', vim.fn
+                .expand('~/.local/bin/kulala-fmt') })
+            vim.fn.system({ 'chmod', '+x', vim.fn.expand('~/.local/bin/kulala-fmt') })
         end,
         opts = {
+            formatters = {
+                kulala = {
+                    command = "kulala-fmt",
+                    args = { "$FILENAME" },
+                    stdin = false,
+                },
+            },
             formatters_by_ft = {
                 go = { "gofumpt", "goimports" },
                 javascript = { "prettier" },
@@ -40,6 +57,7 @@ return {
                 javascriptreact = { "prettier" },
                 typescriptreact = { "prettier" },
                 templ = { "templ" },
+                http = { "kulala" },
             },
             format_on_save = {
                 timeout_ms = 500,

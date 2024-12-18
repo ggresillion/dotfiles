@@ -1,5 +1,4 @@
 return {
-    -- "neovim/nvim-lspconfig",
     "neovim/nvim-lspconfig",
     cmd = { "LspInfo", "LspInstall", "LspStart" },
     event = { "BufReadPre", "BufNewFile" },
@@ -18,8 +17,10 @@ return {
         }
     },
     config = function(_, opts)
-        for k, v in pairs(opts) do
-            require("lspconfig")[k].setup(v)
+        local lspconfig = require('lspconfig')
+        for server, config in pairs(opts) do
+            config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+            lspconfig[server].setup(config)
         end
     end,
     keys = {

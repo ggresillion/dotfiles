@@ -59,6 +59,41 @@ return {
     -- }
     {
         "supermaven-inc/supermaven-nvim",
-        opts = {},
-    }
+        opts = {
+            disable_inline_completion = true,
+            disable_keymaps = true,
+        },
+        dependencies = {
+            {
+                'saghen/blink.compat',
+                lazy = true,
+                opts = {},
+            },
+            {
+                "saghen/blink.cmp",
+                opts = {
+                    sources = {
+                        default = { "supermaven" },
+                        providers = {
+                            supermaven = {
+                                name = 'supermaven',
+                                module = 'blink.compat.source',
+                                score_offset = 10,
+                                opts = {},
+                                transform_items = function(_, items)
+                                    local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
+                                    local kind_idx = #CompletionItemKind + 1
+                                    CompletionItemKind[kind_idx] = "Assistant"
+                                    for _, item in ipairs(items) do
+                                        item.kind = kind_idx
+                                    end
+                                    return items
+                                end,
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
 }

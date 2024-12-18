@@ -89,6 +89,9 @@ return {
                 hover = {
                     silent = true,
                 },
+                signature = {
+                    enabled = false,
+                },
             },
             presets = {
                 bottom_search = false,        -- use a classic bottom cmdline for search

@@ -124,7 +124,7 @@ return {
             },
             {
                 "<leader>dr",
-                function() require("dap").repl.toggle() end,
+                function() require("dap").repl.toggle({ height = 16 }) end,
                 desc = "Toggle REPL",
             },
             {
