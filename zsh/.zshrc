@@ -57,3 +57,5 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+alias mongo-local="mongosh --username fx --password test --tls false --authenticationDatabase admin thetreep-api"
