@@ -1,62 +1,4 @@
 return {
-    -- {
-    --     "monkoose/neocodeium",
-    --     event = "VeryLazy",
-    --     opts = {
-    --         silent = true,
-    --     },
-    --     keys = {
-    --         { "<A-f>", function() require("neocodeium").accept() end,              mode = "i" },
-    --         { "<A-w>", function() require("neocodeium").accept_word() end,         mode = "i" },
-    --         { "<A-a>", function() require("neocodeium").accept_line() end,         mode = "i" },
-    --         { "<A-e>", function() require("neocodeium").cycle_or_complete() end,   mode = "i" },
-    --         { "<A-r>", function() require("neocodeium").cycle_or_complete(-1) end, mode = "i" },
-    --         { "<A-c>", function() require("neocodeium").clear() end,               mode = "i" },
-    --     },
-    -- },
-    -- {
-    --     "olimorris/codecompanion.nvim",
-    --     dependencies = {
-    --         "nvim-lua/plenary.nvim",
-    --         "nvim-treesitter/nvim-treesitter",
-    --         "nvim-telescope/telescope.nvim", -- Optional
-    --         {
-    --             "stevearc/dressing.nvim",    -- Optional: Improves the default Neovim UI
-    --             opts = {},
-    --         },
-    --     },
-    --     opts = {
-    --         adapters = {
-    --             custom = function()
-    --                 return require("codecompanion.adapters").extend("ollama", {
-    --                     name = "custom",
-    --                     schema = {
-    --                         model = {
-    --                             default = "mistral",
-    --                         },
-    --                         -- num_ctx = {
-    --                         --     default = 16384,
-    --                         -- },
-    --                         -- num_predict = {
-    --                         --     default = -1,
-    --                         -- },
-    --                     },
-    --                 })
-    --             end,
-    --         },
-    --         strategies = {
-    --             chat = {
-    --                 adapter = "custom",
-    --             },
-    --             inline = {
-    --                 adapter = "custom",
-    --             },
-    --             agent = {
-    --                 adapter = "custom",
-    --             },
-    --         },
-    --     },
-    -- }
     {
         "supermaven-inc/supermaven-nvim",
         opts = {
@@ -65,12 +7,10 @@ return {
         },
         dependencies = {
             {
-                'saghen/blink.compat',
-                lazy = true,
-                opts = {},
-            },
-            {
                 "saghen/blink.cmp",
+                dependencies = {
+                    "saghen/blink.compat",
+                },
                 opts = {
                     sources = {
                         default = { "supermaven" },
@@ -78,7 +18,7 @@ return {
                             supermaven = {
                                 name = 'supermaven',
                                 module = 'blink.compat.source',
-                                score_offset = 10,
+                                score_offset = 100,
                                 opts = {},
                                 transform_items = function(_, items)
                                     local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
@@ -94,6 +34,52 @@ return {
                     },
                 },
             },
+        },
+    },
+    {
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        opts = {
+            strategies = {
+                chat = {
+                    adapter = "openrouter",
+                },
+                inline = {
+                    adapter = "openrouter",
+                },
+            },
+            adapters = {
+                ollama_deepseek = function()
+                    return require("codecompanion.adapters").extend("ollama", {
+                        name = "ollama_deepseek",
+                        schema = {
+                            model = {
+                                default = "deepseek-coder:6.7b",
+                            },
+                        },
+                    })
+                end,
+                openrouter = function()
+                    return require("codecompanion.adapters").extend("openai_compatible", {
+                        name = "openrouter",
+                        env = {
+                            api_key = "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",
+                            url = "https://openrouter.ai/api",
+                        },
+                        schema = {
+                            model = {
+                                default = "deepseek/deepseek-chat:free"
+                            }
+                        }
+                    })
+                end,
+            },
+            opts = {
+                log_level = "TRACE",
+            }
         },
     },
 }

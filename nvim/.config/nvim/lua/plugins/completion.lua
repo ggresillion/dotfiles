@@ -1,10 +1,9 @@
 return {
     {
         "saghen/blink.cmp",
-        lazy = false,
-        build = "cargo build --release",
+        version = "*",
         dependencies = {
-            "rafamadriz/friendly-snippets"
+            "rafamadriz/friendly-snippets",
         },
         opts = {
             sources = {
@@ -22,9 +21,6 @@ return {
                     },
 
                 },
-                ghost_text = {
-                    enabled = true,
-                },
             },
             signature = {
                 enabled = true,
@@ -39,6 +35,6 @@ return {
                 },
             },
         },
-        opts_extend = { "sources.default", "providers" },
+        opts_extend = { "sources.default" },
     },
 }
