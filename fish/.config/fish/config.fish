@@ -16,3 +16,5 @@ if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+set -x OPENROUTER_API_KEY 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
+starship init fish | source

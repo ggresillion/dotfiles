@@ -39,11 +39,15 @@ return {
                 "mfussenegger/nvim-dap",
                 config = function(_, opts)
                     local dap = require("dap")
-                    for k, v in pairs(opts.adapters) do
-                        dap.adapters[k] = v
+                    if opts.adapters then
+                        for k, v in pairs(opts.adapters) do
+                            dap.adapters[k] = v
+                        end
                     end
-                    for k, v in pairs(opts.configurations) do
-                        dap.configurations[k] = v
+                    if opts.configurations then
+                        for k, v in pairs(opts.configurations) do
+                            dap.configurations[k] = v
+                        end
                     end
                     if opts.setup then
                         opts.setup()

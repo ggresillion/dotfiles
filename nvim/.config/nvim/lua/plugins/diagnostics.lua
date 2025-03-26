@@ -2,7 +2,8 @@ return {
     {
         "folke/trouble.nvim",
         keys = {
-            { "<leader>xx", function() require("trouble").toggle("diagnostics_by_severity") end, desc = "Diagnostics" },
+            { "<leader>xx", function() require("trouble").toggle("diagnostics") end,             desc = "Diagnostics" },
+            { "<leader>xs", function() require("trouble").toggle("diagnostics_by_severity") end, desc = "Diagnostics (Warnings only on current file)" },
         },
         opts = {
             modes = {

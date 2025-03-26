@@ -9,7 +9,10 @@ return {
             sources = {
                 default = { "lsp", "path", "snippets", "buffer" },
             },
-            keymap = { preset = "super-tab" },
+            keymap = {
+                preset = "super-tab",
+                ["<Tab>"] = { "accept", "fallback" },
+            },
             completion = {
                 menu = {
                     border = "rounded",
@@ -21,6 +24,14 @@ return {
                     },
 
                 },
+                trigger = {
+                    show_in_snippet = false,
+                },
+                list = {
+                    selection = {
+                        preselect = false,
+                    },
+                },
             },
             signature = {
                 enabled = true,
@@ -29,7 +40,7 @@ return {
                 },
             },
             appearance = {
-                use_nvim_cmp_as_default = true,
+                -- use_nvim_cmp_as_default = true,
                 kind_icons = {
                     Assistant = "",
                 },

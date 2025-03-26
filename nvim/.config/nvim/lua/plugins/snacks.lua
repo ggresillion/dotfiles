@@ -26,6 +26,15 @@ return {
                         },
                     },
                 },
+                actions = {
+                    git_diff = function(picker, item)
+                        local commit = item.commit
+                        local current_win = vim.api.nvim_get_current_win()
+                        vim.cmd("Gvdiffsplit " .. commit .. ":" .. item.file)
+                        vim.cmd("windo diffthis")
+                        vim.api.nvim_set_current_win(current_win)
+                    end,
+                }
             },
             quickfile = { enabled = true },
             scope = { enabled = true },
@@ -81,7 +90,7 @@ return {
             { "<leader>gs",      function() Snacks.picker.git_status() end,                              desc = "Git Status" },
             { "<leader>gS",      function() Snacks.picker.git_stash() end,                               desc = "Git Stash" },
             { "<leader>gd",      function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
-            { "<leader>gf",      function() Snacks.picker.git_log_file() end,                            desc = "Git Log File" },
+            { "<leader>gf",      function() Snacks.picker.git_log_file({ confirm = "git_diff" }) end,    desc = "Git Log File" },
             -- Grep
             { "<leader>sb",      function() Snacks.picker.lines() end,                                   desc = "Buffer Lines" },
             { "<leader>sB",      function() Snacks.picker.grep_buffers() end,                            desc = "Grep Open Buffers" },

@@ -60,21 +60,21 @@ return {
             -- OPTIONAL:
             --   `nvim-notify` is only needed, if you want to use the notification view.
             --   If not available, we use `mini` as the fallback
-            {
-                "rcarriga/nvim-notify",
-                opts = {
-                    background_colour = "#000000",
-                },
-                keys = {
-                    {
-                        "<leader>un",
-                        function()
-                            require("notify").dismiss({ silent = true, pending = true })
-                        end,
-                        desc = "Delete all Notifications",
-                    },
-                }
-            },
+            -- {
+            --     "rcarriga/nvim-notify",
+            --     opts = {
+            --         background_colour = "#000000",
+            --     },
+            --     keys = {
+            --         {
+            --             "<leader>un",
+            --             function()
+            --                 require("notify").dismiss({ silent = true, pending = true })
+            --             end,
+            --             desc = "Delete all Notifications",
+            --         },
+            --     }
+            -- },
         },
         opts = {
             lsp = {
