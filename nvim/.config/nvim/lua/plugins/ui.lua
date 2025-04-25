@@ -12,7 +12,8 @@ return {
             transparent_background = true,
             custom_highlights = function(colors)
                 return {
-                    CursorLineNr = { fg = colors.text },
+                    LineNrAbove = { fg = colors.overlay2 },
+                    LineNrBelow = { fg = colors.overlay2 },
                 }
             end,
             integrations = {

@@ -8,13 +8,13 @@ return {
         event = "VeryLazy",
         version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
         opts = {
-            provider = "openrouter",
+            provider = "openrouter_deepseek",
             vendors = {
-                openrouter = {
+                openrouter_deepseek = {
                     __inherited_from = 'openai',
                     endpoint = 'https://openrouter.ai/api/v1',
                     api_key_name = 'OPENROUTER_API_KEY',
-                    model = 'deepseek/deepseek-chat:free',
+                    model = 'deepseek/deepseek-chat-v3-0324:free',
                     disable_tools = true
                 },
             },
