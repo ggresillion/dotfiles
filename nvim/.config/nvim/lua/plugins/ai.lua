@@ -8,7 +8,7 @@ return {
         event = "VeryLazy",
         version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
         opts = {
-            provider = "openrouter_deepseek",
+            provider = "ollama",
             vendors = {
                 openrouter_deepseek = {
                     __inherited_from = 'openai',
@@ -18,6 +18,10 @@ return {
                     disable_tools = true
                 },
             },
+            ollama = {
+                endpoint = "http://127.0.0.1:11434",
+                model = "qwen:4b",
+            }
         },
         -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
         build = "make",

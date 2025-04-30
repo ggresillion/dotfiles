@@ -4,6 +4,19 @@ return {
         name = "catppuccin",
         priority = 1000,
         init = function()
+            local flavour = "mocha" -- default fallback
+
+            if vim.fn.has("mac") == 1 then
+                local appearance = vim.fn.system("defaults read -g AppleInterfaceStyle 2>/dev/null"):gsub("%s+", "")
+                if appearance == "Dark" then
+                    flavour = "frappe" -- or "mocha" if you prefer
+                else
+                    flavour = "latte"
+                end
+            end
+
+            vim.g.catppuccin_flavour = flavour
+
             vim.cmd.colorscheme("catppuccin")
             vim.o.cursorline = true
             vim.o.cursorlineopt = "number"
