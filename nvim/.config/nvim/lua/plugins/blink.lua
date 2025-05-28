@@ -6,8 +6,16 @@ return {
   dependencies = {
     {
       'supermaven-inc/supermaven-nvim',
+      init = function()
+        package.preload["cmp"] = function()
+          return {
+            register_source = function() end,  -- No-op for cmp registration
+            setup = function() end             -- Additional mock if needed
+          }
+        end
+      end,
       dependencies = {
-        'huijiro/blink-cmp-supermaven'
+        'huijiro/blink-cmp-supermaven',
       },
       opts = {
         disable_inline_completion = true,
