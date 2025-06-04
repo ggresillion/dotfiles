@@ -39,7 +39,12 @@
         system = "aarch64-darwin";
         modules = [
 
+          sharedConfig
+
           home-manager.darwinModules.home-manager
+          {
+            home-manager.users.${username}.home.homeDirectory = "/Users/guillaume";
+          }
 
           {
             users.users.guillaume = {
@@ -47,8 +52,6 @@
               home = "/Users/guillaume";
             };
           }
-
-          sharedConfig
 
           {
             system.stateVersion = 6;
@@ -60,6 +63,9 @@
         system = "x86_64-linux";
 
         modules = [
+
+          sharedConfig
+
           # WSL
           nixos-wsl.nixosModules.default
           {
@@ -68,12 +74,18 @@
             wsl.useWindowsDriver = true;
           }
 
-          # System packages
+          # Home Manager
+          home-manager.nixosModules.home-manager
           {
-            environment.systemPackages = with nixpkgs.legacyPackages.x86_64-linux; [
-              (ollama.override { acceleration = "cuda"; })
-            ];
+            home-manager.users.${username}.home.homeDirectory = "/home/guillaume";
           }
+
+          # System packages
+          # {
+          #   environment.systemPackages = with nixpkgs.legacyPackages.x86_64-linux; [
+          #     (ollama.override { acceleration = "cuda"; })
+          #   ];
+          # }
 
           # Docker
           {
@@ -93,41 +105,42 @@
           }
 
           # Nvidia CDI
-          {
-            services.xserver.videoDrivers = [ "nvidia" ];
-            hardware.nvidia.open = true;
+          # {
+          #   services.xserver.videoDrivers = [ "nvidia" ];
+          #   hardware.nvidia.open = true;
+          #
+          #   environment.sessionVariables = {
+          #     CUDA_PATH = "${nixpkgs.legacyPackages.x86_64-linux.cudatoolkit}";
+          #     EXTRA_LDFLAGS = "-L/lib -L${nixpkgs.legacyPackages.x86_64-linux.linuxPackages.nvidia_x11}/lib";
+          #     EXTRA_CCFLAGS = "-I/usr/include";
+          #     LD_LIBRARY_PATH = [
+          #       "/usr/lib/wsl/lib"
+          #       "${nixpkgs.legacyPackages.x86_64-linux.linuxPackages.nvidia_x11}/lib"
+          #       "${nixpkgs.legacyPackages.x86_64-linux.ncurses5}/lib"
+          #     ];
+          #     MESA_D3D12_DEFAULT_ADAPTER_NAME = "Nvidia";
+          #   };
+          #
+          #   hardware.nvidia-container-toolkit = {
+          #     enable = true;
+          #     mount-nvidia-executables = false;
+          #   };
+          #
+          #   systemd.services.nvidia-cdi-generator = {
+          #     description = "Generate nvidia cdi";
+          #     wantedBy = [ "docker.service" ];
+          #     serviceConfig = {
+          #       Type = "oneshot";
+          #       ExecStart = "${nixpkgs.legacyPackages.x86_64-linux.nvidia-docker}/bin/nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml --nvidia-ctk-path=${nixpkgs.legacyPackages.x86_64-linux.nvidia-container-toolkit}/bin/nvidia-ctk";
+          #     };
+          #   };
+          #
+          #   virtualisation.docker.daemon.settings = {
+          #     features.cdi = true;
+          #     "cdi-spec-dirs" = [ "/etc/cdi" ];
+          #   };
+          # }
 
-            environment.sessionVariables = {
-              CUDA_PATH = "${nixpkgs.legacyPackages.x86_64-linux.cudatoolkit}";
-              EXTRA_LDFLAGS = "-L/lib -L${nixpkgs.legacyPackages.x86_64-linux.linuxPackages.nvidia_x11}/lib";
-              EXTRA_CCFLAGS = "-I/usr/include";
-              LD_LIBRARY_PATH = [
-                "/usr/lib/wsl/lib"
-                "${nixpkgs.legacyPackages.x86_64-linux.linuxPackages.nvidia_x11}/lib"
-                "${nixpkgs.legacyPackages.x86_64-linux.ncurses5}/lib"
-              ];
-              MESA_D3D12_DEFAULT_ADAPTER_NAME = "Nvidia";
-            };
-
-            hardware.nvidia-container-toolkit = {
-              enable = true;
-              mount-nvidia-executables = false;
-            };
-
-            systemd.services.nvidia-cdi-generator = {
-              description = "Generate nvidia cdi";
-              wantedBy = [ "docker.service" ];
-              serviceConfig = {
-                Type = "oneshot";
-                ExecStart = "${nixpkgs.legacyPackages.x86_64-linux.nvidia-docker}/bin/nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml --nvidia-ctk-path=${nixpkgs.legacyPackages.x86_64-linux.nvidia-container-toolkit}/bin/nvidia-ctk";
-              };
-            };
-
-            virtualisation.docker.daemon.settings = {
-              features.cdi = true;
-              "cdi-spec-dirs" = [ "/etc/cdi" ];
-            };
-          }
           {
             system.stateVersion = "25.11";
           }
