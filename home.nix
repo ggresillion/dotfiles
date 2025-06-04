@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./zellij
+  ];
   home.username = "guillaume";
   home.homeDirectory = "/Users/guillaume";
   home.stateVersion = "24.11";
