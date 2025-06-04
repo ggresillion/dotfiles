@@ -1,3 +1,1 @@
-return {
-	"neovim/nvim-lspconfig",
-}
+/nix/store/2ifan8xz7q6nispdlb1vgmffp9x5q4p7-home-manager-files/.config/nvim/lua/plugins/lspconfig.lua

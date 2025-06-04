@@ -1,13 +1,1 @@
-return {
-	"nvim-treesitter/nvim-treesitter",
-	build = ":TSUpdate",
-	config = function()
-		local configs = require("nvim-treesitter.configs")
-		configs.setup({
-			auto_install = true,
-			sync_install = false,
-			highlight = { enable = true },
-			indent = { enable = true },
-		})
-	end,
-}
+/nix/store/2ifan8xz7q6nispdlb1vgmffp9x5q4p7-home-manager-files/.config/nvim/lua/plugins/treesitter.lua

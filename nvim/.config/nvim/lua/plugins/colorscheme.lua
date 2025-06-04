@@ -1,12 +1,1 @@
-return {
-	"catppuccin/nvim",
-	name = "catppuccin",
-	priority = 1000,
-	opts = {
-		transparent_background = true,
-	},
-	init = function()
-		-- load the colorscheme here
-		vim.cmd([[colorscheme catppuccin]])
-	end,
-}
+/nix/store/2ifan8xz7q6nispdlb1vgmffp9x5q4p7-home-manager-files/.config/nvim/lua/plugins/colorscheme.lua

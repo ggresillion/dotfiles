@@ -1,4 +1,1 @@
-require("config.settings")
-require("config.lazy")
-require("config.lsp")
-require("config.commands")
+/nix/store/2ifan8xz7q6nispdlb1vgmffp9x5q4p7-home-manager-files/.config/nvim/init.lua
