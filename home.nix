@@ -86,6 +86,11 @@
 
       # Load starship prompt
       starship init fish | source
+
+      # Autostart zellij if not already inside a session
+      if status is-login; and status is-interactive; and not set -q ZELLIJ_SESSION
+        exec zellij
+      end
     '';
   };
 
