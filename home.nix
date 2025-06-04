@@ -139,8 +139,4 @@
     source = ./nvim/.config/nvim;
     recursive = true;
   };
-
-  programs.gh = {
-    enable = true;
-  };
 }
