@@ -131,4 +131,5 @@
   };
 
   programs.bat.enable = true;
+  programs.gh.enable = true;
 }
