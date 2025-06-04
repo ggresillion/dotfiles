@@ -1,1 +1,17 @@
-/nix/store/2ifan8xz7q6nispdlb1vgmffp9x5q4p7-home-manager-files/.config/nvim/lua/plugins/better_escape.lua
+return {
+	"max397574/better-escape.nvim",
+	opts = {
+		default_mappings = false,
+		mappings = {
+			i = {
+				j = {
+					k = "<Esc>",
+					j = "<Esc>",
+				},
+				k = {
+					j = "<Esc>",
+				},
+			},
+		},
+	},
+}

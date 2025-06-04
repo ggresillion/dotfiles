@@ -1,1 +1,9 @@
-/nix/store/2ifan8xz7q6nispdlb1vgmffp9x5q4p7-home-manager-files/.config/nvim/lua/plugins/tailwind_tools.lua
+return {
+	"luckasRanarison/tailwind-tools.nvim",
+	name = "tailwind-tools",
+	build = ":UpdateRemotePlugins",
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter",
+	},
+	opts = {},
+}

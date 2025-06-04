@@ -1,1 +1,2 @@
-/nix/store/2ifan8xz7q6nispdlb1vgmffp9x5q4p7-home-manager-files/.config/nvim/lua/config/lsp.lua
+vim.lsp.enable({ "gopls", "luals", "ts_ls", "tailwindcss", "jsonls", "golangci_lint_ls", "nil_ls" })
+vim.diagnostic.config({ virtual_text = true })
