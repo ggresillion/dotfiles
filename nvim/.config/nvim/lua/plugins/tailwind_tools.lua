@@ -1,1 +1,1 @@
-/nix/store/2ifan8xz7q6nispdlb1vgmffp9x5q4p7-home-manager-files/.config/nvim/lua/plugins/tailwind_tools.lua
+/nix/store/z18sm63l0p8im221wczhcyq1mg8iism7-home-manager-files/.config/nvim/lua/plugins/tailwind_tools.lua
