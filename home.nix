@@ -8,8 +8,18 @@
 
   programs.home-manager.enable = true;
 
-  # Example programs
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    functions.rebuild = ''
+      sudo nixos-rebuild switch --flake ~/dotfiles
+    '';
+  };
+
+  xdg.configFile."fish" = {
+    source = ./fish/.config/fish;
+    recursive = true;
+  };
+
   programs.git = {
     enable = true;
     userName = "Your Name";
@@ -29,6 +39,8 @@
       nixfmt-rfc-style
     ];
   };
+
+  programs.starship.enable = true;
 
   xdg.configFile."nvim" = {
     source = ./nvim/.config/nvim;
