@@ -19,8 +19,8 @@
     home-manager.users.${username} = import ./home.nix;
           users.users.${username} = {
             shell = nixpkgs.legacyPackages.x86_64-linux.fish;
-            ignoreShellProgramCheck = true;
           };
+      programs.fish.enable = true;
   };
     in
     {
