@@ -139,4 +139,31 @@
 
   programs.bat.enable = true;
   programs.gh.enable = true;
+  programs.lazygit.enable = true;
+
+  home.packages = with pkgs; [
+    # Compilers
+    go
+    cmake
+    nodejs
+    pnpm
+    pipx
+    # LSP
+    lua-language-server
+    luarocks
+    # Cloud
+    docker-compose
+    google-cloud-sql-proxy
+    stripe-cli
+    # Database
+    mongosh
+    usql
+    # Tools
+    fzf
+    ripgrep
+    jq
+    vegeta
+    wget
+    lazydocker
+  ];
 }

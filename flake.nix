@@ -54,6 +54,19 @@
           }
 
           {
+            system.primaryUser = "guillaume";
+            homebrew.enable = true;
+            homebrew.brews = [
+              "koekeishiya/formulae/yabai"
+              "koekeishiya/formulae/skhd"
+              "ohueter/tap/autokbisw"
+            ];
+            homebrew.casks = [
+              "raycast"
+            ];
+          }
+
+          {
             system.stateVersion = 6;
           }
         ];
