@@ -5,13 +5,9 @@ if status is-interactive
     abbr -a d 'docker'
 
     set -x EDITOR nvim
-end
 
-# pnpm
-set -gx PNPM_HOME "/Users/guillaume/Library/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
+    pyenv init - fish | source
+    starship init fish | source
 
-starship init fish | source
+    function fish_greeting; end
+end
