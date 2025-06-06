@@ -301,3 +301,4 @@ ui {
     }
 }
 
+show_startup_tips false
