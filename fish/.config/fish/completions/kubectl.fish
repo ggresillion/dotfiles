@@ -1,1 +1,0 @@
-/nix/store/q13dd64i4k06bf9by0z4pyf5cw61lszy-home-manager-files/.config/fish/completions/kubectl.fish
