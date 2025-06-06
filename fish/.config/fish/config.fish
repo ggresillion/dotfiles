@@ -10,4 +10,8 @@ if status is-interactive
     starship init fish | source
 
     function fish_greeting; end
+
+    if not set -q ZELLIJ
+        zellij
+    end
 end
