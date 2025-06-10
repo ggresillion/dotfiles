@@ -5,28 +5,28 @@ keybinds {
           SwitchToMode "Normal";
         }
         bind "Alt h" "Alt Left" {
-            MessagePlugin "file:/home/guillaume/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
                 name "move_focus_or_tab";
                 payload "left";
                 move_mod "alt";
             };
         }
         bind "Alt j" "Alt Down" {
-            MessagePlugin "file:/home/guillaume/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "down";
                 move_mod "alt";
             };
         }
         bind "Alt k" "Alt Up" {
-            MessagePlugin "file:/home/guillaume/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "up";
                 move_mod "alt";
             };
         }
         bind "Alt l" "Alt Right" {
-            MessagePlugin "file:/home/guillaume/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
                 name "move_focus_or_tab";
                 payload "right";
                 move_mod "alt";
@@ -205,28 +205,28 @@ keybinds {
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
         bind "Alt h" "Alt Left" {
-            MessagePlugin "file:/home/guillaume/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
                 name "move_focus_or_tab";
                 payload "left";
                 move_mod "alt";
             };
         }
         bind "Alt j" "Alt Down" {
-            MessagePlugin "file:/home/guillaume/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "down";
                 move_mod "alt";
             };
         }
         bind "Alt k" "Alt Up" {
-            MessagePlugin "file:/home/guillaume/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "up";
                 move_mod "alt";
             };
         }
         bind "Alt l" "Alt Right" {
-            MessagePlugin "file:/home/guillaume/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
                 name "move_focus_or_tab";
                 payload "right";
                 move_mod "alt";
@@ -275,7 +275,7 @@ plugins {
     plugin-manager location="zellij:plugin-manager"
     about location="zellij:about"
 
-    autolock location="file:/home/guillaume/.config/zellij/plugins/zellij-autolock.wasm" {
+    autolock location="file:~/.config/zellij/plugins/zellij-autolock.wasm" {
         is_enabled true
         triggers "nvim|vim|git|fzf|zoxide|atuin"
         reaction_seconds "0.3"
@@ -285,7 +285,7 @@ plugins {
 
 load_plugins {
     autolock
-    "file:/home/guillaume/.config/zellij/plugins/zjframes.wasm" {
+    "file:~/.config/zellij/plugins/zjframes.wasm" {
         hide_frame_for_single_pane       "true"
         hide_frame_except_for_search     "true"
         hide_frame_except_for_scroll     "true"
