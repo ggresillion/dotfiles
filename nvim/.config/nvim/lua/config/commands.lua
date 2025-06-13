@@ -6,11 +6,11 @@ vim.api.nvim_create_user_command("GCSFetch", function(opts)
 	---------------------------------------------------------------------------
 	-- 1. Fetch the object directly into Lua (no file on disk)
 	---------------------------------------------------------------------------
-	local raw_lines = vim.fn.systemlist(string.format("gsutil cat '%s'", gs_path))
-	if vim.v.shell_error ~= 0 then
-		vim.api.nvim_err_writeln("Failed to fetch GCS file:\n" .. table.concat(raw_lines, "\n"))
-		return
-	end
+  local raw_lines = vim.fn.systemlist(string.format("gcloud storage cat '%s'", gs_path))
+  if vim.v.shell_error ~= 0 then
+	  vim.api.nvim_err_writeln("Failed to fetch GCS file:\n" .. table.concat(raw_lines, "\n"))
+	  return
+  end
 
 	---------------------------------------------------------------------------
 	-- 2. Split headers / JSON (empty line = separator)
@@ -49,7 +49,6 @@ vim.api.nvim_create_user_command("GCSFetch", function(opts)
 	---------------------------------------------------------------------------
 	-- 4. Show JSON in a scratch, read-only buffer
 	---------------------------------------------------------------------------
-	vim.cmd("new") -- open a fresh window
 	local buf = vim.api.nvim_get_current_buf()
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, formatted)
 
