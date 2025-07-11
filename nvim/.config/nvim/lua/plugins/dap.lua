@@ -9,7 +9,6 @@ return {
 					vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close!<CR>", { noremap = true, silent = true })
 				end,
 			})
-
 			-- highlight signs
 			vim.fn.sign_define(
 				"DapBreakpoint",
@@ -33,6 +32,124 @@ return {
 				linehl = "DapStopped",
 				numhl = "DapStopped",
 			})
+		end,
+		config = function()
+			local dap = require("dap")
+
+			-- Function to scan for Go tests in the project
+			local function scan_go_tests()
+				local tests = {}
+				local cwd = vim.fn.getcwd()
+
+				-- Find all Go test files
+				local test_files = vim.fn.systemlist("find " .. cwd .. " -name '*_test.go' -type f")
+
+				for _, file in ipairs(test_files) do
+					-- Read the file and extract test function names
+					local lines = vim.fn.readfile(file)
+					for _, line in ipairs(lines) do
+						local test_match = line:match("^func%s+(Test%w+)")
+						local benchmark_match = line:match("^func%s+(Benchmark%w+)")
+						local example_match = line:match("^func%s+(Example%w*)")
+
+						if test_match then
+							local relative_path = file:gsub(cwd .. "/", "")
+							local package_path = vim.fn.fnamemodify(relative_path, ":h")
+							if package_path == "." then
+								package_path = ""
+							else
+								package_path = "./" .. package_path
+							end
+
+							table.insert(tests, {
+								name = test_match,
+								file = file,
+								package = package_path,
+								display = package_path .. " :: " .. test_match,
+								type = "test",
+							})
+						elseif benchmark_match then
+							local relative_path = file:gsub(cwd .. "/", "")
+							local package_path = vim.fn.fnamemodify(relative_path, ":h")
+							if package_path == "." then
+								package_path = ""
+							else
+								package_path = "./" .. package_path
+							end
+
+							table.insert(tests, {
+								name = benchmark_match,
+								file = file,
+								package = package_path,
+								display = package_path .. " :: " .. benchmark_match,
+								type = "benchmark",
+							})
+						elseif example_match then
+							local relative_path = file:gsub(cwd .. "/", "")
+							local package_path = vim.fn.fnamemodify(relative_path, ":h")
+							if package_path == "." then
+								package_path = ""
+							else
+								package_path = "./" .. package_path
+							end
+
+							table.insert(tests, {
+								name = example_match,
+								file = file,
+								package = package_path,
+								display = package_path .. " :: " .. example_match,
+								type = "example",
+							})
+						end
+					end
+				end
+
+				return tests
+			end
+
+			-- Function to debug a selected test
+			local function debug_selected_test()
+				local tests = scan_go_tests()
+
+				if #tests == 0 then
+					vim.notify("No tests found in the project", vim.log.levels.WARN)
+					return
+				end
+
+				-- Create display options for vim.ui.select
+				local display_options = {}
+				for _, test in ipairs(tests) do
+					table.insert(display_options, test.display)
+				end
+
+				-- Let user select a test
+				vim.ui.select(display_options, {
+					prompt = "Select test to debug:",
+					format_item = function(item)
+						return item
+					end,
+				}, function(choice, idx)
+					if choice and idx then
+						local selected_test = tests[idx]
+
+						-- Start debugging with the selected test
+						dap.run({
+							type = "go",
+							name = "Debug Selected Test",
+							request = "launch",
+							mode = "test",
+							program = selected_test.package == "" and "." or selected_test.package,
+							args = {
+								"-test.run",
+								"^" .. selected_test.name .. "$",
+							},
+						})
+					end
+				end)
+			end
+
+			-- Store the function globally so we can access it from the keymap
+			_G.debug_selected_test = debug_selected_test
 		end,
 		dependencies = {
 			-- which key integration
@@ -156,6 +273,13 @@ return {
 					require("dap").clear_breakpoints()
 				end,
 				desc = "Clear all breakpoints",
+			},
+			{
+				"<leader>dT",
+				function()
+					_G.debug_selected_test()
+				end,
+				desc = "Debug Selected Test",
 			},
 		},
 	},

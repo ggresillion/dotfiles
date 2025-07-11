@@ -88,3 +88,77 @@ vim.keymap.set("n", "<leader>zf", function()
 		end
 	end)
 end, { desc = "Fetch and process GCS file" })
+
+local html_entities = {
+  ["&quot;"] = '"',
+  ["&apos;"] = "'",
+  ["&amp;"] = "&",
+  ["&lt;"] = "<",
+  ["&gt;"] = ">",
+  ["&nbsp;"] = " ",
+  ["&iexcl;"] = "¡",
+  ["&cent;"] = "¢",
+  ["&pound;"] = "£",
+  ["&copy;"] = "©",
+  ["&reg;"] = "®",
+  -- Add more named entities here if needed
+}
+
+local function decode_numeric_entity(entity)
+  local num = entity:match("&#(%d+);")
+  if num then
+    return utf8.char(tonumber(num))
+  end
+  local hex = entity:match("&#x(%x+);")
+  if hex then
+    return utf8.char(tonumber(hex, 16))
+  end
+  return entity
+end
+
+local function unescape_html(str)
+  -- First replace named entities
+  str = (str:gsub("(&%a+;)", function(entity)
+    return html_entities[entity] or entity
+  end))
+  -- Then replace numeric entities (decimal and hex)
+  str = (str:gsub("&#%d+;", decode_numeric_entity))
+  str = (str:gsub("&#x%x+;", decode_numeric_entity))
+  return str
+end
+
+local function unescape_html_in_range(start_line, end_line)
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+  for i, line in ipairs(lines) do
+    lines[i] = unescape_html(line)
+  end
+  vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, lines)
+end
+
+vim.api.nvim_create_user_command("UnescapeHTML", function(opts)
+  local start_line, end_line
+
+  if opts.range and opts.range > 0 then
+    start_line = opts.line1
+    end_line = opts.line2
+  else
+    start_line = 1
+    end_line = vim.api.nvim_buf_line_count(0)
+  end
+
+  unescape_html_in_range(start_line, end_line)
+end, { range = true, desc = "Unescape HTML entities in buffer or selection" })
+
+vim.keymap.set({ "n", "v" }, "<leader>zu", function()
+  if vim.fn.mode():match("[vV]") then
+    local start_line = vim.fn.line("v")
+    local end_line = vim.fn.line(".")
+    if start_line > end_line then
+      start_line, end_line = end_line, start_line
+    end
+    unescape_html_in_range(start_line, end_line)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+  else
+    unescape_html_in_range(1, vim.api.nvim_buf_line_count(0))
+  end
+end, { desc = "Unescape HTML entities (buffer or selection)" })
