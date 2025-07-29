@@ -59,3 +59,8 @@ esac
 # pnpm end
 
 alias mongo-local="mongosh --username fx --password test --tls false --authenticationDatabase admin thetreep-api"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/guillaume/.lmstudio/bin"
+# End of LM Studio CLI section
+

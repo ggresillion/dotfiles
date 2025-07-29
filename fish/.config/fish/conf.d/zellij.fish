@@ -5,15 +5,15 @@ if status is-interactive
     end
 end
 
-# Function to rename Zellij tab to current directory
-function zellij_tab_name_update --on-variable PWD
-    if set -q ZELLIJ
-        set current_dir (basename $PWD)
-        if test $PWD = $HOME
-            set current_dir "~"
-        end
-        nohup zellij action rename-tab $current_dir >/dev/null 2>&1 &
-    end
-end
-
-zellij_tab_name_update
+# # Function to rename Zellij tab to current directory
+# function zellij_tab_name_update --on-variable PWD
+#     if set -q ZELLIJ
+#         set current_dir (basename $PWD)
+#         if test $PWD = $HOME
+#             set current_dir "~"
+#         end
+#         nohup zellij action rename-tab $current_dir >/dev/null 2>&1 &
+#     end
+# end
+#
+# zellij_tab_name_update
