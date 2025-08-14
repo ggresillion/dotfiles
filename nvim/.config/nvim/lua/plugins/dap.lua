@@ -41,69 +41,44 @@ return {
 				local tests = {}
 				local cwd = vim.fn.getcwd()
 
-				-- Find all Go test files
-				local test_files = vim.fn.systemlist("find " .. cwd .. " -name '*_test.go' -type f")
+				-- Find all Go test files, with paths relative to cwd
+				local command = "cd " .. vim.fn.escape(cwd, " ") .. " && find . -name '*_test.go' -type f"
+				local test_files = vim.fn.systemlist(command)
 
 				for _, file in ipairs(test_files) do
-					-- Read the file and extract test function names
-					local lines = vim.fn.readfile(file)
+					-- file is like './internal/integrationtests/api_test.go'
+					-- We need the absolute path to read the file
+					local abs_file_path = cwd .. "/" .. file:gsub("^./", "")
+					local lines = vim.fn.readfile(abs_file_path)
 					for _, line in ipairs(lines) do
+						local test_name, test_type
 						local test_match = line:match("^func%s+(Test%w+)")
 						local benchmark_match = line:match("^func%s+(Benchmark%w+)")
 						local example_match = line:match("^func%s+(Example%w*)")
 
 						if test_match then
-							local relative_path = file:gsub(cwd .. "/", "")
-							local package_path = vim.fn.fnamemodify(relative_path, ":h")
-							if package_path == "." then
-								package_path = ""
-							else
-								package_path = "./" .. package_path
-							end
-
-							table.insert(tests, {
-								name = test_match,
-								file = file,
-								package = package_path,
-								display = package_path .. " :: " .. test_match,
-								type = "test",
-							})
+							test_name = test_match
+							test_type = "test"
 						elseif benchmark_match then
-							local relative_path = file:gsub(cwd .. "/", "")
-							local package_path = vim.fn.fnamemodify(relative_path, ":h")
-							if package_path == "." then
-								package_path = ""
-							else
-								package_path = "./" .. package_path
-							end
-
-							table.insert(tests, {
-								name = benchmark_match,
-								file = file,
-								package = package_path,
-								display = package_path .. " :: " .. benchmark_match,
-								type = "benchmark",
-							})
+							test_name = benchmark_match
+							test_type = "benchmark"
 						elseif example_match then
-							local relative_path = file:gsub(cwd .. "/", "")
-							local package_path = vim.fn.fnamemodify(relative_path, ":h")
-							if package_path == "." then
-								package_path = ""
-							else
-								package_path = "./" .. package_path
-							end
+							test_name = example_match
+							test_type = "example"
+						end
 
+						if test_name then
+							local package_path = vim.fn.fnamemodify(file, ":h")
 							table.insert(tests, {
-								name = example_match,
-								file = file,
+								name = test_name,
+								file = abs_file_path,
 								package = package_path,
-								display = package_path .. " :: " .. example_match,
-								type = "example",
+								display = package_path .. " :: " .. test_name,
+								type = test_type,
 							})
 						end
 					end
 				end
-
 				return tests
 			end
 
@@ -138,7 +113,7 @@ return {
 							name = "Debug Selected Test",
 							request = "launch",
 							mode = "test",
-							program = selected_test.package == "" and "." or selected_test.package,
+							program = selected_test.package,
 							args = {
 								"-test.run",
 								"^" .. selected_test.name .. "$",
