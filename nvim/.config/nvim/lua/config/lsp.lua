@@ -7,5 +7,6 @@ vim.lsp.enable({
 	"golangci_lint_ls",
 	"nil_ls",
 	"terraformls",
+	"pylsp",
 })
 vim.diagnostic.config({ virtual_text = true })

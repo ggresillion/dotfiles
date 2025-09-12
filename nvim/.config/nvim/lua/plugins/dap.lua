@@ -1,133 +1,156 @@
+-- DAP Signs and UI configuration
+local function setup_dap_signs()
+	local signs = {
+		DapBreakpoint = { text = "", texthl = "DapBreakpoint" },
+		DapBreakpointCondition = { text = "ﳁ", texthl = "DapBreakpoint" },
+		DapBreakpointRejected = { text = "", texthl = "DapBreakpoint" },
+		DapLogPoint = { text = "", texthl = "DapLogPoint" },
+		DapStopped = { text = "", texthl = "DapStopped" },
+	}
+
+	for name, sign in pairs(signs) do
+		vim.fn.sign_define(name, {
+			text = sign.text,
+			texthl = sign.texthl,
+			linehl = name,
+			numhl = name,
+		})
+	end
+end
+
+-- Go test scanning and debugging
+local function scan_go_tests()
+	local tests = {}
+	local cwd = vim.fn.getcwd()
+	local command = "cd " .. vim.fn.escape(cwd, " ") .. " && find . -name '*_test.go' -type f"
+	local test_files = vim.fn.systemlist(command)
+
+	for _, file in ipairs(test_files) do
+		local abs_file_path = cwd .. "/" .. file:gsub("^./", "")
+		local lines = vim.fn.readfile(abs_file_path)
+
+		for _, line in ipairs(lines) do
+			local test_patterns = {
+				{ pattern = "^func%s+(Test%w+)", type = "test" },
+				{ pattern = "^func%s+(Benchmark%w+)", type = "benchmark" },
+				{ pattern = "^func%s+(Example%w*)", type = "example" },
+			}
+
+			for _, test_pattern in ipairs(test_patterns) do
+				local test_name = line:match(test_pattern.pattern)
+				if test_name then
+					local package_path = vim.fn.fnamemodify(file, ":h")
+					table.insert(tests, {
+						name = test_name,
+						file = abs_file_path,
+						package = package_path,
+						display = package_path .. " :: " .. test_name,
+						type = test_pattern.type,
+					})
+					break
+				end
+			end
+		end
+	end
+	return tests
+end
+
+local function debug_selected_test()
+	local tests = scan_go_tests()
+
+	if #tests == 0 then
+		vim.notify("No tests found in the project", vim.log.levels.WARN)
+		return
+	end
+
+	local display_options = vim.tbl_map(function(test)
+		return test.display
+	end, tests)
+
+	vim.ui.select(display_options, {
+		prompt = "Select test to debug:",
+	}, function(choice, idx)
+		if choice and idx then
+			local selected_test = tests[idx]
+			require("dap").run({
+				type = "go",
+				name = "Debug Selected Test",
+				request = "launch",
+				mode = "test",
+				program = selected_test.package,
+				args = { "-test.run", "^" .. selected_test.name .. "$" },
+			})
+		end
+	end)
+end
+
+-- DAP adapter configurations
+local function setup_js_adapters()
+	local dap = require("dap")
+
+	for _, adapter in pairs({ "pwa-node", "pwa-chrome" }) do
+		dap.adapters[adapter] = {
+			type = "server",
+			host = "::1",
+			port = "${port}",
+			executable = {
+				command = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug-adapter",
+				args = { "${port}" },
+			},
+		}
+	end
+end
+
+-- DAP language configurations
+local function setup_js_configurations()
+	local dap = require("dap")
+	local languages = { "typescript", "javascript", "javascriptreact", "typescriptreact" }
+
+	for _, language in ipairs(languages) do
+		dap.configurations[language] = {
+			{
+				type = "pwa-chrome",
+				name = "Launch Chrome to debug client",
+				request = "launch",
+				url = "http://localhost:3000",
+				sourceMaps = true,
+				protocol = "inspector",
+				port = 9222,
+				webRoot = "${workspaceFolder}",
+				skipFiles = {
+					"**/node_modules/**/*",
+					"**/@vite/*",
+				},
+			},
+		}
+	end
+end
+
 return {
 	{
 		"mfussenegger/nvim-dap",
 		init = function()
-			-- keybind to close the dap floating window
+			-- Auto-close DAP floating windows with 'q'
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = "dap-float",
 				callback = function()
 					vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close!<CR>", { noremap = true, silent = true })
 				end,
 			})
-			-- highlight signs
-			vim.fn.sign_define(
-				"DapBreakpoint",
-				{ text = "", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-			)
-			vim.fn.sign_define(
-				"DapBreakpointCondition",
-				{ text = "ﳁ", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-			)
-			vim.fn.sign_define(
-				"DapBreakpointRejected",
-				{ text = "", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-			)
-			vim.fn.sign_define(
-				"DapLogPoint",
-				{ text = "", texthl = "DapLogPoint", linehl = "DapLogPoint", numhl = "DapLogPoint" }
-			)
-			vim.fn.sign_define("DapStopped", {
-				text = "",
-				texthl = "DapStopped",
-				linehl = "DapStopped",
-				numhl = "DapStopped",
-			})
+
+			setup_dap_signs()
 		end,
+
 		config = function()
-			local dap = require("dap")
-
-			-- Function to scan for Go tests in the project
-			local function scan_go_tests()
-				local tests = {}
-				local cwd = vim.fn.getcwd()
-
-				-- Find all Go test files, with paths relative to cwd
-				local command = "cd " .. vim.fn.escape(cwd, " ") .. " && find . -name '*_test.go' -type f"
-				local test_files = vim.fn.systemlist(command)
-
-				for _, file in ipairs(test_files) do
-					-- file is like './internal/integrationtests/api_test.go'
-					-- We need the absolute path to read the file
-					local abs_file_path = cwd .. "/" .. file:gsub("^./", "")
-					local lines = vim.fn.readfile(abs_file_path)
-					for _, line in ipairs(lines) do
-						local test_name, test_type
-						local test_match = line:match("^func%s+(Test%w+)")
-						local benchmark_match = line:match("^func%s+(Benchmark%w+)")
-						local example_match = line:match("^func%s+(Example%w*)")
-
-						if test_match then
-							test_name = test_match
-							test_type = "test"
-						elseif benchmark_match then
-							test_name = benchmark_match
-							test_type = "benchmark"
-						elseif example_match then
-							test_name = example_match
-							test_type = "example"
-						end
-
-						if test_name then
-							local package_path = vim.fn.fnamemodify(file, ":h")
-							table.insert(tests, {
-								name = test_name,
-								file = abs_file_path,
-								package = package_path,
-								display = package_path .. " :: " .. test_name,
-								type = test_type,
-							})
-						end
-					end
-				end
-				return tests
-			end
-
-			-- Function to debug a selected test
-			local function debug_selected_test()
-				local tests = scan_go_tests()
-
-				if #tests == 0 then
-					vim.notify("No tests found in the project", vim.log.levels.WARN)
-					return
-				end
-
-				-- Create display options for vim.ui.select
-				local display_options = {}
-				for _, test in ipairs(tests) do
-					table.insert(display_options, test.display)
-				end
-
-				-- Let user select a test
-				vim.ui.select(display_options, {
-					prompt = "Select test to debug:",
-					format_item = function(item)
-						return item
-					end,
-				}, function(choice, idx)
-					if choice and idx then
-						local selected_test = tests[idx]
-
-						-- Start debugging with the selected test
-						dap.run({
-							type = "go",
-							name = "Debug Selected Test",
-							request = "launch",
-							mode = "test",
-							program = selected_test.package,
-							args = {
-								"-test.run",
-								"^" .. selected_test.name .. "$",
-							},
-						})
-					end
-				end)
-			end
-
-			-- Store the function globally so we can access it from the keymap
+			-- Store globally for keymap access
 			_G.debug_selected_test = debug_selected_test
+
+			-- Setup adapters and configurations
+			setup_js_adapters()
+			setup_js_configurations()
 		end,
+
 		dependencies = {
-			-- which key integration
 			{
 				"folke/which-key.nvim",
 				optional = true,
@@ -137,13 +160,21 @@ return {
 					},
 				},
 			},
-			-- language specific
 			{
 				"leoluz/nvim-dap-go",
 				opts = {},
 			},
 		},
+
 		keys = {
+			-- Breakpoint management
+			{
+				"<leader>db",
+				function()
+					require("dap").toggle_breakpoint()
+				end,
+				desc = "Toggle Breakpoint",
+			},
 			{
 				"<leader>dB",
 				function()
@@ -152,11 +183,20 @@ return {
 				desc = "Breakpoint Condition",
 			},
 			{
-				"<leader>db",
+				"<leader>dx",
 				function()
-					require("dap").toggle_breakpoint()
+					require("dap").clear_breakpoints()
 				end,
-				desc = "Toggle Breakpoint",
+				desc = "Clear all breakpoints",
+			},
+
+			-- Execution control
+			{
+				"<leader>dc",
+				function()
+					require("dap").continue()
+				end,
+				desc = "Continue",
 			},
 			{
 				"<leader>dl",
@@ -166,11 +206,11 @@ return {
 				desc = "Run Last",
 			},
 			{
-				"<leader>dc",
+				"<leader>dt",
 				function()
-					require("dap").continue()
+					require("dap").terminate()
 				end,
-				desc = "Continue",
+				desc = "Terminate",
 			},
 			{
 				"<leader>dC",
@@ -186,6 +226,8 @@ return {
 				end,
 				desc = "Go to line (no execute)",
 			},
+
+			-- Step control
 			{
 				"<leader>di",
 				function()
@@ -194,19 +236,21 @@ return {
 				desc = "Step Into",
 			},
 			{
-				"<leader>dO",
-				function()
-					require("dap").step_out()
-				end,
-				desc = "Step Out",
-			},
-			{
 				"<leader>do",
 				function()
 					require("dap").step_over()
 				end,
 				desc = "Step Over",
 			},
+			{
+				"<leader>dO",
+				function()
+					require("dap").step_out()
+				end,
+				desc = "Step Out",
+			},
+
+			-- Stack navigation
 			{
 				"<leader>du",
 				function()
@@ -221,6 +265,8 @@ return {
 				end,
 				desc = "Go down in the stack",
 			},
+
+			-- UI and inspection
 			{
 				"<leader>dr",
 				function()
@@ -233,22 +279,10 @@ return {
 				function()
 					require("dap.ui.widgets").hover()
 				end,
-				desc = "Display the value of the variable under the cursor",
+				desc = "Display variable value",
 			},
-			{
-				"<leader>dt",
-				function()
-					require("dap").terminate()
-				end,
-				desc = "Terminate",
-			},
-			{
-				"<leader>dx",
-				function()
-					require("dap").clear_breakpoints()
-				end,
-				desc = "Clear all breakpoints",
-			},
+
+			-- Go test debugging
 			{
 				"<leader>dT",
 				function()
