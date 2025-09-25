@@ -480,26 +480,8 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
-        bind "Alt g" {
-            MessagePlugin "autolock" {
-                payload "enable"
-            }
-            SwitchToMode "Locked"
-        }
         bind "Alt q" {
             Quit
-        }
-        bind "Ctrl f" {
-            ToggleFloatingPanes
-        }
-        bind "Ctrl n" {
-            NewPane
-        }
-        bind "Alt i" {
-            MoveTab "Left"
-        }
-        bind "Ctrl o" {
-            MoveTab "Right"
         }
         bind "Alt =" "Alt +" {
             Resize "Increase"
@@ -580,7 +562,7 @@ plugins {
 load_plugins {
     zjframes
 }
-theme "catppuccin-mocha"
+theme ""
 pane_frames false
 show_startup_tips false
 simplified_ui true
