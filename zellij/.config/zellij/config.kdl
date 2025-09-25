@@ -562,7 +562,7 @@ plugins {
 load_plugins {
     zjframes
 }
-theme "catppuccin-latte"
+theme "catppuccin-mocha"
 pane_frames false
 show_startup_tips false
 simplified_ui true
