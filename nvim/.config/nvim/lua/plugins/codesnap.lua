@@ -1,17 +1,17 @@
-return {
-	{
-		"mistricky/codesnap.nvim",
-		build = "make",
-		keys = {
-			{ "<leader>cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
-			{ "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures" },
-		},
-		opts = {
-			save_path = "~/Pictures",
-			has_breadcrumbs = true,
-			has_line_number = true,
-			bg_theme = "grape",
-			watermark = "",
-		},
-	},
-}
+vim.pack.add({
+	{ src = "https://github.com/mistricky/codesnap.nvim" },
+})
+
+vim.fn.system("make")
+
+require("codesnap").setup({
+	save_path = "~/Pictures",
+	has_breadcrumbs = true,
+	has_line_number = true,
+	bg_theme = "grape",
+	watermark = "",
+})
+
+local map = vim.keymap.set
+map("x", "<leader>cc", "<cmd>CodeSnap<cr>", { desc = "Save selected code snapshot into clipboard" })
+map("x", "<leader>cs", "<cmd>CodeSnapSave<cr>", { desc = "Save selected code snapshot in ~/Pictures" })

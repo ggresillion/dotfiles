@@ -1,5 +1,2 @@
-require("config.settings")
-require("config.lazy")
-require("config.lsp")
-require("config.commands")
-require("config.filetype")
+require("config")
+require("plugins")
