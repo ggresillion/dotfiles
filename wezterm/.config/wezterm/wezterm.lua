@@ -1,5 +1,20 @@
 local wezterm = require("wezterm")
 
+function get_appearance()
+  if wezterm.gui then
+    return wezterm.gui.get_appearance()
+  end
+  return 'Dark'
+end
+
+function scheme_for_appearance(appearance)
+  if appearance:find 'Dark' then
+    return 'Catppuccin Mocha'
+  else
+    return 'Catppuccin Latte'
+  end
+end
+
 local config = {
 	font = wezterm.font("JetBrains Mono"),
 	font_size = 14,
@@ -12,24 +27,9 @@ local config = {
 	enable_tab_bar = false,
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE|MACOS_USE_BACKGROUND_COLOR_AS_TITLEBAR_COLOR",
 	window_close_confirmation = "NeverPrompt",
+  color_scheme = scheme_for_appearance(get_appearance()),
 }
 
 local toggle_system_appearance = wezterm.config_dir .. "/toggle_system_appearance.sh"
-
-wezterm.on("window-config-reloaded", function(window, pane)
-	local appearance = window:get_appearance()
-	local is_dark = appearance:find("Dark")
-	if is_dark then
-		window:set_config_overrides({
-			color_scheme = "Catppuccin Mocha",
-		})
-		wezterm.run_child_process({ toggle_system_appearance, "dark" })
-	else
-		window:set_config_overrides({
-			color_scheme = "Catppuccin Latte",
-		})
-		wezterm.run_child_process({ toggle_system_appearance, "light" })
-	end
-end)
 
 return config
