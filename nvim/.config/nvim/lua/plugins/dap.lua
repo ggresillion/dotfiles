@@ -4,6 +4,8 @@ vim.pack.add({
 	{ src = "https://github.com/leoluz/nvim-dap-go" },
 })
 
+require("dap-go").setup()
+
 local function setup_dap_signs()
 	local signs = {
 		DapBreakpoint = { text = "", texthl = "DapBreakpoint" },
