@@ -1,25 +1,7 @@
 vim.pack.add({
-	{ src = "https://github.com/saghen/blink.cmp" },
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
 	{ src = "https://github.com/supermaven-inc/supermaven-nvim" },
 	{ src = "https://github.com/huijiro/blink-cmp-supermaven" },
-})
-
-vim.api.nvim_create_autocmd("PackChanged", {
-	callback = function(ev)
-		print("Building blink.nvim...")
-		local spec = ev.data.spec
-		local kind = ev.data.kind
-		local path = ev.data.path
-		if kind == "install" or kind == "update" then
-			local cmd = string.format("cd %s && cargo build --release", path)
-			local result = vim.fn.system(cmd)
-			if vim.v.shell_error == 0 then
-				print("Built blink.nvim successfully")
-			else
-				print("Failed to build blink.nvim:\n" .. result)
-			end
-		end
-	end,
 })
 
 package.preload["cmp"] = function()
