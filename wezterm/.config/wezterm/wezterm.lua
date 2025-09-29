@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 
 local config = {
 	font = wezterm.font("JetBrains Mono"),
-	font_size = 14,
+	font_size = 15,
 	window_padding = {
 		left = 0,
 		right = 0,
@@ -10,8 +10,10 @@ local config = {
 		bottom = 0,
 	},
 	enable_tab_bar = false,
-	window_decorations = "INTEGRATED_BUTTONS|RESIZE|MACOS_USE_BACKGROUND_COLOR_AS_TITLEBAR_COLOR",
+	window_decorations = "RESIZE",
 	window_close_confirmation = "NeverPrompt",
+	window_background_opacity = 0.8,
+	macos_window_background_blur = 20,
 }
 
 wezterm.on("window-config-reloaded", function(window, pane)
