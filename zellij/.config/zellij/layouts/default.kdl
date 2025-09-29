@@ -1,0 +1,56 @@
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left "{mode} {tabs}"
+                format_center ""
+                format_right "#[bg=0,fg=4]█#[bg=4,fg=8] #[bg=8,fg=4]#[bg=8,fg=4]█#[bg=8,fg=4] {session} #[bg=0,fg=7]"
+                format_space ""
+                format_hide_on_overlength "false"
+                format_precedence "crl"
+                border_enabled "false"
+                border_char "─"
+                border_format "#[fg=7]{char}"
+                border_position "top"
+
+                mode_normal "#[bg=2,fg=0] NORMAL#[bg=0,fg=2]█"
+                mode_locked "#[bg=7,fg=0] LOCKED #[bg=0,fg=7]█"
+                mode_resize "#[bg=1,fg=0] RESIZE#[bg=0,fg=1]█"
+                mode_pane "#[bg=4,fg=0] PANE#[bg=0,fg=4]█"
+                mode_tab "#[bg=4,fg=0] TAB#[bg=0,fg=4]█"
+                mode_scroll "#[bg=3,fg=0] SCROLL#[bg=0,fg=3]█"
+                mode_enter_search "#[bg=4,fg=0] ENT-SEARCH#[bg=0,fg=4]█"
+                mode_search "#[bg=4,fg=0] SEARCHARCH#[bg=0,fg=4]█"
+                mode_rename_tab "#[bg=4,fg=0] RENAME-TAB#[bg=0,fg=4]█"
+                mode_rename_pane "#[bg=4,fg=0] RENAME-PANE#[bg=0,fg=4]█"
+                mode_session "#[bg=6,fg=0] SESSION#[bg=0,fg=6]█"
+                mode_move "#[bg=5,fg=0] MOVE#[bg=0,fg=5]█"
+                mode_prompt "#[bg=4,fg=0] PROMPT#[bg=0,fg=4]█"
+                mode_tmux "#[bg=1,fg=0] TMUX#[bg=0,fg=1]█"
+
+                tab_normal "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{floating_indicator}#[bg=0,fg=8]█"
+                tab_normal_fullscreen "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{fullscreen_indicator}#[bg=0,fg=8]█"
+                tab_normal_sync "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{sync_indicator}#[bg=0,fg=8]█"
+
+                tab_active "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{floating_indicator}#[bg=0,fg=8]█"
+                tab_active_fullscreen "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{fullscreen_indicator}#[bg=0,fg=8]█"
+                tab_active_sync "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{sync_indicator}#[bg=0,fg=8]█"
+
+                tab_separator " "
+                tab_sync_indicator " "
+                tab_fullscreen_indicator " 󰊓"
+                tab_floating_indicator " 󰹙"
+
+                command_git_branch_command "git rev-parse --abbrev-ref HEAD"
+                command_git_branch_format "#[fg=4] {stdout} "
+                command_git_branch_interval "10"
+                command_git_branch_rendermode "static"
+
+                datetime "#[fg=7] {format} "
+                datetime_format "%A, %d %b %Y %H:%M"
+                datetime_timezone "Europe/Paris"
+            }
+        }
+        children
+    }
+}

@@ -14,21 +14,61 @@ local config = {
 	window_close_confirmation = "NeverPrompt",
 }
 
-local toggle_system_appearance = wezterm.config_dir .. "/toggle_system_appearance.sh"
-
 wezterm.on("window-config-reloaded", function(window, pane)
 	local appearance = window:get_appearance()
 	local is_dark = appearance:find("Dark")
 	if is_dark then
 		window:set_config_overrides({
 			color_scheme = "Catppuccin Mocha",
+			colors = {
+				ansi = {
+					"#1e1e2e",
+					"#f38ba8",
+					"#a6e3a1",
+					"#f9e2af",
+					"#89b4fa",
+					"#f5c2e7",
+					"#94e2d5",
+					"#bac2de",
+				},
+				brights = {
+					"#45475a",
+					"#f38ba8",
+					"#a6e3a1",
+					"#f9e2af",
+					"#89b4fa",
+					"#f5c2e7",
+					"#94e2d5",
+					"#a6adc8",
+				},
+			},
 		})
-		wezterm.run_child_process({ toggle_system_appearance, "dark" })
 	else
 		window:set_config_overrides({
 			color_scheme = "Catppuccin Latte",
+			colors = {
+				ansi = {
+					"#eff1f5",
+					"#d20f39",
+					"#40a02b",
+					"#df8e1d",
+					"#1e66f5",
+					"#ea76cb",
+					"#179299",
+					"#5c5f77",
+				},
+				brights = {
+					"#bcc0cc",
+					"#d20f39",
+					"#40a02b",
+					"#df8e1d",
+					"#1e66f5",
+					"#ea76cb",
+					"#179299",
+					"#6c6f85",
+				},
+			},
 		})
-		wezterm.run_child_process({ toggle_system_appearance, "light" })
 	end
 end)
 
