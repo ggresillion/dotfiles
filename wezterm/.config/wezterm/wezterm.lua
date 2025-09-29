@@ -16,6 +16,15 @@ local config = {
 	macos_window_background_blur = 20,
 }
 
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	config.enable_tab_bar = true
+	config.use_fancy_tab_bar = true
+	config.show_tabs_in_tab_bar = false
+	config.show_new_tab_button_in_tab_bar = false
+	config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+	config.default_domain = "WSL:archlinux"
+end
+
 wezterm.on("window-config-reloaded", function(window, pane)
 	local appearance = window:get_appearance()
 	local is_dark = appearance:find("Dark")
