@@ -1,5 +1,13 @@
 local wezterm = require("wezterm")
 
+local function scheme_for_appearance(appearance)
+	if appearance:find("Dark") then
+		return "Catppuccin Mocha"
+	else
+		return "Catppuccin Latte"
+	end
+end
+
 local config = {
 	font = wezterm.font("JetBrains Mono"),
 	font_size = 15,
@@ -14,18 +22,10 @@ local config = {
 	window_close_confirmation = "NeverPrompt",
 	window_background_opacity = 0.8,
 	macos_window_background_blur = 20,
+	default_domain = "WSL:archlinux",
 }
 
-if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	config.enable_tab_bar = true
-	config.use_fancy_tab_bar = true
-	config.show_tabs_in_tab_bar = false
-	config.show_new_tab_button_in_tab_bar = false
-	config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
-	config.default_domain = "WSL:archlinux"
-end
-
-wezterm.on("window-config-reloaded", function(window, pane)
+wezterm.on("window-config-reloaded", function(window)
 	local appearance = window:get_appearance()
 	local is_dark = appearance:find("Dark")
 	if is_dark then
@@ -82,5 +82,19 @@ wezterm.on("window-config-reloaded", function(window, pane)
 		})
 	end
 end)
+
+if wezterm.target_triple:find("darwin") then
+	config.window_decorations = "INTEGRATED_BUTTONS|RESIZE|MACOS_USE_BACKGROUND_COLOR_AS_TITLEBAR_COLOR"
+end
+
+if wezterm.running_under_wsl() then
+	config.color_scheme = "Catppuccin Mocha"
+else
+	local appearance = "Dark"
+	if wezterm.gui then
+		appearance = wezterm.gui.get_appearance()
+	end
+	config.color_scheme = scheme_for_appearance(appearance)
+end
 
 return config
