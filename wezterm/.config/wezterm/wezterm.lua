@@ -1,13 +1,5 @@
 local wezterm = require("wezterm")
 
-local function scheme_for_appearance(appearance)
-	if appearance:find("Dark") then
-		return "Catppuccin Mocha"
-	else
-		return "Catppuccin Latte"
-	end
-end
-
 local config = {
 	font = wezterm.font("JetBrains Mono"),
 	font_size = 15,
@@ -22,7 +14,6 @@ local config = {
 	window_close_confirmation = "NeverPrompt",
 	window_background_opacity = 0.8,
 	macos_window_background_blur = 20,
-	default_domain = "WSL:archlinux",
 }
 
 wezterm.on("window-config-reloaded", function(window)
@@ -89,12 +80,7 @@ end
 
 if wezterm.running_under_wsl() then
 	config.color_scheme = "Catppuccin Mocha"
-else
-	local appearance = "Dark"
-	if wezterm.gui then
-		appearance = wezterm.gui.get_appearance()
-	end
-	config.color_scheme = scheme_for_appearance(appearance)
+	config.defaut_domain = "WSL:archlinux"
 end
 
 return config
