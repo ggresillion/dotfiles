@@ -10,7 +10,6 @@ local config = {
 		bottom = 0,
 	},
 	enable_tab_bar = false,
-	window_decorations = "RESIZE",
 	window_close_confirmation = "NeverPrompt",
 	window_background_opacity = 0.8,
 	macos_window_background_blur = 20,
@@ -78,9 +77,8 @@ if wezterm.target_triple:find("darwin") then
 	config.window_decorations = "INTEGRATED_BUTTONS|RESIZE|MACOS_USE_BACKGROUND_COLOR_AS_TITLEBAR_COLOR"
 end
 
-if wezterm.running_under_wsl() then
-	config.color_scheme = "Catppuccin Mocha"
-	config.defaut_domain = "WSL:archlinux"
+if wezterm.target_triple:find("windows") then
+	config.default_domain = "WSL:archlinux"
 end
 
 return config
