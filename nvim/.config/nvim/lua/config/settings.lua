@@ -1,7 +1,3 @@
--- leader map
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
 -- use system clipboard
 vim.api.nvim_set_option("clipboard", "unnamedplus")
 if vim.fn.has("wsl") == 1 then
@@ -19,7 +15,7 @@ if vim.fn.has("wsl") == 1 then
 	}
 end
 
--- Indent
+-- indent
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
@@ -27,7 +23,7 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
--- Folding
+-- folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
@@ -46,12 +42,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Line numbers
+-- line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
-
--- Keymaps
-vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "LSP: Rename Symbol" })
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code Action" })
-vim.keymap.set("i", "<C-Space>", "v:lua.vim.lsp.omnifunc", { expr = true, silent = true })
-vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostics" })

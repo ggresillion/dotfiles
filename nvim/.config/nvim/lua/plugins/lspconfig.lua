@@ -14,6 +14,7 @@ local lsps = {
 	"nil_ls",
 	"terraformls",
 	"pylsp",
+	"rust_analyzer",
 }
 
 require("mason").setup()
