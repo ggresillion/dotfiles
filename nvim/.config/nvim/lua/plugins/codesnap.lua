@@ -2,8 +2,6 @@ vim.pack.add({
 	{ src = "https://github.com/mistricky/codesnap.nvim" },
 })
 
-vim.fn.system("make")
-
 require("codesnap").setup({
 	save_path = "~/Pictures",
 	has_breadcrumbs = true,

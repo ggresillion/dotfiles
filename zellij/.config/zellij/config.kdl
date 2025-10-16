@@ -370,9 +370,13 @@ keybinds clear-defaults=true {
             Detach
         }
         bind "w" {
-            LaunchOrFocusPlugin "session-manager" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zsm.wasm" {
                 floating true
                 move_to_focused_tab true
+                default_layout "custom"
+                session_separator "_"
+                show_resurrectable_sessions true
+                base_paths "/Users/guillaume/Projects|/home/guillaume"
             }
             SwitchToMode "Normal"
         }
@@ -538,31 +542,27 @@ keybinds clear-defaults=true {
     }
 }
 plugins {
-    tab-bar location="zellij:tab-bar"
-    status-bar location="zellij:status-bar"
-    strider location="zellij:strider"
-    compact-bar location="zellij:compact-bar"
-    session-manager location="zellij:session-manager"
-    welcome-screen location="zellij:session-manager" {
-        welcome_screen true
-    }
-    filepicker location="zellij:strider" {
-        cwd "/"
-    }
-    configuration location="zellij:configuration"
-    plugin-manager location="zellij:plugin-manager"
-    about location="zellij:about"
     zjframes location="file:~/.config/zellij/plugins/zjframes.wasm" {
         hide_frame_for_single_pane "true"
         hide_frame_except_for_search "true"
         hide_frame_except_for_scroll "true"
         hide_frame_except_for_fullscreen "true"
     }
+    zjstatus-hints location="file:~/.config/zellij/plugins/zjstatus-hints.wasm" {
+      max_length 0
+      overflow_str "..."
+      pipe_name "zjstatus_hints"
+      hide_in_base_mode false
+  }
 }
 load_plugins {
     zjframes
+    zjstatus-hints
 }
 theme "ansi"
 pane_frames false
 show_startup_tips false
 simplified_ui true
+pane_viewport_serialization true
+scrollback_lines_to_serialize 1000
+serialization_interval 60
