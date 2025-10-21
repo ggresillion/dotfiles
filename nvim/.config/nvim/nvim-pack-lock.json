@@ -1,0 +1,45 @@
+{
+  "plugins": {
+    "FixCursorHold.nvim": [],
+    "auto-dark-mode.nvim": [],
+    "better-escape.nvim": [],
+    "blink-cmp-supermaven": [],
+    "blink.cmp": {
+      "version": "1.0.0 - 2.0.0"
+    },
+    "codesnap.nvim": [],
+    "conform.nvim": [],
+    "diffview.nvim": [],
+    "flash.nvim": [],
+    "gitsigns.nvim": [],
+    "kulala.nvim": [],
+    "lualine.nvim": [],
+    "marks.nvim": [],
+    "mason-lspconfig.nvim": [],
+    "mason.nvim": [],
+    "mini.icons": [],
+    "neotest": [],
+    "neotest-golang": {
+      "version": ">=0.0.0"
+    },
+    "noice.nvim": [],
+    "nui.nvim": [],
+    "nvim": [],
+    "nvim-dap": [],
+    "nvim-dap-go": [],
+    "nvim-lspconfig": [],
+    "nvim-nio": [],
+    "nvim-notify": [],
+    "nvim-treesitter": {
+      "version": "'main'"
+    },
+    "nvim-web-devicons": [],
+    "oil.nvim": [],
+    "plenary.nvim": [],
+    "snacks.nvim": [],
+    "supermaven-nvim": [],
+    "trouble.nvim": [],
+    "which-key.nvim": [],
+    "zellij-nav.nvim": []
+  }
+}

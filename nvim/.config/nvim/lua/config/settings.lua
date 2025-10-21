@@ -36,7 +36,12 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
 	callback = function()
 		local ft = vim.bo.filetype
-		if require("nvim-treesitter.parsers").has_parser(ft) then
+		local ok, ts_configs = pcall(require, "nvim-treesitter.configs")
+		if not ok or type(ts_configs.is_supported) ~= "function" then
+			return
+		end
+		local ok2, supported = pcall(ts_configs.is_supported, ft)
+		if ok2 and supported then
 			vim.cmd("normal! zx")
 		end
 	end,

@@ -549,7 +549,7 @@ plugins {
         hide_frame_except_for_fullscreen "true"
     }
     zjstatus-hints location="file:~/.config/zellij/plugins/zjstatus-hints.wasm" {
-      max_length 0
+      max_length 120
       overflow_str "..."
       pipe_name "zjstatus_hints"
       hide_in_base_mode false

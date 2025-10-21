@@ -3,11 +3,11 @@ layout {
         pane size=1 borderless=true {
             plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
                 format_left "{mode} {tabs}"
-                format_center ""
-                format_right "{pipe_zjstatus_hints}#[bg=0,fg=4]█#[bg=4,fg=8] #[bg=8,fg=4]#[bg=8,fg=4]█#[bg=8,fg=4] {session} #[bg=0,fg=7]"
+                format_center "{pipe_zjstatus_hints}"
+                format_right "#[bg=0,fg=4]█#[bg=4,fg=8] #[bg=8,fg=4]#[bg=8,fg=4]█#[bg=8,fg=4] {session} #[bg=0,fg=7]"
                 format_space ""
-                format_hide_on_overlength "false"
-                format_precedence "crl"
+                format_hide_on_overlength "true"
+                format_precedence "lrc"
                 border_enabled "false"
                 border_char "─"
                 border_format "#[fg=7]{char}"
