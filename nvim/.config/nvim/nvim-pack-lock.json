@@ -36,7 +36,13 @@
     "nvim-web-devicons": [],
     "oil.nvim": [],
     "plenary.nvim": [],
-    "snacks.nvim": [],
+    "sidekick.nvim": {
+      "rev": "2cb7359",
+      "src": "https://github.com/folke/sidekick.nvim"
+    },
+    "snacks.nvim": {
+      "rev": "0760abd"
+    },
     "supermaven-nvim": [],
     "trouble.nvim": [],
     "which-key.nvim": [],

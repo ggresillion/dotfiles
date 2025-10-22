@@ -15,6 +15,7 @@ local lsps = {
 	"terraformls",
 	"pylsp",
 	"rust_analyzer",
+	"copilot",
 }
 
 require("mason").setup()
