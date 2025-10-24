@@ -24,6 +24,12 @@ use std/util "path add"
 $env.XDG_CONFIG_HOME = $env.HOME | path join ".config/"
 $env.config.buffer_editor = 'nvim'
 $env.config.show_banner = false
+$env.config.edit_mode = 'vi'
+$env.config.cursor_shape = {
+    vi_insert: underscore
+    vi_normal: block
+    emacs: line
+}
 
 path add "~/.local/bin"
 path add "~/go/bin"
@@ -137,6 +143,8 @@ $env.config = {
     ]
 }
 
-# Prompt
+# Plugins
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
+
