@@ -7,44 +7,66 @@
     "blink.cmp": {
       "version": "1.0.0 - 2.0.0"
     },
-    "codesnap.nvim": [],
-    "conform.nvim": [],
+    "codesnap.nvim": {
+      "rev": "927d4a4"
+    },
+    "conform.nvim": {
+      "rev": "9fd3d5e"
+    },
     "diffview.nvim": [],
     "flash.nvim": [],
     "gitsigns.nvim": [],
-    "kulala.nvim": [],
+    "kulala.nvim": {
+      "rev": "f6bc2c7",
+      "version": "'develop'"
+    },
     "lualine.nvim": [],
     "marks.nvim": [],
-    "mason-lspconfig.nvim": [],
+    "mason-lspconfig.nvim": {
+      "rev": "1d77bd8"
+    },
     "mason.nvim": [],
     "mini.icons": [],
-    "neotest": [],
+    "neotest": {
+      "rev": "2089f83"
+    },
     "neotest-golang": {
       "version": ">=0.0.0"
     },
-    "noice.nvim": [],
+    "noice.nvim": {
+      "rev": "d14d02c"
+    },
     "nui.nvim": [],
-    "nvim": [],
+    "nvim": {
+      "rev": "8c4125e"
+    },
     "nvim-dap": [],
     "nvim-dap-go": [],
-    "nvim-lspconfig": [],
+    "nvim-lspconfig": {
+      "rev": "a9b2fb5"
+    },
     "nvim-nio": [],
     "nvim-notify": [],
     "nvim-treesitter": {
+      "rev": "738d9ced",
       "version": "'main'"
     },
-    "nvim-web-devicons": [],
+    "nvim-web-devicons": {
+      "rev": "8dcb311"
+    },
     "oil.nvim": [],
     "plenary.nvim": [],
     "sidekick.nvim": {
-      "rev": "2cb7359",
+      "rev": "bd1f79a",
       "src": "https://github.com/folke/sidekick.nvim"
     },
     "snacks.nvim": {
-      "rev": "0760abd"
+      "rev": "ecde81f"
     },
     "supermaven-nvim": [],
-    "trouble.nvim": [],
+    "trouble.nvim": {
+      "rev": "76030c5"
+    },
     "which-key.nvim": [],
     "zellij-nav.nvim": []
   }

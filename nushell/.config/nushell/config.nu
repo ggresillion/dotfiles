@@ -22,9 +22,10 @@ use std/util "path add"
 
 # Config
 $env.XDG_CONFIG_HOME = $env.HOME | path join ".config/"
-$env.config.buffer_editor = 'nvim'
+$env.config.buffer_editor = "nvim"
+$env.EDITOR = "nvim"
 $env.config.show_banner = false
-$env.config.edit_mode = 'vi'
+$env.config.edit_mode = "vi"
 $env.config.cursor_shape = {
     vi_insert: underscore
     vi_normal: block
@@ -144,6 +145,22 @@ $env.config = {
             }
         }
     ]
+}
+
+# Direnv
+$env.config = {
+  hooks: {
+    pre_prompt: [{ ||
+      if (which direnv | is-empty) {
+        return
+      }
+
+      direnv export json | from json | default {} | load-env
+      if 'ENV_CONVERSIONS' in $env and 'PATH' in $env.ENV_CONVERSIONS {
+        $env.PATH = do $env.ENV_CONVERSIONS.PATH.from_string $env.PATH
+      }
+    }]
+  }
 }
 
 # Plugins
