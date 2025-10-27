@@ -8,7 +8,6 @@ $env.config.keybindings ++= [
             {
                 send: ExecuteHostCommand
                 cmd: "do {
-                    $env.SHELL = /usr/bin/bash
                     commandline edit --insert (
                       history
                       | get command
