@@ -1,9 +1,9 @@
-let keybindings = [
+$env.config.keybindings ++= [
     {
         name: fuzzy_history
-        modifier: control
-        keycode: char_r
-        mode: [emacs, vi_normal, vi_insert]
+        modifier: none
+        keycode: char_/
+        mode: [vi_normal]
         event: [
             {
                 send: ExecuteHostCommand
@@ -20,7 +20,6 @@ let keybindings = [
                           --layout=reverse
                           --height=40%
                           --bind 'ctrl-/:change-preview-window(right,70%|right)'
-                          --preview='echo -n {} | nu --stdin -c \'nu-highlight\''
                       | decode utf-8
                       | str trim
                     )
@@ -30,4 +29,3 @@ let keybindings = [
     }
 ]
 
-register-keybindings $keybindings

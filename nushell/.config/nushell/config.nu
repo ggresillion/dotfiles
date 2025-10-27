@@ -37,6 +37,8 @@ path add "~/.local/bin"
 path add "~/go/bin"
 path add "/opt/homebrew/bin"
 path add "~/.orbstack/bin"
+path add "~/scripts"
+path add "~/.cargo/bin"
 
 # Completers
 let fish_completer = {|spans|
