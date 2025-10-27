@@ -11,7 +11,6 @@ local lsps = {
 	"tailwindcss",
 	"jsonls",
 	"golangci_lint_ls",
-	"nil_ls",
 	"terraformls",
 	"pylsp",
 	"rust_analyzer",

@@ -56,10 +56,6 @@
     },
     "oil.nvim": [],
     "plenary.nvim": [],
-    "sidekick.nvim": {
-      "rev": "bd1f79a",
-      "src": "https://github.com/folke/sidekick.nvim"
-    },
     "snacks.nvim": {
       "rev": "ecde81f"
     },
