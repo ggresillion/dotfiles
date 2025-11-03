@@ -19,6 +19,7 @@
 
 # Imports
 use std/util "path add"
+use ($nu.config-path | path dirname | path join 'zellij.nu') *
 
 # Config
 $env.XDG_CONFIG_HOME = $env.HOME | path join ".config/"
@@ -149,18 +150,24 @@ $env.config = {
     ]
 }
 
-# Direnv
 $env.config = {
   hooks: {
-    pre_prompt: [{ ||
-      if (which direnv | is-empty) {
-        return
+    pre_prompt: [
+      { ||
+        if (which direnv | is-empty) {
+          return
+        }
+        direnv export json | from json | default {} | load-env
+        if 'ENV_CONVERSIONS' in $env and 'PATH' in $env.ENV_CONVERSIONS {
+          $env.PATH = do $env.ENV_CONVERSIONS.PATH.from_string $env.PATH
+        }
       }
-
-      direnv export json | from json | default {} | load-env
-      if 'ENV_CONVERSIONS' in $env and 'PATH' in $env.ENV_CONVERSIONS {
-        $env.PATH = do $env.ENV_CONVERSIONS.PATH.from_string $env.PATH
+      {
+        zellij_update_tabname_prompt
       }
+    ]
+    pre_execution: [{
+        zellij_update_tabname_execution
     }]
   }
 }
