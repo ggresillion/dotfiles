@@ -5,7 +5,9 @@ vim.pack.add({
 })
 
 require("notify").setup({
-	background_colour = "#000000",
+	fps = 120,
+	render = "compact",
+	stages = "slide",
 })
 
 require("noice").setup({

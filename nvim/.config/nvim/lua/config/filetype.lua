@@ -1,6 +1,6 @@
 vim.filetype.add({
 	pattern = {
-		[".*"] = function(path, bufnr)
+		[".*"] = function(_, bufnr)
 			if vim.bo[bufnr].filetype ~= "" then
 				return
 			end
