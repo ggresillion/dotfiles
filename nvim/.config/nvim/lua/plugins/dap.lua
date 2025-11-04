@@ -83,17 +83,10 @@ end
 
 local function setup_js_adapters()
 	local dap = require("dap")
-	for _, adapter in pairs({ "pwa-node", "pwa-chrome" }) do
-		dap.adapters[adapter] = {
-			type = "server",
-			host = "::1",
-			port = "${port}",
-			executable = {
-				command = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug-adapter",
-				args = { "${port}" },
-			},
-		}
-	end
+	dap.adapters.firefox = {
+		type = "executable",
+		command = vim.fn.stdpath("data") .. "/mason/bin/firefox-debug-adapter",
+	}
 end
 
 local function setup_js_configurations()
@@ -102,15 +95,11 @@ local function setup_js_configurations()
 	for _, language in ipairs(languages) do
 		dap.configurations[language] = {
 			{
-				type = "pwa-chrome",
-				name = "Launch Chrome to debug client",
-				request = "launch",
-				url = "http://localhost:3000",
-				sourceMaps = true,
-				protocol = "inspector",
-				port = 9222,
+				name = "Attach to Zen",
+				type = "firefox",
+				request = "attach",
 				webRoot = "${workspaceFolder}",
-				skipFiles = { "**/node_modules/**/*", "**/@vite/*" },
+				url = "http://127.0.0.1:3000",
 			},
 		}
 	end
