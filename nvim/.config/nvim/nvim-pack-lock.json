@@ -11,7 +11,7 @@
       "rev": "927d4a4"
     },
     "conform.nvim": {
-      "rev": "26c02e1"
+      "rev": "cde4da5"
     },
     "diffview.nvim": [],
     "flash.nvim": {
@@ -19,7 +19,7 @@
     },
     "gitsigns.nvim": [],
     "kulala.nvim": {
-      "rev": "8f67064",
+      "rev": "4b0f95e",
       "version": "'develop'"
     },
     "lualine.nvim": [],
@@ -49,13 +49,21 @@
       "rev": "e97dc47"
     },
     "nvim-dap-go": [],
+    "nvim-dap-virtual-text": {
+      "rev": "fbdb48c",
+      "src": "https://github.com/theHamsta/nvim-dap-virtual-text"
+    },
+    "nvim-dap-vscode-js": {
+      "rev": "03bd296",
+      "src": "https://github.com/mxsdev/nvim-dap-vscode-js"
+    },
     "nvim-lspconfig": {
       "rev": "2010fc6"
     },
     "nvim-nio": [],
     "nvim-notify": [],
     "nvim-treesitter": {
-      "rev": "65a266bf",
+      "rev": "896e92a7",
       "version": "'main'"
     },
     "nvim-web-devicons": {
@@ -67,7 +75,7 @@
       "rev": "c2bdf8c"
     },
     "snacks.nvim": {
-      "rev": "41712e3"
+      "rev": "1848d74"
     },
     "supermaven-nvim": [],
     "trouble.nvim": {

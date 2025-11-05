@@ -3,6 +3,8 @@ vim.opt.cursorline = true -- Highlight current line
 vim.opt.wrap = false -- Don't wrap lines
 vim.opt.scrolloff = 10 -- Keep 10 lines above/below cursor
 vim.opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
+vim.opt.exrc = true -- Enable project config
+vim.opt.secure = false -- Disable security for project config
 
 -- visuals
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
