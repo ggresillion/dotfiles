@@ -6,11 +6,16 @@ vim.opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
 vim.opt.exrc = true -- Enable project config
 vim.opt.secure = false -- Disable security for project config
 
--- visuals
+-- colors
+vim.opt.termguicolors = true -- Enable 24-bit colors
+vim.cmd("colorscheme ansi") -- Set the color scheme
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
-vim.opt.termguicolors = true -- Enable 24-bit colors
+
+-- visuals
 vim.opt.signcolumn = "yes" -- Always show sign column
 vim.opt.colorcolumn = "120" -- Show column at 120 characters
 vim.opt.showmatch = true -- Highlight matching brackets

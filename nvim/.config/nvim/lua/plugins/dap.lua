@@ -11,16 +11,14 @@ require("dap-go").setup()
 
 local dap = require("dap")
 
-dap.adapters = {
-	["pwa-chrome"] = {
-		type = "server",
-		host = "::1",
-		port = "${port}",
-		executable = {
-			command = "js-debug-adapter",
-			args = {
-				"${port}",
-			},
+dap.adapters["pwa-chrome"] = {
+	type = "server",
+	host = "::1",
+	port = "${port}",
+	executable = {
+		command = "js-debug-adapter",
+		args = {
+			"${port}",
 		},
 	},
 }
@@ -34,11 +32,11 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.fn.sign_define(
 	"DapBreakpoint",
-	{ text = "", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+	{ text = "●", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
 )
 vim.fn.sign_define(
 	"DapBreakpointCondition",
-	{ text = "ﳁ", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+	{ text = "⦿", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
 )
 vim.fn.sign_define(
 	"DapBreakpointRejected",
