@@ -6,30 +6,9 @@ vim.opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
 vim.opt.exrc = true -- Enable project config
 vim.opt.secure = false -- Disable security for project config
 
--- colors
-vim.opt.termguicolors = true -- Enable 24-bit colors
-vim.cmd("colorscheme ansi") -- Set the color scheme
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
-
 -- visuals
-vim.opt.signcolumn = "yes" -- Always show sign column
-vim.opt.colorcolumn = "120" -- Show column at 120 characters
-vim.opt.showmatch = true -- Highlight matching brackets
-vim.opt.matchtime = 2 -- How long to show matching bracket
-vim.opt.cmdheight = 1 -- Command line height
-vim.opt.completeopt = "menuone,noinsert,noselect" -- Completion options
-vim.opt.showmode = false -- Don't show mode in command line
-vim.opt.pumheight = 10 -- Popup menu height
-vim.opt.pumblend = 10 -- Popup menu transparency
-vim.opt.winblend = 0 -- Floating window transparency
-vim.opt.conceallevel = 0 -- Don't hide markup
-vim.opt.concealcursor = "" -- Don't hide cursor line markup
-vim.opt.lazyredraw = false -- Redraw during macros
-vim.opt.synmaxcol = 300 -- Syntax highlighting limit
+vim.opt.termguicolors = true -- Enable 24-bit colors
+vim.opt.winborder = "rounded"
 
 -- indent
 vim.opt.tabstop = 2 -- Tab width
