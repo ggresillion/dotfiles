@@ -5,8 +5,6 @@ vim.pack.add({
 	{ src = "https://github.com/theHamsta/nvim-dap-virtual-text" },
 })
 
-require("nvim-dap-virtual-text").setup({})
-
 require("dap-go").setup()
 
 local dap = require("dap")
@@ -97,6 +95,3 @@ map("n", "<leader>dv", function()
 		require("dap.ui.widgets").preview()
 	end, { desc = "Preview variable value" })
 end, { desc = "Display variable value" })
-map("n", "<leader>dT", function()
-	_G.debug_selected_test()
-end, { desc = "Debug Selected Test" })

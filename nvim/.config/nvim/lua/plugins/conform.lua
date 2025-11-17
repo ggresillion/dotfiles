@@ -1,24 +1,19 @@
+local languages = require("config.languages")
+
 vim.pack.add({
 	{ src = "https://github.com/stevearc/conform.nvim" },
 })
 
+local formatters_by_ft = {}
+
+for ft, lang in pairs(languages) do
+	if lang.formatter then
+		formatters_by_ft[ft] = lang.formatter
+	end
+end
+
 require("conform").setup({
-	formatters_by_ft = {
-		html = { "prettier" },
-		javascript = { "prettier" },
-		javascriptreact = { "prettier" },
-		typescript = { "prettier" },
-		typescriptreact = { "prettier" },
-		css = { "prettier" },
-		scss = { "prettier" },
-		go = { "gofumpt", "goimports" },
-		json = { "jq" },
-		lua = { "stylua" },
-		markdown = { "prettier" },
-		sql = { "sqlfluff" },
-		nix = { "nixfmt" },
-		xml = { "xmllint" },
-	},
+	formatters_by_ft = formatters_by_ft,
 	notify_on_error = false,
 	format_on_save = function(bufnr)
 		if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
