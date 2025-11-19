@@ -64,4 +64,9 @@ return {
 		},
 		parser = "kulala_http",
 	},
+	templ = {
+		lsp = "templ",
+		parser = "templ",
+		formatter = { "templfmt" },
+	},
 }
