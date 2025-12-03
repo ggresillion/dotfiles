@@ -13,6 +13,7 @@ end
 
 require("nvim-treesitter").setup({})
 require("nvim-treesitter").install(parsers)
+require("nvim-treesitter").install("vim")
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
