@@ -98,6 +98,7 @@ neotest.setup({
 		require("neotest-golang")({
 			runner = "gotestsum",
 			env = get_current_env,
+			warn_test_name_dupes = false,
 		}),
 	},
 })

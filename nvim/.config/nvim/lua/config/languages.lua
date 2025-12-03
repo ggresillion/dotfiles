@@ -69,4 +69,9 @@ return {
 		parser = "templ",
 		formatter = { "templfmt" },
 	},
+	yaml = {
+		lsp = "yamlls",
+		parser = "yaml",
+		formatter = { "prettier" },
+	},
 }
