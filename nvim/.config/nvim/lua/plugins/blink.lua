@@ -4,6 +4,7 @@ vim.pack.add({
 	{ src = "https://github.com/huijiro/blink-cmp-supermaven" },
 })
 
+-- fix supermaven-nvim complaining about missing cmp
 package.preload["cmp"] = function()
 	return {
 		register_source = function() end,

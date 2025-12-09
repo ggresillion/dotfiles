@@ -146,3 +146,8 @@ end, { desc = "LSP Symbols" })
 map("n", "<leader>sS", function()
 	Snacks.picker.lsp_workspace_symbols()
 end, { desc = "LSP Workspace Symbols" })
+
+-- git
+map("n", "<leader>gB", function()
+	Snacks.gitbrowse()
+end, { desc = "Git Browse" })
