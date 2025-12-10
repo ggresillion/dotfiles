@@ -107,6 +107,10 @@
       "rev": "b442115",
       "src": "https://github.com/leoluz/nvim-dap-go"
     },
+    "nvim-dap-ui": {
+      "rev": "cf91d5e2d07c72903d052f5207511bf7ecdb7122",
+      "src": "https://github.com/rcarriga/nvim-dap-ui"
+    },
     "nvim-dap-virtual-text": {
       "rev": "fbdb48c",
       "src": "https://github.com/theHamsta/nvim-dap-virtual-text"
