@@ -14,6 +14,7 @@ local config = {
 	window_background_opacity = 0.8,
 	macos_window_background_blur = 40,
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE",
+	max_fps = 120,
 }
 
 local catppuccin_mocha = {
