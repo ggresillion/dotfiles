@@ -89,6 +89,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
 	{ src = "https://github.com/fredrikaverpil/neotest-golang", version = vim.version.range("*") },
+	{ src = "https://github.com/thenbe/neotest-playwright" },
 })
 
 local neotest = require("neotest")
@@ -99,6 +100,9 @@ neotest.setup({
 			runner = "gotestsum",
 			env = get_current_env,
 			warn_test_name_dupes = false,
+		}),
+		require("neotest-playwright").adapter({
+			options = {},
 		}),
 	},
 })

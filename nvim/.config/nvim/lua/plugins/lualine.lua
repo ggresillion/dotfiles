@@ -9,17 +9,15 @@ require("lualine").setup({
 		globalstatus = true,
 	},
 	sections = {
-		lualine_a = {
-			{
-				"mode",
-				fmt = string.lower,
-			},
-		},
+		lualine_a = { "mode" },
+		lualine_b = { "branch", "diff", "diagnostics" },
 		lualine_c = {
 			{
 				"filename",
 				path = 1,
 			},
+		},
+		lualine_d = {
 			{
 				function()
 					return require("dap").status()
@@ -34,12 +32,8 @@ require("lualine").setup({
 				end,
 			},
 		},
-		lualine_z = {
-			{
-				"location",
-				icon = "",
-			},
-		},
+		lualine_x = { "filetype" },
+		lualine_y = { "progress" },
+		lualine_z = { "location" },
 	},
-	extensions = { "nvim-tree" },
 })

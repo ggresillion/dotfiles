@@ -21,7 +21,7 @@ local catppuccin_mocha = {
 	color_scheme = "Catppuccin Mocha",
 	colors = {
 		ansi = {
-			"#1e1e2e",
+			"none",
 			"#f38ba8",
 			"#a6e3a1",
 			"#f9e2af",
@@ -47,7 +47,7 @@ local catppuccin_latte = {
 	color_scheme = "Catppuccin Latte",
 	colors = {
 		ansi = {
-			"#eff1f5",
+			"none",
 			"#d20f39",
 			"#40a02b",
 			"#df8e1d",

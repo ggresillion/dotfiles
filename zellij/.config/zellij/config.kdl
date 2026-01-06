@@ -549,19 +549,17 @@ plugins {
         hide_frame_except_for_scroll "true"
         hide_frame_except_for_fullscreen "true"
     }
-    zjstatus-hints location="file:~/.config/zellij/plugins/zjstatus-hints.wasm" {
-        max_length 0
-        overflow_str "..."
-        pipe_name "zjstatus_hints"
-        hide_in_base_mode true
+    compact-bar location="zellij:compact-bar" {
+        tooltip "\\"
     }
 }
 
 load_plugins {
     zjframes
-    zjstatus-hints
+    compact-bar
 }
 
+default_layout "custom"
 theme "ansi"
 pane_frames false
 show_startup_tips false
