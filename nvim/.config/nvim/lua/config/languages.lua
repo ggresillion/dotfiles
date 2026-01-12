@@ -62,7 +62,7 @@ return {
 			name = "kulala",
 			external = true,
 		},
-		parser = "kulala_http",
+		-- parser = "kulala_http",
 	},
 	templ = {
 		lsp = "templ",
