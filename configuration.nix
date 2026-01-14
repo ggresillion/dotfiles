@@ -38,17 +38,28 @@
 
   # Niri
   programs.niri.enable = true;
-  services.displayManager.dms-greeter = {
-    enable = true;
-    compositor.name = "niri";
-  };
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   # DMS
-  programs.dms-shell.enable = true;
+  programs.dms-shell = {
+    enable = true;
+    niri = {
+      enableKeybinds = true;
+      enableSpawn = true;
+    };
+  };
+  services.displayManager.dms-greeter = {
+    enable = true;
+    compositor.name = "niri";
+    configHome = "/home/guillaume";
+    logs = {
+      save = true; 
+      path = "/tmp/dms-greeter.log";
+    };
+  };
 
   # Steam
   programs.steam.enable = true;
