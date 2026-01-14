@@ -47,10 +47,10 @@
   programs.dms-shell = {
     enable = true;
 
-    # systemd = {
-    #   enable = true;             # Systemd service for auto-start
-    #   restartIfChanged = true;   # Auto-restart dms.service when dms-shell changes
-    # };
+    systemd = {
+      enable = true;             # Systemd service for auto-start
+      restartIfChanged = true;   # Auto-restart dms.service when dms-shell changes
+    };
     
     # Core features
     enableSystemMonitoring = true;     # System monitoring widgets (dgop)
@@ -61,15 +61,15 @@
     enableCalendarEvents = true;       # Calendar integration (khal)
   };
 
-  services.displayManager.dms-greeter = {
-    enable = true;
-    compositor.name = "niri";
-    configHome = "/home/guillaume";
-    logs = {
-      save = true; 
-      path = "/tmp/dms-greeter.log";
-    };
-  };
+  # services.displayManager.dms-greeter = {
+  #   enable = true;
+  #   compositor.name = "niri";
+  #   configHome = "/home/guillaume";
+  #   logs = {
+  #     save = true; 
+  #     path = "/tmp/dms-greeter.log";
+  #   };
+  # };
 
   # Steam
   programs.steam.enable = true;
