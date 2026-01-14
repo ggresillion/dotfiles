@@ -2,12 +2,16 @@
 
 {
   # Boot
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
+
+  # Cache
+  nix.binaryCaches = [ "https://cache.nixos.org/" ];
+  nix.binaryCachePublicKeys = [ "nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
 
   # Networking
-  networking.hostName = "gaming-rig";
+  networking.hostName = "guillaume-desktop";
   networking.networkmanager.enable = true;
 
   # Time & Locale
@@ -44,6 +48,9 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
+
+  # DMS
+  programs.dms-shell.enable = true;
 
   # Steam
   programs.steam.enable = true;
