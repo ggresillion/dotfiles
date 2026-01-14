@@ -38,11 +38,9 @@
 
   # Niri
   programs.niri.enable = true;
-  services.greetd = {
+  services.displayManager.dms-greeter = {
     enable = true;
-    settings.default_session = {
-      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd niri-session";
-    };
+    compositor.name = "niri";
   };
   xdg.portal = {
     enable = true;
