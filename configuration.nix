@@ -67,6 +67,7 @@
 
   # Nix settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 
   # Basic packages
   environment.systemPackages = with pkgs; [
