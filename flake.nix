@@ -12,6 +12,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    disko = {
+      url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,6 +26,10 @@
     nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
+      	disko.nixosModules.disko 
+	{
+      	  ./hosts/desktop/disko.nix
+	}
         ./hosts/desktop/hardware-configuration.nix
         ./hosts/desktop/configuration.nix
         
