@@ -16,16 +16,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs = { nixpkgs, home-manager, niri, ... }: {
     nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./hardware-configuration.nix
-        ./configuration.nix
-        niri.nixosModules.niri
+        ./hosts/desktop/hardware-configuration.nix
+        ./hosts/desktop/configuration.nix
         
         home-manager.nixosModules.home-manager
         {
