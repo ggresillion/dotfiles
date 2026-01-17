@@ -1,6 +1,4 @@
-{ config, pkgs, ... }:
-
-{
+{ config, pkgs, system, inputs, ... }: {
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
   home.stateVersion = "24.11";
@@ -8,7 +6,14 @@
   # Basic packages
   home.packages = with pkgs; [
     wl-clipboard
-    firefox
+    inputs.zen-browser.packages."${system}".default
+    discord
+    starship
+    zoxide
+    deezer-enhanced
+    unzip
+    go
+    lazygit
   ];
 
   # Neovim - basic setup
@@ -17,58 +22,34 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    extraPackages = with pkgs; [ nodejs python3 gcc tree-sitter nixd ];
   };
+
+  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/nvim/.config/nvim";
 
   # WezTerm - minimal config
-  programs.wezterm = {
-    enable = true;
-    extraConfig = ''
-      return {
-        font_size = 12.0,
-        color_scheme = 'Catppuccin Mocha',
-      }
-    '';
-  };
+  programs.wezterm = { enable = true; };
 
   # Zellij - minimal config
-  programs.zellij = {
-    enable = true;
-  };
+  programs.zellij = { enable = true; };
 
   # Git
-  programs.git = {
-    enable = true;
-    userName = "Guillaume Grésillion";
-    userEmail = "guillaume.gresillion@gmail.com";
-  };
+  programs.git = { enable = true; };
 
-  # Niri config
-  xdg.configFile."niri/config.kdl".text = ''
-    input {
-        keyboard {
-            xkb { layout "us" }
-        }
-    }
+  programs.nushell.enable = true;
 
-    output "DP-1" {
-        mode "5120x1440@240"
-    }
+  # xdg.configFile."niri".source = ./niri/.config/niri;
+  xdg.configFile."wezterm".source = ./wezterm/.config/wezterm;
+  xdg.configFile."git".source = ./git/.config/git;
+  xdg.configFile."nushell".source = ./nushell/.config/nushell;
+  xdg.configFile."starship".source = ./starship/.config/starship;
+  xdg.configFile."zellij".source = ./zellij/.config/zellij;
+  # xdg.configFile."fish".source = ./fish/.config/fish;
+  # xdg.configFile."hyprland".source = ./hyprland/.config/hypr;
 
-    layout {
-        gaps 8
-    }
-
-    binds {
-        Mod+Return { spawn "wezterm"; }
-        Mod+Q { close-window; }
-        Mod+Shift+E { quit; }
-        
-        Mod+H { focus-column-left; }
-        Mod+L { focus-column-right; }
-        Mod+J { focus-window-down; }
-        Mod+K { focus-window-up; }
-    }
-  '';
+  home.sessionVariables.STARSHIP_CONFIG = "~/.config/starship/starship.toml";
 
   programs.home-manager.enable = true;
 }

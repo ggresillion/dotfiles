@@ -2,17 +2,18 @@
   disko.devices = {
     disk.main = {
       type = "disk";
-      device = "/dev/sdX";
+      device = "/dev/nvme0n1";
       content = {
         type = "gpt";
         partitions = {
-          boot = {
-            size = "128M";
+          ESP = {
+            size = "512M";
             type = "EF00";
             content = {
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
+              mountOptions = [ "umask=0077" ];
             };
           };
 

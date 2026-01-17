@@ -1,14 +1,26 @@
 { config, pkgs, ... }:
 
 {
-  # Boot
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
 
   # Cache
-  nix.binaryCaches = [ "https://cache.nixos.org/" ];
-  nix.binaryCachePublicKeys = [ "nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+  nix.settings = {
+    substituters =
+      [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
+  # Boot
+  boot.loader = {
+    grub = {
+      enable = true;
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      device = "nodev";
+    };
+  };
 
   # Networking
   networking.hostName = "guillaume-desktop";
@@ -22,6 +34,8 @@
   users.users.guillaume = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    hashedPassword =
+      "$6$QApRfgdVjtrm1BwC$/6fJuQSpiMFDExYF5G66nbL72/LqZvtHn.ThWKwt2AbmxxUyezr/nhMEsMymteyyvCdnYDI8lSlrfJ6X8Un7u.";
   };
 
   # NVIDIA
@@ -29,12 +43,9 @@
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-  };
+  hardware.graphics = { enable = true; };
 
   # Niri
   programs.niri.enable = true;
@@ -46,33 +57,26 @@
   # DMS
   programs.dms-shell = {
     enable = true;
-
-    systemd = {
-      enable = true;             # Systemd service for auto-start
-      restartIfChanged = true;   # Auto-restart dms.service when dms-shell changes
-    };
-    
-    # Core features
-    enableSystemMonitoring = true;     # System monitoring widgets (dgop)
-    enableClipboard = true;            # Clipboard history manager
-    enableVPN = true;                  # VPN management widget
-    enableDynamicTheming = true;       # Wallpaper-based theming (matugen)
-    enableAudioWavelength = true;      # Audio visualizer (cava)
-    enableCalendarEvents = true;       # Calendar integration (khal)
+    enableSystemMonitoring = true; # System monitoring widgets (dgop)
+    enableClipboard = true; # Clipboard history manager
+    enableVPN = true; # VPN management widget
+    enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+    enableAudioWavelength = true; # Audio visualizer (cava)
+    enableCalendarEvents = true; # Calendar integration (khal)
   };
-
-  # services.displayManager.dms-greeter = {
-  #   enable = true;
-  #   compositor.name = "niri";
-  #   configHome = "/home/guillaume";
-  #   logs = {
-  #     save = true; 
-  #     path = "/tmp/dms-greeter.log";
-  #   };
-  # };
+  services.displayManager.dms-greeter = {
+    enable = true;
+    compositor.name = "niri";
+    configHome = "/home/guillaume";
+    logs = {
+      save = true;
+      path = "/tmp/dms-greeter.log";
+    };
+  };
 
   # Steam
   programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
   programs.gamemode.enable = true;
 
   # Sound
@@ -89,11 +93,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Basic packages
-  environment.systemPackages = with pkgs; [
-    git
-    wget
-    vim
-  ];
+  environment.systemPackages = with pkgs; [ git wget vim xwayland-satellite ];
 
   system.stateVersion = "24.11";
 }

@@ -74,4 +74,12 @@ return {
 		parser = "yaml",
 		formatter = { "prettier" },
 	},
+  nix = {
+    lsp = {
+      name = "nixd",
+      external = true,
+    },
+    parser = "nix",
+    formatter = { "nixfmt" },
+  },
 }
