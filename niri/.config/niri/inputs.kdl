@@ -1,0 +1,26 @@
+input {
+    keyboard {
+        xkb {
+          layout "us"
+          variant "intl"
+        }
+        numlock
+    }
+
+    touchpad {
+        accel-speed 0
+        accel-profile "flat"
+    }
+
+    mouse {
+        accel-speed 0
+        accel-profile "flat"
+    }
+
+    trackpoint {
+        accel-speed 0
+        accel-profile "flat"
+    }
+
+    warp-mouse-to-focus
+}

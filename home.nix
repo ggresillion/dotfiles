@@ -57,9 +57,8 @@
     "${config.home.homeDirectory}/dotfiles/nushell/.config/nushell/autoload";
 
   # Niri
-  # xdg.configFile."niri".source = ./niri/.config/niri;
-  # xdg.configFile."niri".source = config.lib.file.mkOutOfStoreSymlink
-  #   "${config.home.homeDirectory}/dotfiles/niri/.config/niri";
+  xdg.configFile."niri".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/niri/.config/niri";
 
   # Starship
   xdg.configFile."starship.toml".source = ./starship/.config/starship.toml;

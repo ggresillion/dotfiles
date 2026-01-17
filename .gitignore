@@ -3,3 +3,5 @@ fish/.config/fish/fish_variables
 tmux/.config/tmux/plugins/
 
 nushell/.config/nushell/history.txt
+
+niri/.config/niri/dms
