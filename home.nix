@@ -1,4 +1,4 @@
-{ config, pkgs, system, inputs, ... }: {
+{ config, pkgs, inputs, ... }: {
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
   home.stateVersion = "24.11";
@@ -6,7 +6,7 @@
   # Basic packages
   home.packages = with pkgs; [
     wl-clipboard
-    inputs.zen-browser.packages."${system}".default
+    inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
     discord
     starship
     zoxide
@@ -14,7 +14,17 @@
     unzip
     go
     lazygit
+    github-cli
+    carapace
   ];
+
+  # Aliases
+  home.shellAliases = {
+    g = "git";
+    d = "docker";
+    dc = "docker compose";
+    rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles";
+  };
 
   # Neovim - basic setup
   programs.neovim = {
@@ -22,7 +32,8 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    package =
+      inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     extraPackages = with pkgs; [ nodejs python3 gcc tree-sitter nixd ];
   };
 
@@ -31,25 +42,30 @@
 
   # WezTerm - minimal config
   programs.wezterm = { enable = true; };
+  xdg.configFile."wezterm".source = ./wezterm/.config/wezterm;
 
   # Zellij - minimal config
   programs.zellij = { enable = true; };
 
   # Git
   programs.git = { enable = true; };
-
-  programs.nushell.enable = true;
-
-  # xdg.configFile."niri".source = ./niri/.config/niri;
-  xdg.configFile."wezterm".source = ./wezterm/.config/wezterm;
   xdg.configFile."git".source = ./git/.config/git;
-  xdg.configFile."nushell".source = ./nushell/.config/nushell;
-  xdg.configFile."starship".source = ./starship/.config/starship;
-  xdg.configFile."zellij".source = ./zellij/.config/zellij;
-  # xdg.configFile."fish".source = ./fish/.config/fish;
-  # xdg.configFile."hyprland".source = ./hyprland/.config/hypr;
 
-  home.sessionVariables.STARSHIP_CONFIG = "~/.config/starship/starship.toml";
+  # Nushell
+  programs.nushell.enable = true;
+  xdg.configFile."nushell/autoload".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/nushell/.config/nushell/autoload";
+
+  # Niri
+  # xdg.configFile."niri".source = ./niri/.config/niri;
+  # xdg.configFile."niri".source = config.lib.file.mkOutOfStoreSymlink
+  #   "${config.home.homeDirectory}/dotfiles/niri/.config/niri";
+
+  # Starship
+  xdg.configFile."starship.toml".source = ./starship/.config/starship.toml;
+
+  # Zellij
+  xdg.configFile."zellij".source = ./zellij/.config/zellij;
 
   programs.home-manager.enable = true;
 }
