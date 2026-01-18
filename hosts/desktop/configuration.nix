@@ -44,7 +44,7 @@
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   hardware.graphics = { enable = true; };
 
@@ -59,7 +59,6 @@
   programs.dms-shell = {
     enable = true;
     enableSystemMonitoring = true; # System monitoring widgets (dgop)
-    enableClipboard = true; # Clipboard history manager
     enableVPN = true; # VPN management widget
     enableDynamicTheming = true; # Wallpaper-based theming (matugen)
     enableAudioWavelength = true; # Audio visualizer (cava)
@@ -75,13 +74,10 @@
     };
   };
 
-  # Steam
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
-  programs.gamemode.enable = true;
+  #KDE
+  services.desktopManager.plasma6.enable = true;
 
   # Sound
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;

@@ -16,6 +16,8 @@
     lazygit
     github-cli
     carapace
+    nvtopPackages.nvidia
+    ripgrep
   ];
 
   # Aliases
