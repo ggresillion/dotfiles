@@ -19,6 +19,7 @@
     nvtopPackages.nvidia
     ripgrep
     inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap
+    linux-wallpaperengine
   ];
 
   # Aliases
