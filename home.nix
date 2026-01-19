@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, lib, ... }: {
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
   home.stateVersion = "24.11";
@@ -18,6 +18,7 @@
     carapace
     nvtopPackages.nvidia
     ripgrep
+    inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap
   ];
 
   # Aliases
@@ -26,6 +27,8 @@
     d = "docker";
     dc = "docker compose";
     rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles";
+    wrap = lib.getExe
+      inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap;
   };
 
   # Neovim - basic setup
