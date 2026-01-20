@@ -12,6 +12,7 @@
     zoxide
     deezer-enhanced
     unzip
+    p7zip
     go
     lazygit
     github-cli
@@ -19,7 +20,10 @@
     nvtopPackages.nvidia
     ripgrep
     inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap
-    linux-wallpaperengine
+    # linux-wallpaperengine
+    umu-launcher
+    kdePackages.gwenview
+    godot
   ];
 
   # Aliases
@@ -32,7 +36,7 @@
       inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap;
   };
 
-  # Neovim - basic setup
+  # Neovim
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -46,11 +50,11 @@
   xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/dotfiles/nvim/.config/nvim";
 
-  # WezTerm - minimal config
+  # WezTerm
   programs.wezterm = { enable = true; };
   xdg.configFile."wezterm".source = ./wezterm/.config/wezterm;
 
-  # Zellij - minimal config
+  # Zellij
   programs.zellij = { enable = true; };
 
   # Git
