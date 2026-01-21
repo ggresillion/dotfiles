@@ -19,10 +19,13 @@
     nixwrap.url = "github:rti/nixwrap";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations.guillaume-desktop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
+      specialArgs = {
+        inherit inputs;
+        flakeRoot = self.outPath;
+      };
       modules = [
         ./hosts/desktop
         home-manager.nixosModules.home-manager

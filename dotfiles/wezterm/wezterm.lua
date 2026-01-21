@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 
 local config = {
-  enable_wayland = true,
+  enable_wayland = false,
   font = wezterm.font("JetBrains Mono"),
   font_size = 15,
   window_padding = {

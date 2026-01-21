@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, flakeRoot, ... }:
 
 {
 
@@ -70,12 +70,8 @@
   };
   services.displayManager.dms-greeter = {
     enable = true;
-    compositor.name = "niri";
+    compositor = { name = "niri"; };
     configHome = "/home/guillaume";
-    logs = {
-      save = true;
-      path = "/tmp/dms-greeter.log";
-    };
   };
 
   #KDE
@@ -90,8 +86,8 @@
   };
 
   # VPN
-  networking.wg-quick.interfaces.wg0.configFile =
-    "/home/guillaume/wg-CH-FREE-1.conf";
+  # networking.wg-quick.interfaces.wg0.configFile =
+  #   "/home/guillaume/wg-CH-FREE-1.conf";
 
   # Nix settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
