@@ -1,4 +1,5 @@
 { config, pkgs, inputs, lib, ... }: {
+
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
   home.stateVersion = "24.11";
@@ -14,6 +15,7 @@
     unzip
     p7zip
     go
+    gcc
     lazygit
     github-cli
     carapace
@@ -24,6 +26,8 @@
     umu-launcher
     kdePackages.gwenview
     godot
+    gocryptfs
+    unrar
   ];
 
   # Aliases

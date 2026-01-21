@@ -1,4 +1,4 @@
-{ config, pkgs, flakeRoot, ... }:
+{ config, pkgs, ... }:
 
 {
 
@@ -68,6 +68,8 @@
     enableAudioWavelength = true; # Audio visualizer (cava)
     enableCalendarEvents = true; # Calendar integration (khal)
   };
+
+  # Greeter
   services.displayManager.dms-greeter = {
     enable = true;
     compositor = { name = "niri"; };
@@ -86,8 +88,8 @@
   };
 
   # VPN
-  # networking.wg-quick.interfaces.wg0.configFile =
-  #   "/home/guillaume/wg-CH-FREE-1.conf";
+  networking.wg-quick.interfaces.wg0.configFile =
+    "/home/guillaume/wg-CH-FREE-1.conf";
 
   # Nix settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
