@@ -19,21 +19,17 @@
     nixwrap.url = "github:rti/nixwrap";
   };
 
-  outputs = { nixpkgs, disko, home-manager, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations.guillaume-desktop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-        disko.nixosModules.disko
-        ./hosts/desktop/disko-config.nix
-        ./hosts/desktop/configuration.nix
-        ./hosts/desktop/hardware-configuration.nix
-        ./hosts/desktop/gaming.nix
+        ./hosts/desktop
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.guillaume = import ./home.nix;
+          home-manager.users.guillaume = import ./home/guillaume/home.nix;
           home-manager.extraSpecialArgs = { inherit inputs; };
         }
       ];
