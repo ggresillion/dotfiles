@@ -37,7 +37,7 @@
   # User
   users.users.guillaume = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
     hashedPassword =
       "$6$QApRfgdVjtrm1BwC$/6fJuQSpiMFDExYF5G66nbL72/LqZvtHn.ThWKwt2AbmxxUyezr/nhMEsMymteyyvCdnYDI8lSlrfJ6X8Un7u.";
     shell = "${pkgs.nushell}/bin/nu";
@@ -90,6 +90,12 @@
   # VPN
   networking.wg-quick.interfaces.wg0.configFile =
     "/home/guillaume/wg-CH-FREE-1.conf";
+
+  # Docker
+  virtualisation.docker.enable = true;
+
+  # Bluetooth
+  hardware.bluetooth.enable = true;
 
   # Nix settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

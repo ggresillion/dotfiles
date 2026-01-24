@@ -81,5 +81,12 @@
   xdg.configFile."starship.toml".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/dotfiles/dotfiles/starship/starship.toml";
 
+  # Direnv
+  programs.direnv = {
+    enable = true;
+    silent = true;
+    config = { global = { load_dotenv = true; }; };
+  };
+
   programs.home-manager.enable = true;
 }
