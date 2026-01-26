@@ -1,28 +1,19 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[](red)\
+[](fg:red)\
 $os\
 $username\
-[](bg:yellow fg:red)\
+[](fg:red bg:yellow)\
 $directory\
-[](bg:yellow fg:yellow)\
-$git_branch\
-$git_status\
-[](fg:yellow bg:green)\
-$c\
-$rust\
-$golang\
-$nodejs\
-$php\
-$java\
-$kotlin\
-$haskell\
-$python\
-[](fg:green bg:blue)\
-$conda\
+([](fg:yellow bg:cyan)\
+$git_branch$git_status)\
+([](fg:cyan bg:green)\
+$c$rust$golang$nodejs$php$java$kotlin$haskell$python)\
+([](fg:green bg:blue)\
+$conda$nix_shell\
 [](fg:blue bg:purple)\
-$time\
+$time)\
 [ ](fg:purple)\
 $cmd_duration\
 $line_break\
@@ -55,7 +46,7 @@ Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
 
 [username]
-show_always = true
+show_always = false
 style_user = "bg:red fg:black"
 style_root = "bg:red fg:black"
 format = '[ $user]($style)'
@@ -75,13 +66,13 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:yellow"
-format = '[[ $symbol $branch ](fg:black bg:yellow)]($style)'
+style = "bg:cyan"
+format = '[[ $symbol $branch ](fg:black bg:cyan)]($style)'
 
 [git_status]
 disabled = true
-style = "bg:yellow"
-format = '[[($all_status$ahead_behind )](fg:black bg:yellow)]($style)'
+style = "bg:cyan"
+format = '[[($all_status$ahead_behind )](fg:black bg:cyan)]($style)'
 
 [nodejs]
 symbol = ""
@@ -164,3 +155,12 @@ style = "bg:purple"
 disabled = false
 show_notifications = true
 min_time_to_notify = 45000
+
+[nix_shell]
+disabled = false
+style = "fg:black bg:blue"
+impure_msg = "🛠️"
+pure_msg = "🧪"
+unknown_msg = "❓"
+format = '[ $state $name ]($style)'
+

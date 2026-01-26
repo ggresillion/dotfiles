@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 
@@ -88,8 +88,8 @@
   };
 
   # VPN
-  networking.wg-quick.interfaces.wg0.configFile =
-    "/home/guillaume/wg-CH-FREE-1.conf";
+  # networking.wg-quick.interfaces.wg0.configFile =
+  #   "/home/guillaume/wg-CH-FREE-1.conf";
 
   # Docker
   virtualisation.docker.enable = true;

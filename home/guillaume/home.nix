@@ -16,6 +16,7 @@
     p7zip
     go
     gcc
+    delve
     lazygit
     github-cli
     carapace
