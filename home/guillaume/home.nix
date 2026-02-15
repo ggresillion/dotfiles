@@ -29,6 +29,8 @@
     godot
     gocryptfs
     unrar
+    fzf
+    r2modman
   ];
 
   # Aliases

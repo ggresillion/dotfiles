@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
 
@@ -23,6 +23,7 @@
       efiSupport = true;
       efiInstallAsRemovable = true;
       device = "nodev";
+      useOSProber = true;
     };
   };
 
@@ -48,7 +49,7 @@
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
   hardware.graphics = { enable = true; };
 
@@ -86,10 +87,6 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
-  # VPN
-  # networking.wg-quick.interfaces.wg0.configFile =
-  #   "/home/guillaume/wg-CH-FREE-1.conf";
 
   # Docker
   virtualisation.docker.enable = true;
