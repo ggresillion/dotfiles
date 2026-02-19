@@ -21,6 +21,10 @@
       "src": "https://github.com/saghen/blink.cmp",
       "version": "1.0.0 - 2.0.0"
     },
+    "codediff.nvim": {
+      "rev": "9ba04ddf48827f7f765e0d1eeb3a22650323c2a6",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
     "codesnap.nvim": {
       "rev": "d8d55f5b62a6c12bc7756eb0b997a776eafd086e",
       "src": "https://github.com/mistricky/codesnap.nvim"
