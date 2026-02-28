@@ -94,6 +94,9 @@
   # Bluetooth
   hardware.bluetooth.enable = true;
 
+  # KDE connect
+  programs.kdeconnect.enable = true;
+
   # Nix settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;

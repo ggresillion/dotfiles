@@ -31,6 +31,7 @@
     unrar
     fzf
     r2modman
+    faugus-launcher
   ];
 
   # Aliases
