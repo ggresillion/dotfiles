@@ -69,8 +69,8 @@
 
   # Git
   programs.git = { enable = true; };
-  home.file.".gitconfig".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/dotfiles/git/gitconfig";
+  xdg.configFile."git/config".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/dotfiles/git/config";
 
   # Nushell
   programs.nushell.enable = true;
