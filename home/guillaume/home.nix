@@ -53,6 +53,7 @@ in {
 
       programs.noctalia-shell = {
       enable = true;
+      systemd.enable = true;
       settings = {
         # configure noctalia here
         bar = {
@@ -95,11 +96,7 @@ in {
             ];
           };
         };
-        colorSchemes.predefinedScheme = "Monochrome";
-        location = {
-          monthBeforeDay = true;
-          name = "Marseille, France";
-        };
+      };
       };
 
   # Neovim
@@ -113,35 +110,35 @@ in {
     extraPackages = with pkgs; [ nodejs python3 gcc tree-sitter nixd ];
   };
   xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/nvim";
+    "${dotfiles}/nvim/.config/nvim";
 
   # WezTerm
   programs.wezterm = { enable = true; };
   xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/wezterm";
+    "${dotfiles}/wezterm/.config/wezterm";
 
   # Zellij
   programs.zellij = { enable = true; };
   xdg.configFile."zellij".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/zellij";
+    "${dotfiles}/zellij/.config/zellij";
 
   # Git
   programs.git = { enable = true; };
   xdg.configFile."git/config".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/git/config";
+    "${dotfiles}/git/.config/git/config";
 
   # Nushell
   programs.nushell.enable = true;
   xdg.configFile."nushell/autoload".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/nushell/autoload";
+    "${dotfiles}/nushell/.config/nushell/autoload";
 
   # Niri
   xdg.configFile."niri".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/niri";
+    "${dotfiles}/niri/.config/niri";
 
   # Starship
   xdg.configFile."starship.toml".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/starship/starship.toml";
+    "${dotfiles}/starship/.config/starship/starship.toml";
 
   # Direnv
   programs.direnv = {

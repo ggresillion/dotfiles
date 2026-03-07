@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
 
@@ -69,7 +69,7 @@
   #   enableAudioWavelength = true; # Audio visualizer (cava)
   #   enableCalendarEvents = true; # Calendar integration (khal)
   # };
-
+    
   # Greeter
   services.displayManager.dms-greeter = {
     enable = true;
