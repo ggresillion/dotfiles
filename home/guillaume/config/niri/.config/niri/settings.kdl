@@ -1,5 +1,3 @@
-spawn-at-startup "waybar"
-
 hotkey-overlay {
     skip-at-startup
 }
