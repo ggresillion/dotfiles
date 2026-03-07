@@ -19,6 +19,15 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixwrap.url = "github:rti/nixwrap";
   };
+   noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.noctalia-qs.follows = "noctalia-qs";
+    };
+    noctalia-qs = {
+      url = "github:noctalia-dev/noctalia-qs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   outputs = { nixpkgs, nixpkgs-stable, home-manager, ... }@inputs: {
     nixosConfigurations.guillaume-desktop = let

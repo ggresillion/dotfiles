@@ -61,14 +61,14 @@
   };
 
   # DMS
-  programs.dms-shell = {
-    enable = true;
-    enableSystemMonitoring = true; # System monitoring widgets (dgop)
-    enableVPN = true; # VPN management widget
-    enableDynamicTheming = true; # Wallpaper-based theming (matugen)
-    enableAudioWavelength = true; # Audio visualizer (cava)
-    enableCalendarEvents = true; # Calendar integration (khal)
-  };
+  # programs.dms-shell = {
+  #   enable = true;
+  #   enableSystemMonitoring = true; # System monitoring widgets (dgop)
+  #   enableVPN = true; # VPN management widget
+  #   enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+  #   enableAudioWavelength = true; # Audio visualizer (cava)
+  #   enableCalendarEvents = true; # Calendar integration (khal)
+  # };
 
   # Greeter
   services.displayManager.dms-greeter = {
@@ -76,9 +76,6 @@
     compositor = { name = "niri"; };
     configHome = "/home/guillaume";
   };
-
-  #KDE
-  services.desktopManager.plasma6.enable = true;
 
   # Sound
   services.pipewire = {

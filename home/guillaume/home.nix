@@ -3,6 +3,10 @@ let
 	  dotfiles = "${config.home.homeDirectory}/dotfiles/home/guillaume/config";
 in {
 
+    imports = [
+      inputs.noctalia.homeModules.default
+    ];
+
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
   home.stateVersion = "24.11";
@@ -46,6 +50,57 @@ in {
     wrap = lib.getExe
       inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap;
   };
+
+      programs.noctalia-shell = {
+      enable = true;
+      settings = {
+        # configure noctalia here
+        bar = {
+          density = "compact";
+          position = "right";
+          showCapsule = false;
+          widgets = {
+            left = [
+              {
+                id = "ControlCenter";
+                useDistroLogo = true;
+              }
+              {
+                id = "Network";
+              }
+              {
+                id = "Bluetooth";
+              }
+            ];
+            center = [
+              {
+                hideUnoccupied = false;
+                id = "Workspace";
+                labelMode = "none";
+              }
+            ];
+            right = [
+              {
+                alwaysShowPercentage = false;
+                id = "Battery";
+                warningThreshold = 30;
+              }
+              {
+                formatHorizontal = "HH:mm";
+                formatVertical = "HH mm";
+                id = "Clock";
+                useMonospacedFont = true;
+                usePrimaryColor = true;
+              }
+            ];
+          };
+        };
+        colorSchemes.predefinedScheme = "Monochrome";
+        location = {
+          monthBeforeDay = true;
+          name = "Marseille, France";
+        };
+      };
 
   # Neovim
   programs.neovim = {

@@ -16,7 +16,14 @@
               mountOptions = [ "umask=0077" ];
             };
           };
-
+          swap = {
+            size = "34G";
+            content = {
+              type = "swap";
+              discardPolicy = "both";
+              resumeDevice = true;
+            };
+          };
           root = {
             size = "100%";
             content = {
@@ -27,12 +34,10 @@
                   mountpoint = "/";
                   mountOptions = [ "compress=zstd" ];
                 };
-
                 "@home" = {
                   mountpoint = "/home";
                   mountOptions = [ "compress=zstd" ];
                 };
-
                 "@nix" = {
                   mountpoint = "/nix";
                   mountOptions = [ "compress=zstd" "noatime" ];
