@@ -183,7 +183,7 @@
     "settingsPanelSideBarCardStyle": false
   },
   "location": {
-    "name": "Tokyo",
+    "name": "Saint-Cannat",
     "weatherEnabled": true,
     "weatherShowEffects": true,
     "useFahrenheit": false,
@@ -549,6 +549,10 @@
       {
         "enabled": true,
         "id": "steam"
+      },
+      {
+        "enabled": true,
+        "id": "kcolorscheme"
       }
     ],
     "enableUserTheming": false
