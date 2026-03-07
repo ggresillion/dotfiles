@@ -1,11 +1,14 @@
-{ config, pkgs, inputs, lib, ... }: 
-let 
-	  dotfiles = "${config.home.homeDirectory}/dotfiles/home/guillaume/config";
-in {
-
-    imports = [
-      inputs.noctalia.homeModules.default
-    ];
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
+let
+  dotfiles = "${config.home.homeDirectory}/dotfiles/home/guillaume/config";
+in
+{
 
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
@@ -15,7 +18,6 @@ in {
   home.packages = with pkgs; [
     wl-clipboard
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
-    discord
     starship
     zoxide
     deezer-enhanced
@@ -39,6 +41,7 @@ in {
     fzf
     r2modman
     faugus-launcher
+    vesktop
   ];
 
   # Aliases
@@ -47,57 +50,8 @@ in {
     d = "docker";
     dc = "docker compose";
     rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles";
-    wrap = lib.getExe
-      inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap;
+    wrap = lib.getExe inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap;
   };
-
-      programs.noctalia-shell = {
-      enable = true;
-      systemd.enable = true;
-      settings = {
-        # configure noctalia here
-        bar = {
-          density = "compact";
-          position = "right";
-          showCapsule = false;
-          widgets = {
-            left = [
-              {
-                id = "ControlCenter";
-                useDistroLogo = true;
-              }
-              {
-                id = "Network";
-              }
-              {
-                id = "Bluetooth";
-              }
-            ];
-            center = [
-              {
-                hideUnoccupied = false;
-                id = "Workspace";
-                labelMode = "none";
-              }
-            ];
-            right = [
-              {
-                alwaysShowPercentage = false;
-                id = "Battery";
-                warningThreshold = 30;
-              }
-              {
-                formatHorizontal = "HH:mm";
-                formatVertical = "HH mm";
-                id = "Clock";
-                useMonospacedFont = true;
-                usePrimaryColor = true;
-              }
-            ];
-          };
-        };
-      };
-      };
 
   # Neovim
   programs.neovim = {
@@ -105,46 +59,60 @@ in {
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    package =
-      inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    extraPackages = with pkgs; [ nodejs python3 gcc tree-sitter nixd ];
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    extraPackages = with pkgs; [
+      nodejs
+      python3
+      gcc
+      tree-sitter
+      nixd
+      nixfmt
+    ];
   };
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/nvim/.config/nvim";
+  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nvim/.config/nvim";
 
   # WezTerm
-  programs.wezterm = { enable = true; };
-  xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/wezterm/.config/wezterm";
+  programs.wezterm = {
+    enable = true;
+  };
+  xdg.configFile."wezterm".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wezterm/.config/wezterm";
 
   # Zellij
-  programs.zellij = { enable = true; };
-  xdg.configFile."zellij".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/zellij/.config/zellij";
+  programs.zellij = {
+    enable = true;
+  };
+  xdg.configFile."zellij".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/zellij/.config/zellij";
 
   # Git
-  programs.git = { enable = true; };
-  xdg.configFile."git/config".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/git/.config/git/config";
+  programs.git = {
+    enable = true;
+  };
+  xdg.configFile."git/config".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/git/.config/git/config";
 
   # Nushell
   programs.nushell.enable = true;
-  xdg.configFile."nushell/autoload".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/nushell/.config/nushell/autoload";
+  xdg.configFile."nushell/autoload".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nushell/.config/nushell/autoload";
 
   # Niri
-  xdg.configFile."niri".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/niri/.config/niri";
+  xdg.configFile."niri".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/niri/.config/niri";
 
   # Starship
-  xdg.configFile."starship.toml".source = config.lib.file.mkOutOfStoreSymlink
-    "${dotfiles}/starship/.config/starship/starship.toml";
+  xdg.configFile."starship.toml".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/starship/.config/starship/starship.toml";
 
   # Direnv
   programs.direnv = {
     enable = true;
     silent = true;
-    config = { global = { load_dotenv = true; }; };
+    config = {
+      global = {
+        load_dotenv = true;
+      };
+    };
   };
 
   programs.home-manager.enable = true;

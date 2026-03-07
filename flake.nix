@@ -18,7 +18,7 @@
     };
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixwrap.url = "github:rti/nixwrap";
-   noctalia = {
+    noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.noctalia-qs.follows = "noctalia-qs";
@@ -29,23 +29,31 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, home-manager, ... }@inputs: {
-    nixosConfigurations.guillaume-desktop = let
-      system = "x86_64-linux";
-    in nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = { inherit inputs; };
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations.guillaume-desktop =
+        let
+          system = "x86_64-linux";
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
 
-      modules = [
-        ./hosts/desktop
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.guillaume = import ./home/guillaume/home.nix;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-        }
-      ];
+          modules = [
+            ./hosts/desktop
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.guillaume = import ./home/guillaume/default.nix;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+            }
+          ];
+        };
     };
-  };
 }

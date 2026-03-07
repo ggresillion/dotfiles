@@ -13,10 +13,10 @@ background = "#212337"
 brights = [
     "#7081d0",
     "#f16c75",
-    "#69F8B3",
+    "#69f8b3",
     "#f1fc79",
     "#a48cf2",
-    "#FD92CE",
+    "#fd92ce",
     "#66e4fd",
     "#ffffff",
 ]
@@ -36,7 +36,7 @@ visual_bell = "#21222c"
 17 = "#f8f8f2"
 
 [colors.tab_bar]
-background = "#1d1f31"
+background = "#212337"
 inactive_tab_edge = "#bf4f8e"
 
 [colors.tab_bar.active_tab]
@@ -48,7 +48,7 @@ strikethrough = false
 underline = "None"
 
 [colors.tab_bar.inactive_tab]
-bg_color = "#1f2134"
+bg_color = "#212337"
 fg_color = "#ebfafa"
 intensity = "Normal"
 italic = false
