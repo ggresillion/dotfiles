@@ -1,4 +1,7 @@
-{ config, pkgs, inputs, lib, ... }: {
+{ config, pkgs, inputs, lib, ... }: 
+let 
+	  dotfiles = "${config.home.homeDirectory}/dotfiles/home/guillaume/config";
+in {
 
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
@@ -55,35 +58,35 @@
     extraPackages = with pkgs; [ nodejs python3 gcc tree-sitter nixd ];
   };
   xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/dotfiles/nvim";
+    "${dotfiles}/nvim";
 
   # WezTerm
   programs.wezterm = { enable = true; };
   xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/dotfiles/wezterm";
+    "${dotfiles}/wezterm";
 
   # Zellij
   programs.zellij = { enable = true; };
   xdg.configFile."zellij".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/dotfiles/zellij";
+    "${dotfiles}/zellij";
 
   # Git
   programs.git = { enable = true; };
   xdg.configFile."git/config".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/dotfiles/git/config";
+    "${dotfiles}/git/config";
 
   # Nushell
   programs.nushell.enable = true;
   xdg.configFile."nushell/autoload".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/dotfiles/nushell/autoload";
+    "${dotfiles}/nushell/autoload";
 
   # Niri
   xdg.configFile."niri".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/dotfiles/niri";
+    "${dotfiles}/niri";
 
   # Starship
   xdg.configFile."starship.toml".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/dotfiles/starship/starship.toml";
+    "${dotfiles}/starship/starship.toml";
 
   # Direnv
   programs.direnv = {

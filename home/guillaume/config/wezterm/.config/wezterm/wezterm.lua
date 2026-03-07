@@ -70,16 +70,16 @@ local catppuccin_latte = {
   },
 }
 
-wezterm.on("window-config-reloaded", function(window)
-  local appearance = window:get_appearance()
-  local is_dark = appearance:find("Dark")
-  if is_dark then
-    window:set_config_overrides(catppuccin_mocha)
-  else
-    window:set_config_overrides(catppuccin_latte)
-  end
-end)
-
+-- wezterm.on("window-config-reloaded", function(window)
+--   local appearance = window:get_appearance()
+--   local is_dark = appearance:find("Dark")
+--   if is_dark then
+--     window:set_config_overrides(catppuccin_mocha)
+--   else
+--     window:set_config_overrides(catppuccin_latte)
+--   end
+-- end)
+--
 if wezterm.target_triple:find("darwin") then
   config.window_decorations = "RESIZE"
 end
@@ -87,5 +87,7 @@ end
 if wezterm.target_triple:find("windows") then
   config.default_domain = "WSL:archlinux"
 end
+
+config.color_scheme = "Noctalia"
 
 return config
