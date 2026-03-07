@@ -91,6 +91,7 @@
           "useCustomFont": false
         },
         {
+          "defaultSettings": {},
           "id": "plugin:kde-connect"
         }
       ]
@@ -544,6 +545,10 @@
       {
         "enabled": true,
         "id": "gtk"
+      },
+      {
+        "enabled": true,
+        "id": "steam"
       }
     ],
     "enableUserTheming": false

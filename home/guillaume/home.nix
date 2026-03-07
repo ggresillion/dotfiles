@@ -42,6 +42,7 @@ in
     r2modman
     faugus-launcher
     vesktop
+    jq
   ];
 
   # Aliases
