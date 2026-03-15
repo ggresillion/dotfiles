@@ -45,7 +45,7 @@
 
   # Starship
   xdg.configFile."starship.toml".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/starship/.config/starship/starship.toml";
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/starship/.config/starship.toml";
 
   # Zellij
   programs.zellij = {

@@ -5,5 +5,6 @@
     godot
     r2modman
     faugus-launcher
+    gamescope
   ];
 }
