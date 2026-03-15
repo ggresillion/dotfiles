@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
 
@@ -38,9 +43,14 @@
   # User
   users.users.guillaume = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
-    hashedPassword =
-      "$6$QApRfgdVjtrm1BwC$/6fJuQSpiMFDExYF5G66nbL72/LqZvtHn.ThWKwt2AbmxxUyezr/nhMEsMymteyyvCdnYDI8lSlrfJ6X8Un7u.";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "audio"
+      "docker"
+    ];
+    hashedPassword = "$6$QApRfgdVjtrm1BwC$/6fJuQSpiMFDExYF5G66nbL72/LqZvtHn.ThWKwt2AbmxxUyezr/nhMEsMymteyyvCdnYDI8lSlrfJ6X8Un7u.";
     shell = "${pkgs.nushell}/bin/nu";
   };
 
@@ -51,30 +61,15 @@
     open = false;
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
-  hardware.graphics = { enable = true; };
+  hardware.graphics = {
+    enable = true;
+  };
 
   # Niri
   programs.niri.enable = true;
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
-
-  # DMS
-  # programs.dms-shell = {
-  #   enable = true;
-  #   enableSystemMonitoring = true; # System monitoring widgets (dgop)
-  #   enableVPN = true; # VPN management widget
-  #   enableDynamicTheming = true; # Wallpaper-based theming (matugen)
-  #   enableAudioWavelength = true; # Audio visualizer (cava)
-  #   enableCalendarEvents = true; # Calendar integration (khal)
-  # };
-    
-  # Greeter
-  services.displayManager.dms-greeter = {
-    enable = true;
-    compositor = { name = "niri"; };
-    configHome = "/home/guillaume";
   };
 
   # Sound
@@ -95,11 +90,20 @@
   programs.kdeconnect.enable = true;
 
   # Nix settings
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
+  programs.nix-ld.enable = true;
 
   # Basic packages
-  environment.systemPackages = with pkgs; [ git wget vim xwayland-satellite ];
+  environment.systemPackages = with pkgs; [
+    git
+    wget
+    vim
+    xwayland-satellite
+  ];
 
   system.stateVersion = "24.11";
 }
