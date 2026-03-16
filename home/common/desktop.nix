@@ -2,7 +2,7 @@
   inputs,
   config,
   pkgs,
-  dotfiles,
+  flakeRoot,
   ...
 }:
 
@@ -22,5 +22,6 @@
     settings = ./noctalia.json;
   };
 
-  xdg.configFile."niri".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/niri/.config/niri";
+  xdg.configFile."niri".source =
+    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/niri/.config/niri";
 }

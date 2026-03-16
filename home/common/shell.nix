@@ -3,7 +3,7 @@
   pkgs,
   inputs,
   lib,
-  dotfiles,
+  flakeRoot,
   ...
 }:
 
@@ -41,25 +41,25 @@
   # Nushell
   programs.nushell.enable = true;
   xdg.configFile."nushell/autoload".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nushell/.config/nushell/autoload";
+    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/nushell/.config/nushell/autoload";
 
   # Starship
   xdg.configFile."starship.toml".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/starship/.config/starship.toml";
+    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/starship/.config/starship.toml";
 
   # Zellij
   programs.zellij = {
     enable = true;
   };
   xdg.configFile."zellij".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/zellij/.config/zellij";
+    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/zellij/.config/zellij";
 
   # Git
   programs.git = {
     enable = true;
   };
   xdg.configFile."git/config".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/git/.config/git/config";
+    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/git/.config/git/config";
 
   # Neovim
   programs.neovim = {
@@ -77,12 +77,13 @@
       nixfmt
     ];
   };
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nvim/.config/nvim";
+  xdg.configFile."nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/nvim/.config/nvim";
 
   # WezTerm
   programs.wezterm = {
     enable = true;
   };
   xdg.configFile."wezterm".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wezterm/.config/wezterm";
+    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/wezterm/.config/wezterm";
 }

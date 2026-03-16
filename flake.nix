@@ -51,8 +51,14 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.guillaume = import ./home/guillaume/default.nix;
-              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users = {
+                guillaume = import ./home/guillaume/default.nix;
+                # guillaume_thetreep = import ./home/guillaume_thetreep/default.nix;
+              };
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                flakeRoot = toString ./.;
+              };
             }
           ];
         };
