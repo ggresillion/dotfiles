@@ -77,8 +77,24 @@
       nixfmt
     ];
   };
-  xdg.configFile."nvim".source =
-    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/nvim/.config/nvim";
+  xdg.configFile = {
+    "nvim/init.lua" = {
+      source = "${flakeRoot}/home/common/config/nvim/.config/nvim/init.lua";
+      force = true;
+    };
+    "nvim/lua" = {
+      source = "${flakeRoot}/home/common/config/nvim/.config/nvim/lua";
+      force = true;
+    };
+    "nvim/colors" = {
+      source = "${flakeRoot}/home/common/config/nvim/.config/nvim/colors";
+      force = true;
+    };
+    "nvim/snippets" = {
+      source = "${flakeRoot}/home/common/config/nvim/.config/nvim/snippets";
+      force = true;
+    };
+  };
 
   # WezTerm
   programs.wezterm = {
