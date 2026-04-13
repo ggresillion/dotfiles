@@ -1,7 +1,18 @@
 vim.pack.add({
 	{ src = "https://github.com/catppuccin/nvim" },
 	{ src = "https://github.com/f-person/auto-dark-mode.nvim" },
+	{ src = "https://github.com/tinted-theming/tinted-nvim" },
 })
+
+-- require("tinted-nvim").setup({
+-- 	compile = true,
+-- 	ui = {
+-- 		transparent = true,
+-- 	},
+-- 	selector = {
+-- 		enabled = true,
+-- 	},
+-- })
 
 require("catppuccin").setup({
 	transparent_background = true,

@@ -15,10 +15,16 @@ for _, lang in pairs(languages) do
 		if type(lsp) == "string" then
 			table.insert(mason_lsps, lsp)
 		elseif type(lsp) == "table" then
-			if lsp.external then
-				table.insert(external_lsps, lsp.name)
+			if vim.islist(lsp) then
+				for _, name in ipairs(lsp) do
+					table.insert(mason_lsps, name)
+				end
 			else
-				table.insert(mason_lsps, lsp.name)
+				if lsp.external then
+					table.insert(external_lsps, lsp.name)
+				else
+					table.insert(mason_lsps, lsp.name)
+				end
 			end
 		end
 	end

@@ -5,7 +5,23 @@ vim.pack.add({
 	{ src = "https://github.com/theHamsta/nvim-dap-virtual-text" },
 })
 
-require("dap-go").setup()
+require("dap-go").setup({
+	dap_configurations = {
+		{
+			type = "go",
+			name = "Attach to Docker",
+			mode = "remote",
+			request = "attach",
+			remotePath = "/app",
+			localRoot = vim.fn.getcwd() .. "/backend",
+			host = "127.0.0.1",
+			port = 2345,
+			substitutePath = {
+				{ from = vim.fn.getcwd() .. "/backend", to = "/app" },
+			},
+		},
+	},
+})
 
 local dap = require("dap")
 

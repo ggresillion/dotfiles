@@ -14,7 +14,7 @@ vim.opt.winborder = "rounded"
 vim.opt.tabstop = 2 -- Tab width
 vim.opt.shiftwidth = 2 -- Indent width
 vim.opt.softtabstop = 2 -- Soft tab stop
-vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.opt.expandtab = false -- Use tabs instead of spaces
 vim.opt.smartindent = true -- Smart auto-indenting
 vim.opt.autoindent = true -- Copy indent from current line
 
@@ -79,3 +79,6 @@ if vim.fn.has("wsl") == 1 then
 		cache_enabled = 0,
 	}
 end
+
+-- new ui
+require("vim._core.ui2").enable()

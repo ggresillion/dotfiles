@@ -1,6 +1,6 @@
 vim.pack.add({
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
-	{ src = "https://github.com/sindrets/diffview.nvim" },
+	{ src = "https://github.com/esmuellert/codediff.nvim" },
 	{ src = "https://github.com/tpope/vim-fugitive" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
@@ -39,13 +39,6 @@ map("n", "<leader>gS", "<cmd>Gitsigns stage_buffer<cr>", { desc = "Stage buffer"
 map("n", "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>", { desc = "Reset buffer" })
 map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<cr>", { desc = "Preview hunk" })
 map("n", "<leader>gi", "<cmd>Gitsigns preview_hunk_inline<cr>", { desc = "Preview hunk inline" })
-map("n", "<leader>gb", function()
-	require("gitsigns").blame_line({ full = true })
-end, { desc = "Blame line" })
-map("n", "<leader>gd", "<cmd>Gitsigns diffthis<cr>", { desc = "Diff this" })
-map("n", "<leader>gD", function()
-	require("gitsigns").diffthis("~")
-end, { desc = "Diff against ~" })
 map("n", "<leader>gQ", function()
 	require("gitsigns").setqflist("all")
 end, { desc = "Send all hunks to quickfix" })
@@ -56,6 +49,9 @@ map("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<cr>", { desc = "
 map("n", "<leader>gw", "<cmd>Gitsigns toggle_word_diff<cr>", { desc = "Toggle word diff" })
 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select hunk" })
 
-require("diffview").setup({
-	use_icons = true,
-})
+map("n", "<leader>gd", "<cmd>CodeDiff<CR>", { desc = "Git diff explorer (HEAD)" })
+map("n", "<leader>gD", "<cmd>CodeDiff file HEAD<CR>", { desc = "Diff current file vs HEAD" })
+map("n", "<leader>gH", "<cmd>CodeDiff history<CR>", { desc = "Show history" })
+map("n", "<leader>gh", "<cmd>CodeDiff history %<CR>", { desc = "Show history for file" })
+
+require("codediff").setup({})

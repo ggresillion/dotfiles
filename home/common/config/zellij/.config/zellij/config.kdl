@@ -370,13 +370,9 @@ keybinds clear-defaults=true {
             Detach
         }
         bind "w" {
-            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zsm.wasm" {
+            LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
-                default_layout "custom"
-                session_separator "_"
-                show_resurrectable_sessions true
-                base_paths "/Users/guillaume/Projects|/home/guillaume"
             }
             SwitchToMode "Normal"
         }
