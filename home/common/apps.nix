@@ -10,5 +10,8 @@
     unrar
     deezer-enhanced
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
+    tor-browser
+    yazi
+    qbittorrent
   ];
 }

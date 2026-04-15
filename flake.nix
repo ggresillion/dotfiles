@@ -53,7 +53,6 @@
               home-manager.useUserPackages = true;
               home-manager.users = {
                 guillaume = import ./home/guillaume/default.nix;
-                # guillaume_thetreep = import ./home/guillaume_thetreep/default.nix;
               };
               home-manager.extraSpecialArgs = {
                 inherit inputs;
