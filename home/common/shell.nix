@@ -23,7 +23,9 @@
     g = "git";
     d = "docker";
     dc = "docker compose";
-    rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles";
+    nswitch = "sudo nixos-rebuild switch --flake /etc/nixos";
+    nedit = "sudo -E nvim /etc/nixos";
+    nd = "nix develop path:. --command $env.SHELL";
     wrap = lib.getExe inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap;
   };
 

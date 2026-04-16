@@ -1,14 +1,12 @@
 { stdenv, fetchFromGitHub }:
 stdenv.mkDerivation {
-  pname = "noctalia-sddm-theme";
-  version = "0.0.1";
+  name = "noctalia-sddm-theme";
   src = fetchFromGitHub {
-    owner = "mda-dev";
-    repo = "noctalia-sddm-theme";
-    rev = "main";
-    sha256 = "sha256-K1Bj+TZgskUHHbfhmZkuLz+2BWMyFXOpP/aR2GwhzKA=";
+    owner = "mahaveergurjar";
+    repo = "sddm";
+    rev = "noctalia";
+    sha256 = "sha256-q/aw4PLSHhS2jKjRl8F1JIBZn1aBV/QBEDgZ+2Oyo2A=";
   };
-  dontBuild = true;
   installPhase = ''
     mkdir -p $out/share/sddm/themes/noctalia
     cp -r * $out/share/sddm/themes/noctalia

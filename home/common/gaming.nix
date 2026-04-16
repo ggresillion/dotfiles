@@ -6,5 +6,6 @@
     r2modman
     faugus-launcher
     gamescope
+    wowup-cf
   ];
 }
