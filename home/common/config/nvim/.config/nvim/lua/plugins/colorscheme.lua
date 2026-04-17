@@ -1,41 +1,41 @@
 vim.pack.add({
-	-- { src = "https://github.com/catppuccin/nvim" },
-	-- { src = "https://github.com/f-person/auto-dark-mode.nvim" },
+	{ src = "https://github.com/catppuccin/nvim" },
+	{ src = "https://github.com/f-person/auto-dark-mode.nvim" },
 	{ src = "https://github.com/tinted-theming/tinted-nvim" },
 })
 
-require("tinted-nvim").setup({
-	selector = {
-		enabled = true,
-	},
-	ui = {
-		transparent = true,
-	},
-	highlights = {
-		overrides = function(palette)
-			return {
-				LualineNormalA = { fg = palette.base00, bg = palette.base0B },
-			}
-		end,
-	},
-})
-
--- require("catppuccin").setup({
--- 	transparent_background = true,
--- 	flavour = "mocha",
--- 	float = {
+-- require("tinted-nvim").setup({
+-- 	selector = {
+-- 		enabled = true,
+-- 	},
+-- 	ui = {
 -- 		transparent = true,
 -- 	},
+-- 	highlights = {
+-- 		overrides = function(palette)
+-- 			return {
+-- 				LualineNormalA = { fg = palette.base00, bg = palette.base0B },
+-- 			}
+-- 		end,
+-- 	},
 -- })
--- vim.cmd("colorscheme catppuccin")
---
--- require("auto-dark-mode").setup({
--- 	update_interval = 2000,
--- 	set_dark_mode = function()
--- 		vim.cmd("colorscheme catppuccin-mocha")
--- 	end,
--- 	set_light_mode = function()
--- 		vim.cmd("colorscheme catppuccin-latte")
--- 	end,
--- 	fallback = "dark",
--- }
+
+require("catppuccin").setup({
+	transparent_background = true,
+	flavour = "mocha",
+	float = {
+		transparent = true,
+	},
+})
+vim.cmd("colorscheme catppuccin")
+
+require("auto-dark-mode").setup({
+	update_interval = 2000,
+	set_dark_mode = function()
+		vim.cmd("colorscheme catppuccin-mocha")
+	end,
+	set_light_mode = function()
+		vim.cmd("colorscheme catppuccin-latte")
+	end,
+	fallback = "dark",
+})
