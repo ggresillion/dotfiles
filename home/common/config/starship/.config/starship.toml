@@ -24,7 +24,7 @@ $character
 palette = "ansi"
 
 [palettes.ansi]
-os = "1"
+os = "9"
 directory = "3"
 git = "2"
 lang = "6"

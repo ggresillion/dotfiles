@@ -7,7 +7,7 @@ require("lualine").setup({
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
 		globalstatus = true,
-		-- theme = "tinted",
+		theme = "auto",
 	},
 	sections = {
 		lualine_a = { "mode" },
