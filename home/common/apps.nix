@@ -13,5 +13,8 @@
     tor-browser
     yazi
     qbittorrent
+    vlc
+    caprine
+    tinty
   ];
 }
