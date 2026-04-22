@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     disko = {
       url = "github:nix-community/disko/latest";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,7 +56,6 @@
               };
               home-manager.extraSpecialArgs = {
                 inherit inputs;
-                flakeRoot = toString ./.;
               };
             }
           ];

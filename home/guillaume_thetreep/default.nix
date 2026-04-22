@@ -7,7 +7,7 @@
 
   home.username = "guillaume_thetreep";
   home.homeDirectory = "/home/guillaume_thetreep";
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
     slack

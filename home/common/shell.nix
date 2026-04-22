@@ -1,12 +1,8 @@
 {
-  config,
   pkgs,
   inputs,
-  lib,
-  flakeRoot,
   ...
 }:
-
 {
   home.packages = with pkgs; [
     ripgrep
@@ -26,7 +22,6 @@
     nswitch = "sudo nixos-rebuild switch --flake /etc/nixos";
     nedit = "sudo -E nvim /etc/nixos";
     nd = "nix develop path:. --command $env.SHELL";
-    wrap = lib.getExe inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap;
   };
 
   # Direnv
@@ -42,26 +37,22 @@
 
   # Nushell
   programs.nushell.enable = true;
-  xdg.configFile."nushell/autoload".source =
-    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/nushell/.config/nushell/autoload";
+  xdg.configFile."nushell/autoload".source = ./config/nushell/.config/nushell/autoload;
 
   # Starship
-  xdg.configFile."starship.toml".source =
-    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/starship/.config/starship.toml";
+  xdg.configFile."starship.toml".source = ./config/starship/.config/starship.toml;
 
   # Zellij
   programs.zellij = {
     enable = true;
   };
-  xdg.configFile."zellij".source =
-    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/zellij/.config/zellij";
+  xdg.configFile."zellij".source = ./config/zellij/.config/zellij;
 
   # Git
   programs.git = {
     enable = true;
   };
-  xdg.configFile."git/config".source =
-    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/git/.config/git/config";
+  xdg.configFile."git/config".source = ./config/git/.config/git/config;
 
   # Neovim
   programs.neovim = {
@@ -81,19 +72,19 @@
   };
   xdg.configFile = {
     "nvim/init.lua" = {
-      source = "${flakeRoot}/home/common/config/nvim/.config/nvim/init.lua";
+      source = ./config/nvim/.config/nvim/init.lua;
       force = true;
     };
     "nvim/lua" = {
-      source = "${flakeRoot}/home/common/config/nvim/.config/nvim/lua";
+      source = ./config/nvim/.config/nvim/lua;
       force = true;
     };
     "nvim/colors" = {
-      source = "${flakeRoot}/home/common/config/nvim/.config/nvim/colors";
+      source = ./config/nvim/.config/nvim/colors;
       force = true;
     };
     "nvim/snippets" = {
-      source = "${flakeRoot}/home/common/config/nvim/.config/nvim/snippets";
+      source = ./config/nvim/.config/nvim/snippets;
       force = true;
     };
   };
@@ -102,6 +93,5 @@
   programs.wezterm = {
     enable = true;
   };
-  xdg.configFile."wezterm".source =
-    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/wezterm/.config/wezterm";
+  xdg.configFile."wezterm".source = ./config/wezterm/.config/wezterm;
 }

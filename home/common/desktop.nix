@@ -1,8 +1,6 @@
 {
   inputs,
-  config,
   pkgs,
-  flakeRoot,
   ...
 }:
 
@@ -18,10 +16,8 @@
 
   programs.noctalia-shell = {
     enable = true;
-    systemd.enable = true;
     settings = ./noctalia.json;
   };
 
-  xdg.configFile."niri".source =
-    config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/home/common/config/niri/.config/niri";
+  xdg.configFile."niri".source = ./config/niri/.config/niri;
 }

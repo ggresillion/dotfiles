@@ -7,5 +7,9 @@
     faugus-launcher
     gamescope
     wowup-cf
+    steamtinkerlaunch
+    xdotool
+    xorg.xwininfo
+    yad
   ];
 }
