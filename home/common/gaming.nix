@@ -9,7 +9,7 @@
     wowup-cf
     steamtinkerlaunch
     xdotool
-    xorg.xwininfo
+    xwininfo
     yad
   ];
 }

@@ -93,5 +93,5 @@
   programs.wezterm = {
     enable = true;
   };
-  xdg.configFile."wezterm".source = ./config/wezterm/.config/wezterm;
+  xdg.configFile."wezterm/wezterm.lua".source = ./config/wezterm/.config/wezterm/wezterm.lua;
 }
