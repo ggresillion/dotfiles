@@ -1,5 +1,5 @@
 layout {
-    gaps 16
+    gaps 2
     center-focused-column "never"
     preset-column-widths {
         proportion 0.25
@@ -11,7 +11,7 @@ layout {
     default-column-width { proportion 0.5; }
 
     focus-ring {
-        width 4
+        width 2
         active-color "#7fc8ff"
         inactive-color "#505050"
     }
@@ -32,7 +32,7 @@ layout {
 // Noctalia
 window-rule {
   // Rounded corners for a modern look.
-  geometry-corner-radius 20
+  geometry-corner-radius 0
 
   // Clips window contents to the rounded corner boundaries.
   clip-to-geometry true

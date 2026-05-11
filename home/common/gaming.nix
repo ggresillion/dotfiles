@@ -7,9 +7,11 @@
     faugus-launcher
     gamescope
     wowup-cf
+    # custom proton settings
     steamtinkerlaunch
     xdotool
     xwininfo
     yad
+    ###
   ];
 }
