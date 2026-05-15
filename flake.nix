@@ -28,6 +28,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
+    nix-gaming.url = "github:fufexan/nix-gaming";
   };
 
   outputs =

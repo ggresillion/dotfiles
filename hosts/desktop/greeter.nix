@@ -16,6 +16,12 @@ in
     ];
 
     wayland.enable = false;
+
+    settings = {
+      General = {
+        InputMethod = "";
+      };
+    };
   };
 
   environment.systemPackages = [

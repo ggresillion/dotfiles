@@ -10,5 +10,6 @@
     ./greeter.nix
     ./plex.nix
     ./appimage.nix
+    ./vr.nix
   ];
 }

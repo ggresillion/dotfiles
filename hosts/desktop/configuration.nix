@@ -64,6 +64,7 @@
   };
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
   };
 
   # Niri
@@ -72,6 +73,9 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
+
+  # Plasma
+  services.desktopManager.plasma6.enable = true;
 
   # Sound
   services.pipewire = {
@@ -96,7 +100,10 @@
     "flakes"
   ];
   nixpkgs.config.allowUnfree = true;
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = [ ];
+  };
 
   # Basic packages
   environment.systemPackages = with pkgs; [
@@ -104,6 +111,7 @@
     wget
     vim
     xwayland-satellite
+    lxqt.lxqt-policykit
   ];
 
   system.stateVersion = "26.05";

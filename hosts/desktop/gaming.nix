@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # Disabled until fixed
@@ -8,7 +8,8 @@
   programs.steam = {
     enable = true;
     # package = pkgs.millennium-steam;
-    gamescopeSession.enable = true;
+    # gamescopeSession.enable = true;
+    remotePlay.openFirewall = true;
   };
 
   programs.gamemode.enable = true;
