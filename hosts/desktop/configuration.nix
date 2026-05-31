@@ -11,12 +11,10 @@
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
-      "https://cache.nixos-cuda.org"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
     ];
   };
 
@@ -34,6 +32,12 @@
   # Networking
   networking.hostName = "guillaume-desktop";
   networking.networkmanager.enable = true;
+
+  # Speed up boot
+  systemd.services.NetworkManager-wait-online.enable = false;
+  services.timesyncd.enable = false;
+  services.chrony.enable = true;
+  systemd.oomd.enable = false;
 
   # Time & Locale
   time.timeZone = "Europe/Paris";
@@ -55,17 +59,14 @@
     };
   };
 
-  # NVIDIA
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-  };
+  # AMD
+  services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
+  # enable tweaking
+  hardware.amdgpu.overdrive.enable = true;
 
   # Niri
   programs.niri.enable = true;
@@ -102,7 +103,51 @@
   nixpkgs.config.allowUnfree = true;
   programs.nix-ld = {
     enable = true;
-    libraries = [ ];
+    libraries = with pkgs; [
+      # GL / EGL / Vulkan
+      libGL
+      libGLU
+      libglvnd # libEGL.so.1
+      vulkan-loader
+      vulkan-validation-layers
+
+      # X11 family
+      libx11 # also provides libX11-xcb.so.1
+      libxext
+      libxrender
+      libxi
+      libxfixes
+      libxcursor
+      libxrandr
+      libxinerama
+      libxcb
+      libsm
+      libice
+
+      # xcb extras
+      libxkbcommon
+      xcb-util-cursor
+
+      # C / C++ runtimes
+      stdenv.cc.cc.lib # libstdc++.so.6
+      libgcc.lib # libgcc_s.so.1
+
+      # Core libs
+      zlib
+      glib # libglib-2.0.so.0 + libgthread-2.0.so.0
+      dbus # libdbus-1.so.3
+
+      # Fonts
+      fontconfig
+      freetype
+
+      # Audio
+      alsa-lib
+      pulseaudio
+
+      # System
+      udev
+    ];
   };
 
   # Basic packages

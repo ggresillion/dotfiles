@@ -8,7 +8,17 @@ local function read_file(path)
 	return s
 end
 
-local scheme = read_file(os.getenv("HOME") .. "/.local/share/tinted-theming/tinty/artifacts/current_scheme")
+local tinty_scheme = read_file(os.getenv("HOME") .. "/.local/share/tinted-theming/tinty/artifacts/current_scheme")
+
+local noctalia_colors = os.getenv("HOME") .. "/.config/wezterm/colors/Noctalia.toml"
+local scheme = tinty_scheme
+if not scheme then
+	local f = io.open(noctalia_colors, "r")
+	if f then
+		f:close()
+		scheme = "Noctalia"
+	end
+end
 
 local config = {
 	enable_wayland = false,

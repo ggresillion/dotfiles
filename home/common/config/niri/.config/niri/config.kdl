@@ -5,5 +5,5 @@ include "rules.kdl"
 include "settings.kdl"
 include "layout.kdl"
 
-include "./noctalia.kdl"
+include "noctalia.kdl"
 

@@ -6,16 +6,18 @@ in
 {
   services.xserver.enable = true;
 
+  services.displayManager.defaultSession = "niri";
+
   services.displayManager.sddm = {
     enable = true;
-    theme = "noctalia";
+    theme = "breeze";
 
     extraPackages = [
-      noctaliaTheme
-      pkgs.qt6.qt5compat
+      # noctaliaTheme
+      # pkgs.qt6.qt5compat
     ];
 
-    wayland.enable = false;
+    wayland.enable = true;
 
     settings = {
       General = {
@@ -23,8 +25,4 @@ in
       };
     };
   };
-
-  environment.systemPackages = [
-    noctaliaTheme
-  ];
 }

@@ -8,9 +8,14 @@
   services.wivrn = {
     enable = true;
     openFirewall = true;
-    package = (pkgs.wivrn.override { cudaSupport = true; });
+    package = pkgs.wivrn;
     autoStart = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    opencomposite
+    xrizer
+  ];
 
   programs.steam.package = lib.mkDefault (
     pkgs.steam.override (prev: {

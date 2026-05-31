@@ -16,5 +16,10 @@
 
   environment.systemPackages = with pkgs; [
     mangohud
+    winetricks
+    protontricks
+    wineWow64Packages.full
   ];
+
+  services.lact.enable = true;
 }
