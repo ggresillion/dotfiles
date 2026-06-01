@@ -15,6 +15,5 @@
     qbittorrent
     vlc
     caprine
-    tinty
   ];
 }

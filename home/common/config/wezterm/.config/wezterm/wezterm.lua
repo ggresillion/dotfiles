@@ -8,21 +8,9 @@ local function read_file(path)
 	return s
 end
 
-local tinty_scheme = read_file(os.getenv("HOME") .. "/.local/share/tinted-theming/tinty/artifacts/current_scheme")
-
-local noctalia_colors = os.getenv("HOME") .. "/.config/wezterm/colors/Noctalia.toml"
-local scheme = tinty_scheme
-if not scheme then
-	local f = io.open(noctalia_colors, "r")
-	if f then
-		f:close()
-		scheme = "Noctalia"
-	end
-end
-
 local config = {
 	enable_wayland = false,
-	color_scheme = scheme or "base16-catppuccin-mocha",
+	color_scheme = "Noctalia",
 	font = wezterm.font("JetBrains Mono"),
 	font_size = 15,
 	window_padding = {
@@ -38,6 +26,11 @@ local config = {
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE",
 	max_fps = 120,
 }
+
+local tinty_scheme = read_file(os.getenv("HOME") .. "/.local/share/tinted-theming/tinty/artifacts/current_scheme")
+if tinty_scheme then
+	config.color_scheme = tinty_scheme
+end
 
 if wezterm.target_triple:find("darwin") then
 	config.window_decorations = "RESIZE"
