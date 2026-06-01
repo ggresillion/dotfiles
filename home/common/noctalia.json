@@ -1,10 +1,10 @@
 {
-  "settingsVersion": 57,
+  "settingsVersion": 59,
   "bar": {
     "barType": "simple",
     "position": "left",
     "monitors": [],
-    "density": "default",
+    "density": "comfortable",
     "showOutline": false,
     "showCapsule": false,
     "capsuleOpacity": 1,
@@ -13,8 +13,8 @@
     "contentPadding": 2,
     "fontScale": 1,
     "enableExclusionZoneInset": true,
-    "backgroundOpacity": 0.93,
-    "useSeparateOpacity": false,
+    "backgroundOpacity": 0,
+    "useSeparateOpacity": true,
     "marginVertical": 4,
     "marginHorizontal": 4,
     "frameThickness": 8,
@@ -30,6 +30,7 @@
         {
           "colorizeDistroLogo": false,
           "colorizeSystemIcon": "none",
+          "colorizeSystemText": "none",
           "customIconPath": "",
           "enableColorization": false,
           "icon": "noctalia",
@@ -39,7 +40,8 @@
         {
           "displayMode": "onhover",
           "iconColor": "none",
-          "id": "Network",
+          "id": "Volume",
+          "middleClickCommand": "pwvucontrol || pavucontrol",
           "textColor": "none"
         },
         {
@@ -47,6 +49,54 @@
           "iconColor": "none",
           "id": "Bluetooth",
           "textColor": "none"
+        },
+        {
+          "displayMode": "onhover",
+          "iconColor": "none",
+          "id": "Network",
+          "textColor": "none"
+        },
+        {
+          "compactMode": false,
+          "hideMode": "hidden",
+          "hideWhenIdle": false,
+          "id": "MediaMini",
+          "maxWidth": 145,
+          "panelShowAlbumArt": true,
+          "scrollingMode": "hover",
+          "showAlbumArt": true,
+          "showArtistFirst": true,
+          "showProgressRing": true,
+          "showVisualizer": false,
+          "textColor": "none",
+          "useFixedWidth": false,
+          "visualizerType": "linear"
+        },
+        {
+          "defaultSettings": {},
+          "id": "plugin:kde-connect"
+        },
+        {
+          "compactMode": true,
+          "diskPath": "/",
+          "iconColor": "none",
+          "id": "SystemMonitor",
+          "showCpuCores": false,
+          "showCpuFreq": false,
+          "showCpuTemp": true,
+          "showCpuUsage": true,
+          "showDiskAvailable": false,
+          "showDiskUsage": false,
+          "showDiskUsageAsPercent": false,
+          "showGpuTemp": false,
+          "showLoadAverage": false,
+          "showMemoryAsPercent": false,
+          "showMemoryUsage": true,
+          "showNetworkStats": false,
+          "showSwapUsage": false,
+          "textColor": "none",
+          "useMonospaceFont": true,
+          "usePadding": false
         }
       ],
       "center": [
@@ -66,6 +116,7 @@
           "occupiedColor": "secondary",
           "pillSize": 0.6,
           "showApplications": false,
+          "showApplicationsHover": false,
           "showBadge": true,
           "showLabelsOnlyWhenOccupied": true,
           "unfocusedIconsOpacity": 1
@@ -73,13 +124,10 @@
       ],
       "right": [
         {
-          "deviceNativePath": "__default__",
-          "displayMode": "graphic-clean",
-          "hideIfIdle": false,
-          "hideIfNotDetected": true,
-          "id": "Battery",
-          "showNoctaliaPerformance": false,
-          "showPowerProfiles": false
+          "colorName": "primary",
+          "hideWhenIdle": false,
+          "id": "AudioVisualizer",
+          "width": 200
         },
         {
           "clockColor": "none",
@@ -89,10 +137,6 @@
           "id": "Clock",
           "tooltipFormat": "HH:mm ddd, MMM dd",
           "useCustomFont": false
-        },
-        {
-          "defaultSettings": {},
-          "id": "plugin:kde-connect"
         },
         {
           "blacklist": [],
@@ -595,6 +639,18 @@
       {
         "enabled": true,
         "id": "kcolorscheme"
+      },
+      {
+        "enabled": true,
+        "id": "yazi"
+      },
+      {
+        "enabled": true,
+        "id": "starship"
+      },
+      {
+        "enabled": true,
+        "id": "btop"
       }
     ],
     "enableUserTheming": false
