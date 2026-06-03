@@ -187,11 +187,11 @@
       },
       "locked": {
         "dir": "packages/nix",
-        "lastModified": 1780238784,
-        "narHash": "sha256-eQI1eEBP0AE4TodksOa1zJF1r5L+kPm8njvxh48bAkg=",
+        "lastModified": 1780329986,
+        "narHash": "sha256-wjIuevAwVZ+MyXxjGLu2yVMGtx6MIPh46eecmURK55I=",
         "owner": "SteamClientHomebrew",
         "repo": "Millennium",
-        "rev": "7931a9ebdc224f8346eca9ba7e2078fbfa80a7cf",
+        "rev": "9ece89fdb35d3b791d6e3cd18df013943f42a081",
         "type": "github"
       },
       "original": {
