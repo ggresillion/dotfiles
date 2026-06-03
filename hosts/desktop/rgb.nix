@@ -10,6 +10,12 @@ let
       COLOR="000000"
     fi
 
+    # Retry until openrgb daemon is ready (it starts slowly at boot)
+    for attempt in $(seq 1 10); do
+      ${pkgs.openrgb}/bin/openrgb --device 0 --mode static --color "$COLOR" 2>/dev/null && break
+      sleep 1
+    done
+
     # Fire all devices in parallel
     for i in 0 1 2; do
       ${pkgs.openrgb}/bin/openrgb --device $i --mode static --color "$COLOR" &
