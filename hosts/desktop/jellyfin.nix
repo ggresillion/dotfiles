@@ -1,6 +1,6 @@
 { ... }:
 {
-  services.plex = {
+  services.jellyfin = {
     enable = true;
     openFirewall = true;
   };

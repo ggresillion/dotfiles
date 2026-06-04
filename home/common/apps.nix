@@ -15,5 +15,9 @@
     qbittorrent
     vlc
     caprine
+    btop
+    opencode
+    amdgpu_top
+    fastfetch
   ];
 }
