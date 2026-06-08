@@ -20,7 +20,8 @@
     d = "docker";
     dc = "docker compose";
     nswitch = "sudo nixos-rebuild switch --flake /etc/nixos";
-    nedit = "sudo -E nvim /etc/nixos";
+    nupdate = "nix flake update /etc/nixos and sudo nixos-rebuild switch --flake /etc/nixos";
+    nedit = "nvim /etc/nixos";
     nd = "nix develop path:. --command $env.SHELL";
   };
 

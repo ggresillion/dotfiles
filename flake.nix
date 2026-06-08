@@ -19,18 +19,15 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixwrap.url = "github:rti/nixwrap";
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.noctalia-qs.follows = "noctalia-qs";
-    };
-    noctalia-qs = {
-      url = "github:noctalia-dev/noctalia-qs";
+      url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     nix-gaming.url = "github:fufexan/nix-gaming";
-    nix-index-database.url = "github:nix-community/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

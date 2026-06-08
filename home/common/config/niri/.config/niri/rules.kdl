@@ -16,8 +16,8 @@ window-rule {
     block-out-from "screen-capture"
 }
 
-window-rule {
-    match is-active=false
-    opacity 0.90
-}
+// window-rule {
+//     match is-active=false
+//     opacity 0.90
+// }
 

@@ -1,0 +1,197 @@
+[audio]
+enable_overdrive = false
+enable_sounds = false
+sound_volume = 0.5
+
+[bar.main]
+auto_hide = false
+background_opacity = 0.0
+capsule = false
+center = [ "workspaces" ]
+end = [ "media", "tray", "clock" ]
+margin_edge = 4
+margin_ends = 0
+padding = 14
+position = "left"
+radius = 0
+reserve_space = true
+scale = 1.0
+shadow = true
+start = [ "control-center", "volume", "bluetooth", "network" ]
+thickness = 32
+widget_spacing = 6
+
+[brightness]
+enable_ddcutil = false
+
+[config]
+
+[desktop_widgets]
+enabled = false
+
+[dock]
+auto_hide = false
+enabled = false
+pinned = []
+position = "bottom"
+reserve_space = false
+show_running = true
+
+[hooks]
+
+[idle.behavior.lock]
+enabled = false
+timeout = 600
+
+[idle.behavior.screen-off]
+enabled = false
+timeout = 660
+
+[keybinds]
+cancel = [ "escape" ]
+down = [ "down" ]
+left = [ "left" ]
+right = [ "right" ]
+up = [ "up" ]
+validate = [ "return", "kp_enter" ]
+
+[location]
+address = "Saint-Cannat"
+auto_locate = false
+
+[lockscreen]
+blur_intensity = 0.5
+blurred_desktop = false
+tint_intensity = 0.29999999999999999
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 2560.0
+    cy = 1317.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "login_box"
+
+[nightlight]
+enabled = false
+force = false
+temperature_day = 6500
+temperature_night = 4000
+
+[notification]
+background_opacity = 0.96999999999999997
+enable_daemon = true
+layer = "top"
+scale = 1.0
+show_actions = true
+show_app_name = true
+
+[osd]
+orientation = "horizontal"
+position = "top_right"
+scale = 1.0
+
+    [osd.kinds]
+    bluetooth = true
+    brightness = true
+    caffeine = true
+    dnd = true
+    keyboard_layout = true
+    lock_keys = true
+    power_profile = true
+    volume = true
+    volume_input = true
+    volume_output = true
+    wifi = true
+
+[shell]
+avatar_path = "/home/guillaume/.face"
+clipboard_auto_paste = "auto"
+clipboard_enabled = true
+clipboard_history_max_entries = 50
+font_family = "Sans Serif"
+password_style = "default"
+polkit_agent = false
+settings_show_advanced = false
+shared_gl_context = true
+telemetry_enabled = false
+time_format = "{:%H:%M}"
+ui_scale = 1.0
+
+    [shell.animation]
+    enabled = true
+    speed = 1.0
+
+    [shell.panel]
+    borders = true
+    control_center_placement = "attached"
+    launcher_placement = "centered"
+    open_near_click_control_center = false
+    open_near_click_launcher = false
+    shadow = true
+
+    [shell.shadow]
+    alpha = 0.55000000000000004
+    direction = "down"
+
+[system.monitor]
+cpu_poll_seconds = 2.0
+disk_poll_seconds = 10.0
+enabled = true
+gpu_poll_seconds = 5.0
+memory_poll_seconds = 2.0
+network_poll_seconds = 3.0
+
+[templates]
+
+[theme]
+mode = "dark"
+source = "wallpaper"
+wallpaper_scheme = "m3-rainbow"
+
+    [theme.templates]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "niri", "qt", "starship", "wezterm" ]
+    community_ids = [ "zen-browser", "neovim", "discord", "steam", "yazi" ]
+    enable_builtin_templates = true
+    enable_community_templates = true
+
+[wallpaper]
+directory = "/home/guillaume/Pictures/Wallpapers"
+edge_smoothness = 0.050000000000000003
+enabled = true
+fill_color = "#000000"
+fill_mode = "crop"
+transition = [ "random" ]
+transition_duration = 1500
+transition_on_startup = false
+
+    [wallpaper.automation]
+    enabled = true
+    order = "random"
+    recursive = true
+
+    [wallpaper.default]
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_3qrol9.jpg"
+
+    [wallpaper.last]
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_3qrol9.jpg"
+
+    [wallpaper.monitors.DP-1]
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_3qrol9.jpg"
+
+[weather]
+effects = true
+enabled = true
+refresh_minutes = 30
+unit = "celsius"

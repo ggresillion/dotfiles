@@ -6,17 +6,27 @@
 
 {
 
-  # Cache
+  # Cache & performance
   nix.settings = {
+    max-jobs = "auto";
+    max-substitution-jobs = 64;
+    auto-optimise-store = true;
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
+      "https://neovim-nightly-overlay.cachix.org"
+      "https://nix-gaming.cachix.org"
+      "https://noctalia.cachix.org"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "neovim-nightly-overlay.cachix.org-1:D4E4bOCHkNxK7s6h3PF0bYmeHXHpOiS6bqXN5FrFSrw="
+      "nix-gaming.cachix.org-1:n3XmE2zu6wBBw3C0FYdxe6G6efzHlKj5VYMfGJb2b4s="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
+  nix.optimise.automatic = true;
 
   # Boot
   boot.loader = {
@@ -32,6 +42,7 @@
   # Networking
   networking.hostName = "guillaume-desktop";
   networking.networkmanager.enable = true;
+  networking.networkmanager.dns = "dnsmasq";
 
   # Speed up boot
   systemd.services.NetworkManager-wait-online.enable = false;
@@ -99,6 +110,7 @@
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
+    "ca-derivations"
   ];
   nixpkgs.config.allowUnfree = true;
   programs.nix-ld = {
