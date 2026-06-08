@@ -5,10 +5,11 @@ vim.opt.scrolloff = 10 -- Keep 10 lines above/below cursor
 vim.opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
 vim.opt.exrc = true -- Enable project config
 vim.opt.secure = false -- Disable security for project config
+vim.opt.shell = "/bin/sh" -- Prevent weird shells to cause issues
 
 -- visuals
 vim.opt.termguicolors = true -- Enable 24-bit colors
-vim.opt.winborder = "rounded"
+vim.opt.winborder = "rounded" -- Rounded borders
 
 -- indent
 vim.opt.tabstop = 2 -- Tab width
@@ -35,6 +36,8 @@ vim.opt.ignorecase = true -- Case insensitive search
 vim.opt.smartcase = true -- Case sensitive if uppercase in search
 vim.opt.hlsearch = true -- Highlight search results
 vim.opt.incsearch = true -- Show matches as you type
+vim.opt.wildignore:append("**/vendor/**")
+vim.opt.wildignore:append("**/node_modules/**") -- Ignore some directories
 
 -- folding
 vim.opt.foldcolumn = "0"

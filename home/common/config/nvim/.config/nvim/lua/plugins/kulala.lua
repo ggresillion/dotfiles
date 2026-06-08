@@ -9,4 +9,8 @@ require("kulala").setup({
 	ui = {
 		max_response_size = 300000,
 	},
+	lsp = {
+		filetypes = { "http", "rest", "json", "yaml", "bruno", "javascript" },
+		formatter = true,
+	},
 })
