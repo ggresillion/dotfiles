@@ -11,6 +11,7 @@
     carapace
     starship
     zoxide
+  ] ++ pkgs.lib.optionals (!pkgs.stdenv.isDarwin) [
     inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap
   ];
 
@@ -24,6 +25,7 @@
     nedit = "nvim /etc/nixos";
     nd = "nix develop path:. --command $env.SHELL";
   };
+  # Note: nswitch/nedit overridden in darwin home config
 
   # Direnv
   programs.direnv = {
@@ -90,8 +92,8 @@
     };
   };
 
-  # WezTerm
-  programs.wezterm = {
+  # WezTerm — package managed by homebrew on darwin
+  programs.wezterm = pkgs.lib.mkIf (!pkgs.stdenv.isDarwin) {
     enable = true;
   };
   xdg.configFile."wezterm/wezterm.lua" = {

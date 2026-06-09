@@ -16,6 +16,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixwrap.url = "github:rti/nixwrap";
     noctalia = {
@@ -33,6 +38,8 @@
   outputs =
     {
       nixpkgs,
+      nixpkgs-darwin,
+      nix-darwin,
       home-manager,
       nix-index-database,
       ...
@@ -56,6 +63,33 @@
               home-manager.users = {
                 guillaume = import ./home/guillaume/default.nix;
               };
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+              };
+            }
+          ];
+        };
+
+      darwinConfigurations.macbook =
+        let
+          system = "aarch64-darwin";
+        in
+        nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          pkgs = import nixpkgs-darwin {
+            inherit system;
+            config.allowUnfree = true;
+          };
+
+          modules = [
+            ./hosts/mac
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "bak";
+              home-manager.users.guillaume = import ./home/guillaume_mac/default.nix;
               home-manager.extraSpecialArgs = {
                 inherit inputs;
               };
