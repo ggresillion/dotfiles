@@ -19,7 +19,7 @@
     g = "git";
     d = "docker";
     dc = "docker compose";
-    nswitch = "sudo nixos-rebuild switch --flake /etc/nixos";
+    nswitch = "sudo nixos-rebuild switch --flake /home/guillaume/nixos";
     nupdate = "nix flake update /etc/nixos and sudo nixos-rebuild switch --flake /etc/nixos";
     nedit = "nvim /etc/nixos";
     nd = "nix develop path:. --command $env.SHELL";
@@ -41,7 +41,10 @@
   xdg.configFile."nushell/autoload".source = ./config/nushell/.config/nushell/autoload;
 
   # Starship
-  xdg.configFile."starship.toml".source = ./config/starship/.config/starship.toml;
+  xdg.configFile."starship.toml" = {
+    source = ./config/starship/.config/starship.toml;
+    force = true;
+  };
 
   # Zellij
   programs.zellij = {
