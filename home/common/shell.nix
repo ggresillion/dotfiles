@@ -40,11 +40,11 @@
 
   # Nushell
   programs.nushell.enable = true;
-  xdg.configFile."nushell/autoload".source = ./config/nushell/.config/nushell/autoload;
+  xdg.configFile."nushell/autoload".source = ./config/nushell/autoload;
 
   # Starship
   xdg.configFile."starship.toml" = {
-    source = ./config/starship/.config/starship.toml;
+    source = ./config/starship/starship.toml;
     force = true;
   };
 
@@ -52,13 +52,13 @@
   programs.zellij = {
     enable = true;
   };
-  xdg.configFile."zellij".source = ./config/zellij/.config/zellij;
+  xdg.configFile."zellij".source = ./config/zellij;
 
   # Git
   programs.git = {
     enable = true;
   };
-  xdg.configFile."git/config".source = ./config/git/.config/git/config;
+  xdg.configFile."git/config".source = ./config/git/config;
 
   # Neovim
   programs.neovim = {
@@ -78,19 +78,19 @@
   };
   xdg.configFile = {
     "nvim/init.lua" = {
-      source = ./config/nvim/.config/nvim/init.lua;
+      source = ./config/nvim/init.lua;
       force = true;
     };
     "nvim/lua" = {
-      source = ./config/nvim/.config/nvim/lua;
+      source = ./config/nvim/lua;
       force = true;
     };
     "nvim/colors" = {
-      source = ./config/nvim/.config/nvim/colors;
+      source = ./config/nvim/colors;
       force = true;
     };
     "nvim/snippets" = {
-      source = ./config/nvim/.config/nvim/snippets;
+      source = ./config/nvim/snippets;
       force = true;
     };
   };
@@ -100,7 +100,7 @@
     enable = true;
   };
   xdg.configFile."wezterm/wezterm.lua" = {
-    source = ./config/wezterm/.config/wezterm/wezterm.lua;
+    source = ./config/wezterm/wezterm.lua;
     force = true;
   };
 }

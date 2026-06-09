@@ -32,7 +32,7 @@
         (file: {
           name = "niri/${file}";
           value = {
-            source = ./config/niri/.config/niri/${file};
+            source = ./config/niri/${file};
             force = true;
           };
         })

@@ -1,27 +1,15 @@
-.PHONY: all
-all:
-	stow --target=$$HOME aerospace
-	stow --target=$$HOME fish
-	stow --target=$$HOME git
-	stow --target=$$HOME hypr
-	stow --target=$$HOME niri
-	stow --target=$$HOME nushell
-	stow --target=$$HOME nvim
-	stow --target=$$HOME starship
-	stow --target=$$HOME wezterm
-	stow --target=$$HOME zellij
-	stow --target=$$HOME zsh
+XDG_CONFIG_HOME ?= $(HOME)/.config
 
-.PHONY: delete
+DIRS = fish git hypr niri nushell nvim wezterm zellij
+FILES = starship
+HOME_DIRS = aerospace zsh
+
+all:
+	for d in $(DIRS); do stow --target=$(XDG_CONFIG_HOME)/$$d $$d; done
+	for d in $(FILES); do stow --target=$(XDG_CONFIG_HOME) $$d; done
+	for d in $(HOME_DIRS); do stow --target=$(HOME) $$d; done
+
 delete:
-	stow -D aerospace
-	stow -D fish
-	stow -D git
-	stow -D hypr
-	stow -D niri
-	stow -D nushell
-	stow -D nvim
-	stow -D starship
-	stow -D wezterm
-	stow -D zellij
-	stow -D zsh
+	for d in $(DIRS); do stow -D --target=$(XDG_CONFIG_HOME)/$$d $$d; done
+	for d in $(FILES); do stow -D --target=$(XDG_CONFIG_HOME) $$d; done
+	for d in $(HOME_DIRS); do stow -D --target=$(HOME) $$d; done

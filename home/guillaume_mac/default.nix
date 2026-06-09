@@ -26,7 +26,7 @@
   };
 
   # Aerospace config (window manager)
-  home.file.".aerospace.toml".source = ../common/config/aerospace/.config/.aerospace.toml;
+  home.file.".aerospace.toml".source = ../common/config/aerospace/.aerospace.toml;
 
   # Remove stale symlink left by older home-manager before copyApps creates real dir
   home.activation.removeHomeManagerAppsLink = lib.hm.dag.entryBefore ["copyApps"] ''
