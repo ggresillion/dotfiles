@@ -162,7 +162,7 @@ wallpaper_scheme = "m3-rainbow"
 
     [theme.templates]
     builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "niri", "qt", "wezterm" ]
-    community_ids = [ "zen-browser", "neovim", "discord", "steam", "yazi" ]
+    community_ids = [ "zen-browser", "neovim", "vicinae", "discord", "steam", "yazi" ]
     enable_builtin_templates = true
     enable_community_templates = true
 
@@ -182,13 +182,13 @@ transition_on_startup = false
     recursive = true
 
     [wallpaper.default]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_vp5qg8.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_g8q88q.jpg"
 
     [wallpaper.last]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_vp5qg8.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_g8q88q.jpg"
 
     [wallpaper.monitors.DP-1]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_vp5qg8.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_g8q88q.jpg"
 
 [weather]
 effects = true

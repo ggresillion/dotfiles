@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   pkgs,
   lib,
@@ -46,7 +47,13 @@
           "layout.kdl"
         ]
     )
-    // { };
+    // {
+      "qt6ct/qt6ct.conf".text = ''
+        [Appearance]
+        style=Fusion
+        color_scheme_path=${config.home.homeDirectory}/.config/qt6ct/colors/noctalia.conf
+      '';
+    };
 
   home.activation.cleanNiriConfig = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
     if [ -L "$HOME/.config/niri" ]; then
@@ -59,4 +66,6 @@
     touch "$HOME/.config/niri/noctalia.kdl"
     chmod u+w "$HOME/.config/niri" "$HOME/.config/niri/noctalia.kdl"
   '';
+
+  programs.vicinae.enable = true;
 }

@@ -7,6 +7,7 @@
       pkgs.icu
       pkgs.libxcrypt-legacy
       pkgs.python312
+      pkgs.zstd
     ];
   };
 }

@@ -153,7 +153,6 @@
       zlib
       glib # libglib-2.0.so.0 + libgthread-2.0.so.0
       dbus # libdbus-1.so.3
-
       # Fonts
       fontconfig
       freetype
