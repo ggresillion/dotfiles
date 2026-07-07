@@ -19,5 +19,6 @@
     opencode
     amdgpu_top
     fastfetch
+    mpvpaper
   ];
 }

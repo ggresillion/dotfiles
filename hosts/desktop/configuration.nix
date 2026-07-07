@@ -10,7 +10,6 @@
   nix.settings = {
     max-jobs = "auto";
     max-substitution-jobs = 64;
-    auto-optimise-store = true;
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
@@ -20,7 +19,7 @@
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nix-gaming.cachix.org-1:n3XmE2zu6wBBw3C0FYdxe6G6efzHlKj5VYMfGJb2b4s="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
@@ -90,6 +89,9 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
+
+  # Prefer Wayland for electron-based apps (Vesktop, VSCode, etc.)
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Plasma
   services.desktopManager.plasma6.enable = true;

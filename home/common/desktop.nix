@@ -20,6 +20,9 @@
     # Required for Qt/KDE apps (Dolphin, Gwenview, etc.) to use
     # Noctalia's generated dark theme via qt6ct
     QT_QPA_PLATFORMTHEME = "qt6ct";
+    # Prefer Wayland, fallback to X11 if unavailable
+    GDK_BACKEND = "wayland,x11";
+    SDL_VIDEODRIVER = "wayland,x11";
   };
 
   programs.noctalia = {

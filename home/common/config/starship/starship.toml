@@ -1,21 +1,19 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[](fg:os)\
+[ ](fg:os)\
 $os\
 [ ](fg:os bg:os)\
 $username\
-[](fg:os bg:directory)\
+[](fg:os bg:directory)\
 $directory\
-[](fg:directory bg:git)\
+[](fg:directory bg:git)\
 $git_branch$git_status\
-[](fg:git bg:lang)\
 $c$rust$golang$nodejs$php$java$kotlin$haskell$python\
-[](fg:lang bg:env)\
 $conda$nix_shell\
-[](fg:env bg:time)\
+[](fg:env bg:time)\
 $time\
-[ ](fg:time)\
+[ ](fg:time)\
 $cmd_duration\
 $line_break\
 $character
@@ -38,27 +36,27 @@ text = "0"
 [os]
 disabled = false
 style = "bg:os fg:text"
-
 [os.symbols]
-Windows = ""
+Windows = ""
 Ubuntu = "󰕈"
-SUSE = ""
+SUSE = ""
 Raspbian = "󰐿"
 Mint = "󰣭"
 Macos = "󰀵"
-Manjaro = ""
+Manjaro = ""
 Linux = "󰌽"
 Gentoo = "󰣨"
 Fedora = "󰣛"
-Alpine = ""
-Amazon = ""
-Android = ""
+Alpine = ""
+Amazon = ""
+Android = ""
 Arch = "󰣇"
 Artix = "󰣇"
-CentOS = ""
+CentOS = ""
 Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
+NixOS = ""
 
 # -------------------
 # USERNAME
@@ -77,22 +75,20 @@ style = "bg:directory fg:text"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
-
 [directory.substitutions]
 "Documents" = "󰈙 "
-"Downloads" = " "
+"Downloads" = " "
 "Music" = "󰝚 "
-"Pictures" = " "
+"Pictures" = " "
 "Developer" = "󰲋 "
 
 # -------------------
 # GIT
 # -------------------
 [git_branch]
-symbol = ""
+symbol = ""
 style = "bg:git"
 format = '[[ $symbol $branch ](fg:text bg:git)]($style)'
-
 [git_status]
 disabled = true
 style = "bg:git"
@@ -100,73 +96,71 @@ format = '[[($all_status$ahead_behind )](fg:text bg:git)]($style)'
 
 # -------------------
 # LANGUAGES
+# Each module carries its own entry separator (fg:git bg:lang).
+# If a module doesn't activate, neither the arrow nor its content prints,
+# so an empty lang cluster leaves no orphan arrow.
+# Modules share bg:lang so back-to-back arrows (if multiple langs detected)
+# blend rather than clash.
 # -------------------
-[nodejs]
-symbol = ""
-style = "bg:lang"
-format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
-
 [c]
-symbol = " "
+symbol = " "
 style = "bg:lang"
-format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
-
+format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [rust]
-symbol = ""
+symbol = ""
 style = "bg:lang"
-format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
-
+format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [golang]
-symbol = ""
+symbol = ""
 style = "bg:lang"
-format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
-
+format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+[nodejs]
+symbol = ""
+style = "bg:lang"
+format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [php]
-symbol = ""
+symbol = ""
 style = "bg:lang"
-format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
-
+format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [java]
-symbol = " "
+symbol = " "
 style = "bg:lang"
-format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
-
+format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [kotlin]
-symbol = ""
+symbol = ""
 style = "bg:lang"
-format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
-
+format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [haskell]
-symbol = ""
+symbol = ""
 style = "bg:lang"
-format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
-
+format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [python]
-symbol = ""
+symbol = ""
 style = "bg:lang"
-format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:text bg:lang)]($style)'
+format = '[](fg:git bg:lang)[[ $symbol( $version)(\(#$virtualenv\)) ](fg:text bg:lang)]($style)'
 
 # -------------------
 # CONTAINERS / ENV
+# Same self-contained separator approach. Entry arrow assumes lang's bg
+# as its fg, which is a reasonable approximation whether or not a
+# language segment actually rendered (both fg:lang here).
 # -------------------
 [docker_context]
-symbol = ""
+symbol = ""
 style = "bg:env"
-format = '[[ $symbol( $context) ](fg:text bg:env)]($style)'
-
+format = '[](fg:lang bg:env)[[ $symbol( $context) ](fg:text bg:env)]($style)'
 [conda]
-symbol = "  "
+symbol = "  "
 style = "fg:text bg:env"
-format = '[$symbol$environment ]($style)'
-ignore_base = false
-
+format = '[](fg:lang bg:env)[$symbol$environment ]($style)'
+ignore_base = true
 [nix_shell]
 disabled = false
 style = "fg:text bg:env"
 impure_msg = "🛠️"
 pure_msg = "🧪"
 unknown_msg = "❓"
-format = '[ $state $name ]($style)'
+format = '[](fg:lang bg:env)[ $state $name ]($style)'
 
 # -------------------
 # TIME
@@ -175,14 +169,14 @@ format = '[ $state $name ]($style)'
 disabled = false
 time_format = "%R"
 style = "bg:time"
-format = '[[  $time ](fg:text bg:time)]($style)'
+format = '[[  $time ](fg:text bg:time)]($style)'
 
 # -------------------
 # CMD DURATION
 # -------------------
 [cmd_duration]
 show_milliseconds = true
-format = " in $duration "
+format = " in $duration "
 style = "bg:time"
 disabled = false
 show_notifications = true
@@ -193,7 +187,6 @@ min_time_to_notify = 45000
 # -------------------
 [line_break]
 disabled = false
-
 [character]
 disabled = true
 success_symbol = '[❯](bold fg:lang)'

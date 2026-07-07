@@ -4,6 +4,12 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    nixwrap.url = "github:rti/nixwrap";
+    noctalia.url = "github:noctalia-dev/noctalia";
+    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     disko = {
       url = "github:nix-community/disko/latest";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,19 +22,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nixwrap.url = "github:rti/nixwrap";
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
-    nix-gaming.url = "github:fufexan/nix-gaming";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
