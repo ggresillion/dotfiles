@@ -16,7 +16,7 @@ def zellij_update_tabname_prompt [] {
             } else {
                 $git_root_super
             };
-            if (($git_root | str downcase) != ($current_dir | str downcase)) {
+            if (($git_root | str lowercase) != ($current_dir | str lowercase)) {
                 let repo_name = ($git_root | path parse | get stem);
                 let subpath = $current_dir | str replace $git_root "";
                 $tab_name = $"($repo_name):($subpath)"

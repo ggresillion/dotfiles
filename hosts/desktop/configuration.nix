@@ -1,8 +1,13 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
+
+let
+  limineTheme = builtins.readFile "${inputs.catppuccin-limine}/themes/mocha/catppuccin-mocha-blue.conf";
+in
 
 {
 
@@ -27,12 +32,23 @@
 
   # Boot
   boot.loader = {
-    grub = {
+    limine = {
       enable = true;
       efiSupport = true;
       efiInstallAsRemovable = true;
-      device = "nodev";
-      useOSProber = true;
+      maxGenerations = 2;
+      secureBoot = {
+        enable = true;
+        autoGenerateKeys = true;
+      };
+      extraConfig = limineTheme;
+      style.backdrop = "1e1e2e";
+
+      extraEntries = ''
+        /Windows
+            protocol: chainload
+            path: guid://378ba3bb-403c-421a-8220-6170ea7ef72c/EFI/Microsoft/Boot/bootmgfw.efi
+      '';
     };
   };
 
@@ -171,6 +187,7 @@
   # Basic packages
   environment.systemPackages = with pkgs; [
     git
+    sbctl
     wget
     vim
     xwayland-satellite

@@ -30,6 +30,10 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin-limine = {
+      url = "github:catppuccin/limine";
+      flake = false;
+    };
   };
 
   outputs =

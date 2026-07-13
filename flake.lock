@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "catppuccin-limine": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781176720,
+        "narHash": "sha256-4quZdgijooBlIevUpdwJXu/7eg32BQdHA21HqWIzFis=",
+        "owner": "catppuccin",
+        "repo": "limine",
+        "rev": "43d7027853c6f733bcea7e22968510915ba0da23",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "limine",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -458,6 +474,7 @@
     },
     "root": {
       "inputs": {
+        "catppuccin-limine": "catppuccin-limine",
         "disko": "disko",
         "home-manager": "home-manager",
         "millennium": "millennium",
