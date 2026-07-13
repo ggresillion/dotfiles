@@ -61,8 +61,32 @@ in
 
   # Networking
   networking.hostName = "guillaume-desktop";
-  networking.networkmanager.enable = true;
-  networking.networkmanager.dns = "dnsmasq";
+  networking = {
+    networkmanager.enable = true;
+
+    # Use the local dnsmasq instance
+    nameservers = [
+      "127.0.0.1"
+      "::1"
+    ];
+  };
+
+  services.dnsmasq = {
+    enable = true;
+
+    settings = {
+      no-resolv = true;
+
+      server = [
+        "1.1.1.1"
+        "1.0.0.1"
+        "2606:4700:4700::1111"
+        "2606:4700:4700::1001"
+      ];
+
+      cache-size = 1000;
+    };
+  };
 
   # Speed up boot
   systemd.services.NetworkManager-wait-online.enable = false;
