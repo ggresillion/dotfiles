@@ -1,8 +1,13 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
+
+let
+  limineTheme = builtins.readFile "${inputs.catppuccin-limine}/themes/mocha/catppuccin-mocha-blue.conf";
+in
 
 {
 
@@ -27,12 +32,23 @@
 
   # Boot
   boot.loader = {
-    grub = {
+    limine = {
       enable = true;
       efiSupport = true;
       efiInstallAsRemovable = true;
-      device = "nodev";
-      useOSProber = true;
+      maxGenerations = 2;
+      secureBoot = {
+        enable = true;
+        autoGenerateKeys = true;
+      };
+      extraConfig = limineTheme;
+      style.backdrop = "1e1e2e";
+
+      extraEntries = ''
+        /Windows
+            protocol: chainload
+            path: guid://378ba3bb-403c-421a-8220-6170ea7ef72c/EFI/Microsoft/Boot/bootmgfw.efi
+      '';
     };
   };
 
@@ -45,8 +61,32 @@
 
   # Networking
   networking.hostName = "guillaume-desktop";
-  networking.networkmanager.enable = true;
-  networking.networkmanager.dns = "dnsmasq";
+  networking = {
+    networkmanager.enable = true;
+
+    # Use the local dnsmasq instance
+    nameservers = [
+      "127.0.0.1"
+      "::1"
+    ];
+  };
+
+  services.dnsmasq = {
+    enable = true;
+
+    settings = {
+      no-resolv = true;
+
+      server = [
+        "1.1.1.1"
+        "1.0.0.1"
+        "2606:4700:4700::1111"
+        "2606:4700:4700::1001"
+      ];
+
+      cache-size = 1000;
+    };
+  };
 
   # Speed up boot
   systemd.services.NetworkManager-wait-online.enable = false;
@@ -171,6 +211,7 @@
   # Basic packages
   environment.systemPackages = with pkgs; [
     git
+    sbctl
     wget
     vim
     xwayland-satellite

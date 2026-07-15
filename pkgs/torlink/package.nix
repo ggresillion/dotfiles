@@ -1,0 +1,109 @@
+{
+  lib,
+  stdenv,
+  buildNpmPackage,
+  fetchFromGitHub,
+  # dependencies
+  nodejs_22,
+  wl-clipboard,
+  xclip,
+  cmake,
+  openssl,
+  cacert,
+}:
+
+let
+  libdatachannel = fetchFromGitHub {
+    owner = "paullouisageneau";
+    repo = "libdatachannel";
+    tag = "v0.24.5";
+    fetchSubmodules = true;
+    hash = "sha256-rr3au3JMqLd/sjNtXtXY2mcuW0CeOgG+Xj2RgEQCWys=";
+  };
+
+  libdatachannelBuildDeps = stdenv.mkDerivation {
+    name = "libdatachannel-build-deps";
+    nativeBuildInputs = [
+      nodejs_22
+      cacert
+    ];
+    buildPhase = ''
+      export HOME=$(mktemp -d)
+      export SSL_CERT_FILE=${cacert}/etc/ssl/certs/ca-bundle.crt
+      mkdir -p $out
+      npm install --prefix $out --no-save --ignore-scripts \
+        cmake-js@8.0.0 node-addon-api@8.9.0
+    '';
+
+    dontUnpack = true;
+    dontInstall = true;
+    outputHashMode = "recursive";
+    outputHash = "sha256-1Rr9ZMugV9ac+EpELJNLei43W8jdxfvnT9/FEyXTrd0=";
+  };
+in
+
+buildNpmPackage (finalAttrs: {
+  pname = "torlink";
+  version = "1.4.0";
+  src = fetchFromGitHub {
+    owner = "baairon";
+    repo = "torlink";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-KeszeV9atSvaA9s7iDCl+Q1eDMSx7flnQuBE8t49IPY=";
+  };
+  __structuredAttrs = true;
+  strictDeps = true;
+
+  nodejs = nodejs_22;
+  npmDepsHash = "sha256-nSHunmjZfr9oCygaLnHQxrXv7wuSa5ze7cQL7BrqfwQ=";
+  npmFlags = [ "--ignore-scripts" ];
+
+  nativeBuildInputs = [ cmake ];
+  buildInputs = [ openssl ];
+  dontUseCmakeConfigure = true;
+
+  postBuild = ''
+    node scripts/postbuild.cjs
+  '';
+
+  postInstall = ''
+    pushd $out/lib/node_modules/torlnk/node_modules/node-datachannel
+
+    substituteInPlace CMakeLists.txt \
+      --replace-fail \
+      'set(OPENSSL_USE_STATIC_LIBS TRUE)' \
+      'set(OPENSSL_USE_STATIC_LIBS FALSE)'
+
+    mkdir -p node_modules
+    cp -r ${libdatachannelBuildDeps}/node_modules/. node_modules/
+    patchShebangs --build node_modules
+
+    export npm_config_nodedir=${lib.getDev nodejs_22}
+
+    node_modules/.bin/cmake-js compile \
+        --CDFETCHCONTENT_SOURCE_DIR_LIBDATACHANNEL=${libdatachannel} \
+        --CDFETCHCONTENT_FULLY_DISCONNECTED=ON
+
+    find build -mindepth 1 -maxdepth 1 -not -name Release -exec rm -rf {} +
+    find build/Release -mindepth 1 -not -name 'node_datachannel.node' -exec rm -rf {} +
+    popd
+
+    wrapProgram $out/bin/torlnk \
+      --prefix PATH : ${
+        lib.makeBinPath [
+          wl-clipboard
+          xclip
+        ]
+      }
+  '';
+
+  meta = {
+    description = "Torlink is a torrent finder that lives in your terminal, with zero setup and nothing to configure.";
+    homepage = "https://github.com/baairon/torlink";
+    changelog = "https://github.com/baairon/torlink/releases/tag/${finalAttrs.src.tag}";
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ ghastrum ];
+    mainProgram = "torlnk";
+    platforms = lib.platforms.linux;
+  };
+})

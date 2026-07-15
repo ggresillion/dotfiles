@@ -20,5 +20,6 @@
     amdgpu_top
     fastfetch
     mpvpaper
+    (pkgs.callPackage ../../pkgs/torlink/package.nix { })
   ];
 }

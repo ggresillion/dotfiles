@@ -1,8 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
-let
-  noctaliaTheme = pkgs.callPackage ./noctalia-sddm-theme.nix { };
-in
 {
   services.xserver.enable = true;
 
@@ -10,11 +7,14 @@ in
 
   services.displayManager.sddm = {
     enable = true;
-    theme = "breeze";
+    theme = "catppuccin-mocha-blue";
+    package = lib.mkForce pkgs.kdePackages.sddm;
 
     extraPackages = [
-      # noctaliaTheme
-      # pkgs.qt6.qt5compat
+      (pkgs.catppuccin-sddm.override {
+        flavor = "mocha";
+        accent = "blue";
+      })
     ];
 
     wayland.enable = true;
@@ -25,4 +25,11 @@ in
       };
     };
   };
+
+  environment.systemPackages = [
+    (pkgs.catppuccin-sddm.override {
+      flavor = "mocha";
+      accent = "blue";
+    })
+  ];
 }
