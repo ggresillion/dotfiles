@@ -20,7 +20,7 @@ vim.pack.add({
 -- 	disable_keymaps = true,
 -- })
 
-require("codeium").setup({})
+-- require("codeium").setup({})
 
 require("blink.cmp").setup({
 	keymap = {
@@ -34,11 +34,11 @@ require("blink.cmp").setup({
 		ghost_text = { enabled = true },
 	},
 	sources = {
-		default = { "lsp", "path", "snippets", "buffer", "codeium" },
+		default = { "lsp", "path", "snippets", "buffer" },
 		providers = {
 			snippets = { min_keyword_length = 2, score_offset = 10 },
 			-- supermaven = { name = "supermaven", module = "blink-cmp-supermaven", async = true, score_offset = 4 },
-			codeium = { name = "Codeium", module = "codeium.blink", async = true, score_offset = 4 },
+			-- codeium = { name = "Codeium", module = "codeium.blink", async = true, score_offset = 4 },
 			lsp = { score_offset = 3 },
 			path = { min_keyword_length = 3, score_offset = 2 },
 			buffer = { min_keyword_length = 3, score_offset = 1 },

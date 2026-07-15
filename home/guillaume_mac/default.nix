@@ -21,7 +21,7 @@
 
   # Mac-specific shell aliases (override common)
   home.shellAliases = {
-    nswitch = lib.mkForce "darwin-rebuild switch --flake ~/dotfiles#macbook";
+    nswitch = lib.mkForce "sudo darwin-rebuild switch --flake ~/dotfiles#macbook";
     nedit = lib.mkForce "nvim ~/dotfiles";
   };
 

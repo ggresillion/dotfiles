@@ -1,5 +1,5 @@
 vim.pack.add({
-	{ src = "https://github.com/mistweaverco/kulala.nvim", version = "develop" },
+	{ src = "https://github.com/mistweaverco/kulala.nvim" },
 })
 
 require("kulala").setup({

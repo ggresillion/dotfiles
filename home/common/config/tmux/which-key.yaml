@@ -1,0 +1,81 @@
+title: " which-key"
+# Show after pressing prefix (Ctrl+b) then pausing
+timeout: 500
+
+custom_bindings:
+  # Alt+t → windows (mirrors zellij tab mode)
+  - key: "M-t"
+    name: "Windows (Alt+t)"
+    menu:
+      - key: "n"
+        name: "new window"
+        command: "new-window -c '#{pane_current_path}'"
+      - key: "x"
+        name: "kill window"
+        command: "kill-window"
+      - key: "r"
+        name: "rename"
+        command: "command-prompt -I '#W' 'rename-window %%'"
+      - key: "h/k"
+        name: "prev window"
+        command: "previous-window"
+      - key: "l/j"
+        name: "next window"
+        command: "next-window"
+      - key: "i"
+        name: "move left"
+        command: "swap-window -d -t -1"
+      - key: "o"
+        name: "move right"
+        command: "swap-window -d -t +1"
+      - key: "1-9"
+        name: "go to window N"
+        command: "select-window -t :1"
+
+  # Alt+p → panes (mirrors zellij pane mode)
+  - key: "M-p"
+    name: "Panes (Alt+p)"
+    menu:
+      - key: "d"
+        name: "split down"
+        command: "split-window -v -c '#{pane_current_path}'"
+      - key: "r"
+        name: "split right"
+        command: "split-window -h -c '#{pane_current_path}'"
+      - key: "x"
+        name: "kill pane"
+        command: "kill-pane"
+      - key: "f"
+        name: "zoom"
+        command: "resize-pane -Z"
+      - key: "h/j/k/l"
+        name: "navigate"
+        command: "select-pane -L"
+
+  # Alt+n → resize (mirrors zellij resize mode)
+  - key: "M-n"
+    name: "Resize (Alt+n)"
+    menu:
+      - key: "h/H"
+        name: "shrink/grow left"
+        command: "resize-pane -L 5"
+      - key: "j/J"
+        name: "shrink/grow down"
+        command: "resize-pane -D 5"
+      - key: "k/K"
+        name: "shrink/grow up"
+        command: "resize-pane -U 5"
+      - key: "l/L"
+        name: "shrink/grow right"
+        command: "resize-pane -R 5"
+
+  # Alt+o → session (mirrors zellij session mode)
+  - key: "M-o"
+    name: "Session (Alt+o)"
+    menu:
+      - key: "d"
+        name: "detach"
+        command: "detach-client"
+      - key: "$"
+        name: "rename session"
+        command: "command-prompt -I '#S' 'rename-session %%'"

@@ -22,6 +22,8 @@
   # ── macOS system defaults ──────────────────────────────────────────────────
 
   system.defaults = {
+    spaces.spans-displays = false;
+
     dock = {
       autohide = true;
       tilesize = 47;
@@ -208,11 +210,10 @@
       "ngrok"
       "obsidian"
       "orbstack"
-      "postman"
       "sequel-ace"
       "utm"
       "visual-studio-code"
-      "wireshark-app"
+      "wireshark"
       "zed"
 
       # Editors / IDEs
@@ -256,7 +257,6 @@
       "steam"
 
       # Remote / networking
-      "barrier"
       "netbird-ui"
       "rustdesk"
 

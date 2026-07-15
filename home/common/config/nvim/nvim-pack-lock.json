@@ -54,9 +54,8 @@
       "src": "https://github.com/giusgad/hologram.nvim"
     },
     "kulala.nvim": {
-      "rev": "792ca9b04df887f5b14ddb038114f6faae9c4cd9",
-      "src": "https://github.com/mistweaverco/kulala.nvim",
-      "version": "'develop'"
+      "rev": "69250f64e60f75c010feac413576acbd9ffa4ec8",
+      "src": "https://github.com/mistweaverco/kulala.nvim"
     },
     "let-it-snow.nvim": {
       "rev": "15ad478c8f903f8c2addad08fed1d8429bc01bde",

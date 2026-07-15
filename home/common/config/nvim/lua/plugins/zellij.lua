@@ -3,9 +3,7 @@ vim.pack.add({
 })
 
 local smart_splits = require("smart-splits")
-smart_splits.setup({
-	zellij_move_focus_or_tab = true,
-})
+smart_splits.setup({})
 
 local map = vim.keymap.set
 map("n", "<C-h>", smart_splits.move_cursor_left, { silent = true, desc = "Navigate left" })
