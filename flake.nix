@@ -45,31 +45,30 @@
       nix-index-database,
       ...
     }@inputs:
+    let
+      system = "x86_64-linux";
+    in
     {
-      nixosConfigurations.guillaume-desktop =
-        let
-          system = "x86_64-linux";
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
+      nixosConfigurations.guillaume-desktop = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
 
-          modules = [
-            ./hosts/desktop
-            nix-index-database.nixosModules.default
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users = {
-                guillaume = import ./home/guillaume/default.nix;
-              };
-              home-manager.extraSpecialArgs = {
-                inherit inputs;
-              };
-            }
-          ];
-        };
+        modules = [
+          ./hosts/desktop
+          nix-index-database.nixosModules.default
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users = {
+              guillaume = import ./home/guillaume/default.nix;
+            };
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
+          }
+        ];
+      };
 
       darwinConfigurations.macbook =
         let

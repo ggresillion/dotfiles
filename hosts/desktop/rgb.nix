@@ -17,8 +17,12 @@ let
     done
 
     # Fire all devices in parallel
-    for i in 0 1 2; do
-      ${pkgs.openrgb}/bin/openrgb --device $i --mode static --color "$COLOR" &
+    for i in 0 1 2 3; do
+      if [ "$i" = "3" ]; then
+        ${pkgs.openrgb}/bin/openrgb --device $i --mode direct --color "$COLOR" &
+      else
+        ${pkgs.openrgb}/bin/openrgb --device $i --mode static --color "$COLOR" &
+      fi
     done
     wait
   '';
@@ -34,7 +38,6 @@ in
 {
   services.hardware.openrgb = {
     enable = true;
-    motherboard = "intel";
   };
   boot.kernelModules = [ "i2c-dev" ];
   hardware.i2c.enable = true;
