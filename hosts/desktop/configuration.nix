@@ -160,6 +160,11 @@ in
     "ca-derivations"
   ];
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [
+    (final: prev: {
+      openrgb = final.callPackage ../../pkgs/openrgb-git { };
+    })
+  ];
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [

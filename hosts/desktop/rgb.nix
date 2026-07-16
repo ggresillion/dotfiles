@@ -17,12 +17,18 @@ let
     done
 
     # Fire all devices in parallel
-    for i in 0 1 2 3; do
-      if [ "$i" = "3" ]; then
-        ${pkgs.openrgb}/bin/openrgb --device $i --mode direct --color "$COLOR" &
-      else
-        ${pkgs.openrgb}/bin/openrgb --device $i --mode static --color "$COLOR" &
-      fi
+    for i in 0 1 2 3 4; do
+      case "$i" in
+        3)
+          ${pkgs.openrgb}/bin/openrgb --device $i --mode direct --color "$COLOR" &
+          ;;
+        4)
+          ${pkgs.openrgb}/bin/openrgb --device $i --mode "Solid Color" --color "$COLOR" &
+          ;;
+        *)
+          ${pkgs.openrgb}/bin/openrgb --device $i --mode static --color "$COLOR" &
+          ;;
+      esac
     done
     wait
   '';
