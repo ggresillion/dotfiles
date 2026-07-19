@@ -47,7 +47,7 @@ in
       extraEntries = ''
         /Windows
             protocol: chainload
-            path: guid://378ba3bb-403c-421a-8220-6170ea7ef72c/EFI/Microsoft/Boot/bootmgfw.efi
+            path: guid(378ba3bb-403c-421a-8220-6170ea7ef72c):/EFI/Microsoft/Boot/bootmgfw.efi
       '';
     };
   };
