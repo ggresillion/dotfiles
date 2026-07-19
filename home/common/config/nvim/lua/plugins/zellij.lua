@@ -1,9 +1,14 @@
 vim.pack.add({
 	{ src = "https://github.com/mrjones2014/smart-splits.nvim" },
+	{ src = "https://github.com/hiasr/vim-zellij-navigator.nvim" },
 })
 
+require("vim-zellij-navigator").setup()
+
 local smart_splits = require("smart-splits")
-smart_splits.setup({})
+smart_splits.setup({
+	zellij_move_focus_or_tab = true,
+})
 
 local map = vim.keymap.set
 map("n", "<C-h>", smart_splits.move_cursor_left, { silent = true, desc = "Navigate left" })

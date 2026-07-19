@@ -1,59 +1,51 @@
 keybinds clear-defaults=true {
     shared {
         bind "Ctrl h" "Ctrl Left" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm" {
                 name "move_focus_or_tab"
                 payload "left"
-                move_mod "alt"
             }
         }
         bind "Ctrl j" "Ctrl Down" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm" {
                 name "move_focus"
                 payload "down"
-                move_mod "alt"
             }
         }
         bind "Ctrl k" "Ctrl Up" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm" {
                 name "move_focus"
                 payload "up"
-                move_mod "alt"
             }
         }
         bind "Ctrl l" "Ctrl Right" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm" {
                 name "move_focus_or_tab"
                 payload "right"
-                move_mod "alt"
             }
         }
         bind "Alt h" "Alt Left" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm" {
                 name "move_focus_or_tab"
                 payload "left"
-                move_mod "alt"
             }
         }
         bind "Alt j" "Alt Down" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm" {
                 name "move_focus"
                 payload "down"
-                move_mod "alt"
             }
         }
         bind "Alt k" "Alt Up" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm" {
                 name "move_focus"
                 payload "up"
-                move_mod "alt"
             }
         }
         bind "Alt l" "Alt Right" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm" {
                 name "move_focus_or_tab"
                 payload "right"
-                move_mod "alt"
             }
         }
     }
@@ -542,12 +534,14 @@ plugins {
     compact-bar location="zellij:compact-bar" {
         tooltip "\\"
     }
-    vim-zellij-navigator location="https://github.com/hiasr/vim-zellij-navigator/releases/latest/download/vim-zellij-navigator.wasm"
+    vim-zellij-navigator location="https://github.com/hiasr/vim-zellij-navigator/releases/download/0.1.0/vim-zellij-navigator.wasm"
+    smart-tabs location="https://github.com/YesYouKenSpace/zellij-smart-tabs/releases/download/v0.2.4/zellij-smart-tabs.wasm"
 }
 
 load_plugins {
     compact-bar
 		vim-zellij-navigator
+    smart-tabs
 }
 
 default_layout "custom"
