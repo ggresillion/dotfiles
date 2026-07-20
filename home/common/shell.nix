@@ -1,31 +1,34 @@
 {
+  config,
   pkgs,
   inputs,
   ...
 }:
 {
-  home.packages = with pkgs; [
-    ripgrep
-    fzf
-    jq
-    carapace
-    starship
-    zoxide
-  ] ++ pkgs.lib.optionals (!pkgs.stdenv.isDarwin) [
-    inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap
-  ];
+  home.packages =
+    with pkgs;
+    [
+      ripgrep
+      fzf
+      jq
+      carapace
+      starship
+      zoxide
+    ]
+    ++ pkgs.lib.optionals (!pkgs.stdenv.isDarwin) [
+      inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap
+    ];
 
   # Aliases
   home.shellAliases = {
     g = "git";
     d = "docker";
     dc = "docker compose";
-    nswitch = "sudo nixos-rebuild switch --flake /home/guillaume/nixos";
-    nupdate = "nix flake update /etc/nixos and sudo nixos-rebuild switch --flake /etc/nixos";
-    nedit = "nvim /etc/nixos";
+    nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#$(hostname)";
+    nrt = "sudo nixos-rebuild test --flake ${config.home.homeDirectory}/nixos#$(hostname)";
+    nfu = "nix flake update --flake ${config.home.homeDirectory}/nixos";
     nd = "nix develop path:. --command $env.SHELL";
   };
-  # Note: nswitch/nedit overridden in darwin home config
 
   # Direnv
   programs.direnv = {

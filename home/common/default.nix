@@ -8,6 +8,7 @@
     ./desktop.nix
     ./gaming.nix
     ./apps.nix
+    ./rgb.nix
   ];
 
   programs.home-manager.enable = true;

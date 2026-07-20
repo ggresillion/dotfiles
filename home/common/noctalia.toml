@@ -211,6 +211,11 @@ enabled = true
 refresh_minutes = 30
 unit = "celsius"
 
+[widget.audio_visualizer]
+bands = 64
+mirrored = false
+width = 128
+
 [widget.cat]
 type = "noctalia/bongocat:cat"
 
