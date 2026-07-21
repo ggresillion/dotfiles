@@ -165,6 +165,19 @@ in
       openrgb = final.callPackage ../../pkgs/openrgb-git { };
     })
   ];
+
+  # OpenRGB: run a persistent SDK server (uses the git package above, since
+  # nixpkgs' stable openrgb doesn't yet support this MSI B850 board's i2c
+  # devices). This also wires up services.udev.packages so the udev rules
+  # produced by the package's own build (60-openrgb.rules) actually get
+  # installed system-wide, and loads i2c-piix4 for SMBus access to RAM on
+  # AMD platforms - both were previously missing, which is why OpenRGB
+  # couldn't see any devices without running as root.
+  services.hardware.openrgb = {
+    enable = true;
+    package = pkgs.openrgb;
+    motherboard = "amd";
+  };
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
