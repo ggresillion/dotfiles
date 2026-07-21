@@ -24,8 +24,8 @@
     g = "git";
     d = "docker";
     dc = "docker compose";
-    nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#$(hostname)";
-    nrt = "sudo nixos-rebuild test --flake ${config.home.homeDirectory}/nixos#$(hostname)";
+    nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#(hostname)";
+    nrt = "sudo nixos-rebuild test --flake ${config.home.homeDirectory}/nixos#(hostname)";
     nfu = "nix flake update --flake ${config.home.homeDirectory}/nixos";
     nd = "nix develop path:. --command $env.SHELL";
   };
