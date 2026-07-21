@@ -221,6 +221,15 @@ in
     vim
     xwayland-satellite
     lxqt.lxqt-policykit
+    efibootmgr
+
+    (writeShellScriptBin "reboot-uefi" ''
+      exec sudo systemctl reboot --firmware-setup
+    '')
+
+    (writeShellScriptBin "reboot-windows" ''
+      exec sudo efibootmgr --bootnext 0002 && exec sudo reboot
+    '')
   ];
 
   system.stateVersion = "26.05";
