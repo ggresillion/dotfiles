@@ -48,7 +48,22 @@ stdenv.mkDerivation (finalAttrs: {
 
   qmakeFlags = [
     "QT_TOOL.lrelease.binary=${lib.getDev qt6.qttools}/bin/lrelease"
+    # The 60-openrgb.rules udev_rules install target in OpenRGB.pro is only
+    # wired up under CONFIG(release, debug|release); force it explicitly so
+    # `make install` reliably produces $out/lib/udev/rules.d/60-openrgb.rules.
+    "CONFIG+=release"
   ];
+
+  # Fail the build loudly rather than silently shipping a package with no
+  # udev rules, which manifests at runtime as "Connection attempt failed" /
+  # needing root to run OpenRGB - see build-udev-rules.sh + OpenRGB.pro.
+  postInstall = ''
+    if [ ! -f "$out/lib/udev/rules.d/60-openrgb.rules" ]; then
+      echo "ERROR: 60-openrgb.rules was not installed to $out/lib/udev/rules.d/" >&2
+      echo "OpenRGB will require root and services.udev.packages will do nothing." >&2
+      exit 1
+    fi
+  '';
 
   meta = {
     description = "Open source RGB lighting control (git master)";

@@ -47,7 +47,7 @@ in
       extraEntries = ''
         /Windows
             protocol: chainload
-            path: guid://378ba3bb-403c-421a-8220-6170ea7ef72c/EFI/Microsoft/Boot/bootmgfw.efi
+            path: guid(378ba3bb-403c-421a-8220-6170ea7ef72c):/EFI/Microsoft/Boot/bootmgfw.efi
       '';
     };
   };
@@ -165,6 +165,19 @@ in
       openrgb = final.callPackage ../../pkgs/openrgb-git { };
     })
   ];
+
+  # OpenRGB: run a persistent SDK server (uses the git package above, since
+  # nixpkgs' stable openrgb doesn't yet support this MSI B850 board's i2c
+  # devices). This also wires up services.udev.packages so the udev rules
+  # produced by the package's own build (60-openrgb.rules) actually get
+  # installed system-wide, and loads i2c-piix4 for SMBus access to RAM on
+  # AMD platforms - both were previously missing, which is why OpenRGB
+  # couldn't see any devices without running as root.
+  services.hardware.openrgb = {
+    enable = true;
+    package = pkgs.openrgb;
+    motherboard = "amd";
+  };
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -221,6 +234,15 @@ in
     vim
     xwayland-satellite
     lxqt.lxqt-policykit
+    efibootmgr
+
+    (writeShellScriptBin "reboot-uefi" ''
+      exec sudo systemctl reboot --firmware-setup
+    '')
+
+    (writeShellScriptBin "reboot-windows" ''
+      exec sudo efibootmgr --bootnext 0002 && exec sudo reboot
+    '')
   ];
 
   system.stateVersion = "26.05";

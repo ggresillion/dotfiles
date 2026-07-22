@@ -1,4 +1,9 @@
-{ pkgs, inputs, lib, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 {
   imports = [
     ../common/shell.nix
@@ -19,17 +24,11 @@
     helix
   ];
 
-  # Mac-specific shell aliases (override common)
-  home.shellAliases = {
-    nswitch = lib.mkForce "sudo darwin-rebuild switch --flake ~/nixos#macbook";
-    nedit = lib.mkForce "nvim ~/dotfiles";
-  };
-
   # Aerospace config (window manager)
   home.file.".aerospace.toml".source = ../common/config/aerospace/.aerospace.toml;
 
   # Remove stale symlink left by older home-manager before copyApps creates real dir
-  home.activation.removeHomeManagerAppsLink = lib.hm.dag.entryBefore ["copyApps"] ''
+  home.activation.removeHomeManagerAppsLink = lib.hm.dag.entryBefore [ "copyApps" ] ''
     if [ -L "$HOME/Applications/Home Manager Apps" ]; then
       $DRY_RUN_CMD rm "$HOME/Applications/Home Manager Apps"
     fi

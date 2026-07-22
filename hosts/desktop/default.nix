@@ -12,6 +12,5 @@
     ./jellyfin.nix
     ./appimage.nix
     ./vr.nix
-    ./rgb.nix
   ];
 }
