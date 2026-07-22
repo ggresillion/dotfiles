@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../common
+    ../../modules/home
   ];
 
   home.username = "guillaume";

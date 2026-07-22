@@ -10,93 +10,25 @@ let
 in
 
 {
-
-  # Cache & performance
+  # Extra cache for gaming-related packages (this host only)
   nix.settings = {
-    max-jobs = "auto";
-    max-substitution-jobs = 64;
-    substituters = [
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-      "https://nix-gaming.cachix.org"
-      "https://noctalia.cachix.org"
-    ];
-    trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-    ];
-  };
-  nix.optimise.automatic = true;
-
-  # Boot
-  boot.loader = {
-    limine = {
-      enable = true;
-      efiSupport = true;
-      efiInstallAsRemovable = true;
-      maxGenerations = 2;
-      secureBoot = {
-        enable = true;
-        autoGenerateKeys = true;
-      };
-      extraConfig = limineTheme;
-      style.backdrop = "1e1e2e";
-
-      extraEntries = ''
-        /Windows
-            protocol: chainload
-            path: guid(378ba3bb-403c-421a-8220-6170ea7ef72c):/EFI/Microsoft/Boot/bootmgfw.efi
-      '';
-    };
+    substituters = [ "https://nix-gaming.cachix.org" ];
+    trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
   };
 
-  # SSH
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-    openFirewall = true;
+  # Boot: theme + Windows dual-boot chainload (this machine's disk layout)
+  boot.loader.limine = {
+    extraConfig = limineTheme;
+    style.backdrop = "1e1e2e";
+
+    extraEntries = ''
+      /Windows
+          protocol: chainload
+          path: guid(378ba3bb-403c-421a-8220-6170ea7ef72c):/EFI/Microsoft/Boot/bootmgfw.efi
+    '';
   };
 
-  # Networking
   networking.hostName = "guillaume-desktop";
-  networking = {
-    networkmanager.enable = true;
-
-    # Use the local dnsmasq instance
-    nameservers = [
-      "127.0.0.1"
-      "::1"
-    ];
-  };
-
-  services.dnsmasq = {
-    enable = true;
-
-    settings = {
-      no-resolv = true;
-
-      server = [
-        "1.1.1.1"
-        "1.0.0.1"
-        "2606:4700:4700::1111"
-        "2606:4700:4700::1001"
-      ];
-
-      cache-size = 1000;
-    };
-  };
-
-  # Speed up boot
-  systemd.services.NetworkManager-wait-online.enable = false;
-  services.timesyncd.enable = false;
-  services.chrony.enable = true;
-  systemd.oomd.enable = false;
-
-  # Time & Locale
-  time.timeZone = "Europe/Paris";
-  i18n.defaultLocale = "en_US.UTF-8";
 
   # User
   users.users = {
@@ -123,43 +55,18 @@ in
   # enable tweaking
   hardware.amdgpu.overdrive.enable = true;
 
-  # Niri
-  programs.niri.enable = true;
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
+  # 32-bit audio for gaming
+  services.pipewire.alsa.support32Bit = true;
 
-  # Prefer Wayland for electron-based apps (Vesktop, VSCode, etc.)
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  # Plasma
+  # Plasma (available alongside niri at the SDDM session picker)
   services.desktopManager.plasma6.enable = true;
-
-  # Sound
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   # Docker
   virtualisation.docker.enable = true;
 
-  # Bluetooth
-  hardware.bluetooth.enable = true;
-
   # KDE connect
   programs.kdeconnect.enable = true;
 
-  # Nix settings
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-    "ca-derivations"
-  ];
-  nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
     (final: prev: {
       openrgb = final.callPackage ../../pkgs/openrgb-git { };
@@ -232,8 +139,6 @@ in
     sbctl
     wget
     vim
-    xwayland-satellite
-    lxqt.lxqt-policykit
     efibootmgr
 
     (writeShellScriptBin "reboot-uefi" ''

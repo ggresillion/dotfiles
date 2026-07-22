@@ -4,10 +4,11 @@
   imports = [
     ./hardware.nix
     ./configuration.nix
+    ../../modules/nixos/common
+    ../../modules/nixos/desktop/niri.nix
     ./gaming.nix
     inputs.disko.nixosModules.default
     ./disko.nix
-    ./greeter.nix
     ./storage.nix
     ./jellyfin.nix
     ./appimage.nix
