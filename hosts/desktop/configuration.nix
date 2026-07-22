@@ -85,6 +85,9 @@ in
     package = pkgs.openrgb;
     motherboard = "amd";
   };
+  # Waits for every
+  systemd.services.openrgb.serviceConfig.ExecStartPre =
+    "${pkgs.systemd}/bin/udevadm settle --timeout=30";
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
