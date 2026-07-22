@@ -31,6 +31,10 @@
   programs.direnv = {
     enable = true;
     silent = true;
+    # ponytail: custom mtime-cached hook in config/nushell/autoload/direnv.nu
+    # already covers this; home-manager's default hook re-runs `direnv export`
+    # on every single prompt with no caching.
+    enableNushellIntegration = false;
     config = {
       global = {
         load_dotenv = true;

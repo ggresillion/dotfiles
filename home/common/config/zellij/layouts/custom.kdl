@@ -29,13 +29,13 @@ layout {
                 mode_prompt "#[bg=4,fg=0] PROMPT#[bg=0,fg=4]█"
                 mode_tmux "#[bg=1,fg=0] TMUX#[bg=0,fg=1]█"
 
-                tab_normal "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{floating_indicator}#[bg=0,fg=8]█"
-                tab_normal_fullscreen "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{fullscreen_indicator}#[bg=0,fg=8]█"
-                tab_normal_sync "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{sync_indicator}#[bg=0,fg=8]█"
+                tab_normal "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{floating_indicator} #[bg=0,fg=8]█"
+                tab_normal_fullscreen "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{fullscreen_indicator} #[bg=0,fg=8]█"
+                tab_normal_sync "#[bg=0,fg=4]█#[bg=4,fg=0]{index} #[bg=8,fg=4] {name}{sync_indicator} #[bg=0,fg=8]█"
 
-                tab_active "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{floating_indicator}#[bg=0,fg=8]█"
-                tab_active_fullscreen "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{fullscreen_indicator}#[bg=0,fg=8]█"
-                tab_active_sync "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{sync_indicator}#[bg=0,fg=8]█"
+                tab_active "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{floating_indicator} #[bg=0,fg=8]█"
+                tab_active_fullscreen "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{fullscreen_indicator} #[bg=0,fg=8]█"
+                tab_active_sync "#[bg=0,fg=3]█#[bg=3,fg=0]{index} #[bg=8,fg=3] {name}{sync_indicator} #[bg=0,fg=8]█"
 
                 tab_separator " "
                 tab_sync_indicator "  "

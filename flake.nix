@@ -70,6 +70,27 @@
         ];
       };
 
+      nixosConfigurations.guillaume-laptop = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+
+        modules = [
+          ./hosts/laptop
+          nix-index-database.nixosModules.default
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users = {
+              guillaume = import ./home/guillaume_laptop/default.nix;
+            };
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
+          }
+        ];
+      };
+
       darwinConfigurations.macbook =
         let
           system = "aarch64-darwin";

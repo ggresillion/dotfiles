@@ -1,6 +1,6 @@
 vim.pack.add({
 	{ src = "https://github.com/mrjones2014/smart-splits.nvim" },
-	{ src = "https://github.com/hiasr/vim-zellij-navigator.nvim" },
+	{ src = "https://github.com/hiasr/vim-zellij-navigator.nvim", version = vim.version.range("0.1.*") },
 })
 
 require("vim-zellij-navigator").setup()
