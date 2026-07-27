@@ -13,5 +13,6 @@
     ./jellyfin.nix
     ./appimage.nix
     ./vr.nix
+    ./llm.nix
   ];
 }

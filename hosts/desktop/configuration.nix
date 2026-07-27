@@ -149,7 +149,8 @@ in
     '')
 
     (writeShellScriptBin "reboot-windows" ''
-      exec sudo efibootmgr --bootnext 0002 && exec sudo reboot
+      entry=$(sudo efibootmgr | grep -i "Windows Boot Manager" | cut -c5-8)
+      exec sudo efibootmgr --bootnext "$entry" && exec sudo reboot
     '')
   ];
 
