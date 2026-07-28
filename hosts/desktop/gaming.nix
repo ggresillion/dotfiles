@@ -17,6 +17,10 @@
 
   programs.gamemode.enable = true;
 
+  # Managed gamescope wrapper (setuid capabilities for KMS/VT switching),
+  # used for per-game HDR: gamescope --hdr-enabled -- %command%
+  programs.gamescope.enable = true;
+
   environment.systemPackages = with pkgs; [
     mangohud
     winetricks
