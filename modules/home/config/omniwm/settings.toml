@@ -9,7 +9,7 @@ monitorRoutingOverrides = []
 mode = "dark"
 
 [borders]
-enabled = false
+enabled = true
 width = 2.0
 
 [borders.color]
@@ -85,7 +85,7 @@ alwaysCenterSingleColumn = true
 centerFocusedColumn = "never"
 containerPrimarySpanPresets = [0.25, 0.33, 0.5, 0.66]
 defaultContainerPrimarySpan = 0.25
-infiniteLoop = true
+infiniteLoop = false
 singleWindowFit = "container_primary_span"
 visibleContainerCount = 2
 
