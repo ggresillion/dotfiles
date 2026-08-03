@@ -85,6 +85,9 @@ in
     package = pkgs.openrgb;
     motherboard = "amd";
   };
+  # Waits for every
+  systemd.services.openrgb.serviceConfig.ExecStartPre =
+    "${pkgs.systemd}/bin/udevadm settle --timeout=30";
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -146,9 +149,12 @@ in
     '')
 
     (writeShellScriptBin "reboot-windows" ''
-      exec sudo efibootmgr --bootnext 0002 && exec sudo reboot
+      entry=$(sudo efibootmgr | grep -i "Windows Boot Manager" | cut -c5-8)
+      exec sudo efibootmgr --bootnext "$entry" && exec sudo reboot
     '')
   ];
+
+  programs.coolercontrol.enable = true;
 
   system.stateVersion = "26.05";
 }

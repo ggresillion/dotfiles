@@ -21,5 +21,7 @@
     fastfetch
     mpvpaper
     (pkgs.callPackage ../../pkgs/torlink/package.nix { })
+    (pkgs.callPackage ../../pkgs/deezer-tui/package.nix { })
+
   ];
 }
