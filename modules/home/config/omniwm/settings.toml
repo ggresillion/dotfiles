@@ -493,7 +493,7 @@ binding = "Unassigned"
 id = "focusMonitorLast"
 
 [[hotkeys]]
-binding = "Shift+Command+F"
+binding = "Unassigned"
 id = "toggleFullscreen"
 
 [[hotkeys]]
@@ -669,7 +669,7 @@ binding = "Unassigned"
 id = "cycleWindowSecondarySpanBackward"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Shift+Command+F"
 id = "toggleContainerFullPrimarySpan"
 
 [[hotkeys]]
