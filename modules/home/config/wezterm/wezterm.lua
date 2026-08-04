@@ -25,6 +25,10 @@ local config = {
 	macos_window_background_blur = 40,
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE",
 	max_fps = 120,
+	keys = {
+		{ key = "q", mods = "CMD", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
+		{ key = "w", mods = "CMD|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
+	},
 }
 
 local tinty_scheme = read_file(os.getenv("HOME") .. "/.local/share/tinted-theming/tinty/artifacts/current_scheme")

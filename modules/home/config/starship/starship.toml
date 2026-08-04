@@ -75,6 +75,9 @@ style = "bg:directory fg:text"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
+# ponytail: skips the git-root walk-up (was 3-17ms/prompt); paths truncate
+# by segment count instead of stopping at repo root
+truncate_to_repo = false
 [directory.substitutions]
 "Documents" = "󰈙 "
 "Downloads" = " "

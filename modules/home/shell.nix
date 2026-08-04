@@ -24,8 +24,16 @@
     g = "git";
     d = "docker";
     dc = "docker compose";
-    nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#(hostname)";
-    nrt = "sudo nixos-rebuild test --flake ${config.home.homeDirectory}/nixos#(hostname)";
+    nrs =
+      if pkgs.stdenv.isDarwin then
+        "sudo /run/current-system/sw/bin/darwin-rebuild switch --flake ${config.home.homeDirectory}/nixos#(hostname)"
+      else
+        "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#(hostname)";
+    nrt =
+      if pkgs.stdenv.isDarwin then
+        "darwin-rebuild build --flake ${config.home.homeDirectory}/nixos#(hostname)"
+      else
+        "sudo nixos-rebuild test --flake ${config.home.homeDirectory}/nixos#(hostname)";
     nfu = "nix flake update --flake ${config.home.homeDirectory}/nixos";
     nd = "nix develop path:. --command $env.SHELL";
   };
