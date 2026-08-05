@@ -268,4 +268,11 @@
   };
 
   xdg.configFile."tridactyl/tridactylrc".source = ./config/tridactyl/tridactylrc;
+
+  # Raycast script command — new WezTerm window without a cold process spawn
+  home.file."scripts/open-wezterm-window.sh" = pkgs.lib.mkIf pkgs.stdenv.isDarwin {
+    source = ./config/raycast/open-wezterm-window.sh;
+    executable = true;
+    force = true;
+  };
 }
