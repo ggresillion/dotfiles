@@ -162,6 +162,7 @@
 
       # Fonts (nerd fonts)
       "font-jetbrains-mono-nerd-font"
+			"font-fira-code-nerd-font"
    ];
   };
 }

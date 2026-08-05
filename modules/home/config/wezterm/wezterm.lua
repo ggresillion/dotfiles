@@ -11,8 +11,10 @@ end
 local config = {
 	enable_wayland = false,
 	color_scheme = "Noctalia",
-	font = wezterm.font("JetBrains Mono"),
-	font_size = 15,
+	font = wezterm.font("FiraCode Nerd Font Mono"),
+	font_size = 14.0,
+	line_height = 1.2,
+	cell_width = 1.0,
 	window_padding = {
 		left = 4,
 		right = 4,
@@ -26,7 +28,7 @@ local config = {
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE",
 	max_fps = 120,
 	keys = {
-		{ key = "q", mods = "CMD", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
+		{ key = "q", mods = "CMD",       action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 		{ key = "w", mods = "CMD|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 	},
 }

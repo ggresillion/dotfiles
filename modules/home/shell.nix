@@ -266,4 +266,6 @@
     source = ./config/wezterm/wezterm.lua;
     force = true;
   };
+
+  xdg.configFile."tridactyl/tridactylrc".source = ./config/tridactyl/tridactylrc;
 }
