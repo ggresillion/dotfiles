@@ -54,4 +54,9 @@ map("n", "<leader>gD", "<cmd>CodeDiff file HEAD<CR>", { desc = "Diff current fil
 map("n", "<leader>gH", "<cmd>CodeDiff history<CR>", { desc = "Show history" })
 map("n", "<leader>gh", "<cmd>CodeDiff history %<CR>", { desc = "Show history for file" })
 
-require("codediff").setup({})
+require("codediff").setup({
+	explorer = {
+		view_mode    = "tree",
+		flatten_dirs = true,
+	},
+})

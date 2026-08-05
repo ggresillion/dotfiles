@@ -84,7 +84,7 @@ margin = 1
 alwaysCenterSingleColumn = true
 centerFocusedColumn = "never"
 containerPrimarySpanPresets = [0.25, 0.33, 0.5, 0.66]
-defaultContainerPrimarySpan = 0.25
+defaultContainerPrimarySpan = 0.5
 infiniteLoop = false
 singleWindowFit = "container_primary_span"
 visibleContainerCount = 2
@@ -649,7 +649,7 @@ binding = "Command+R"
 id = "cycleSizeForward"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Shift+Command+R"
 id = "cycleSizeBackward"
 
 [[hotkeys]]
