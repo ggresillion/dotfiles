@@ -145,13 +145,41 @@ in
     efibootmgr
 
     (writeShellScriptBin "reboot-uefi" ''
-      exec sudo systemctl reboot --firmware-setup
+      exec sudo -n systemctl reboot --firmware-setup
     '')
 
     (writeShellScriptBin "reboot-windows" ''
-      entry=$(sudo efibootmgr | grep -i "Windows Boot Manager" | cut -c5-8)
-      exec sudo efibootmgr --bootnext "$entry" && exec sudo reboot
+      set -e
+
+      entry=$(sudo -n efibootmgr | awk '/Windows Boot Manager/ {
+          sub(/^Boot/, "")
+          sub(/\*.*/, "")
+          print
+      }')
+
+      sudo -n efibootmgr --bootnext "$entry"
+      sudo -n reboot
     '')
+  ];
+
+  security.sudo.extraRules = [
+    {
+      users = [ "guillaume" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/efibootmgr";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/run/current-system/sw/bin/reboot";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/run/current-system/sw/bin/systemctl";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
   ];
 
   programs.coolercontrol.enable = true;

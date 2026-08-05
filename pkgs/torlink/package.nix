@@ -38,7 +38,7 @@ let
     dontUnpack = true;
     dontInstall = true;
     outputHashMode = "recursive";
-    outputHash = "sha256-1Rr9ZMugV9ac+EpELJNLei43W8jdxfvnT9/FEyXTrd0=";
+    outputHash = "sha256-2Ox1ovzjV/G8Dw3Geh+JX0a7YrJkU5VyWE597+WjjD0=";
   };
 in
 
