@@ -14,5 +14,6 @@
     ./appimage.nix
     ./vr.nix
     ./llm.nix
+    ./network.nix
   ];
 }
