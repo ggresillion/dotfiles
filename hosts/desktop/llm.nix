@@ -16,7 +16,6 @@
                 					--model /home/guillaume/.cache/huggingface/hub/models--unsloth--Qwen3-Coder-30B-A3B-Instruct-GGUF/snapshots/b17cb02dd882d5b6ab62fc777ad2995f19668350/Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf \
                           --ctx-size 32768 \
                           --n-gpu-layers 999 \
-                          --n-cpu-moe 20 \
                           --flash-attn on \
                           --port 8080 \
         									--jinja \
