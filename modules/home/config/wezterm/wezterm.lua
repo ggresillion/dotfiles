@@ -24,14 +24,21 @@ local config = {
 	enable_tab_bar = false,
 	window_close_confirmation = "NeverPrompt",
 	window_background_opacity = 0.8,
-	macos_window_background_blur = 40,
+	macos_window_background_blur = 0,
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE",
+	front_end = "WebGpu",
 	max_fps = 120,
 	keys = {
 		{ key = "q", mods = "CMD",       action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 		{ key = "w", mods = "CMD|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 	},
 }
+
+wezterm.on("window-focus-changed", function(window)
+	window:set_config_overrides({
+		window_background_opacity = window:is_focused() and 0.8 or 0.5,
+	})
+end)
 
 local tinty_scheme = read_file(os.getenv("HOME") .. "/.local/share/tinted-theming/tinty/artifacts/current_scheme")
 if tinty_scheme then
