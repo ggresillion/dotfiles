@@ -22,7 +22,7 @@ local config = {
 	enable_tab_bar = false,
 	window_close_confirmation = "NeverPrompt",
 	window_background_opacity = 0.8,
-	macos_window_background_blur = 0.4,
+	macos_window_background_blur = 40,
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE",
 	keys = {
 		{ key = "q", mods = "CMD",       action = wezterm.action.CloseCurrentTab({ confirm = false }) },
