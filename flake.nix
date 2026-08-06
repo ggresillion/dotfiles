@@ -7,6 +7,10 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixwrap.url = "github:rti/nixwrap";
     noctalia.url = "github:noctalia-dev/noctalia";
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";

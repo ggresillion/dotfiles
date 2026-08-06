@@ -26,7 +26,7 @@ local config = {
 	window_background_opacity = 0.8,
 	macos_window_background_blur = 0,
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE",
-	front_end = "WebGpu",
+	front_end = "OpenGL",
 	max_fps = 120,
 	keys = {
 		{ key = "q", mods = "CMD",       action = wezterm.action.CloseCurrentTab({ confirm = false }) },

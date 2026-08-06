@@ -7,6 +7,7 @@
     ../../modules/nixos/common
     ../../modules/nixos/desktop/niri.nix
     ./gaming.nix
+    inputs.noctalia-greeter.nixosModules.default
     inputs.disko.nixosModules.default
     ./disko.nix
     ./storage.nix
