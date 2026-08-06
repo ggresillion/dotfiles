@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # Cache & performance
@@ -78,4 +78,10 @@
   # Time & Locale
   time.timeZone = "Europe/Paris";
   i18n.defaultLocale = "en_US.UTF-8";
+
+  # Shells
+  environment.shells = with pkgs; [
+    bash
+    nushell
+  ];
 }

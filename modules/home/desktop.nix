@@ -73,27 +73,29 @@
   programs.vicinae.enable = true;
 
   home.activation.vicinaeScripts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    mkdir -p "$HOME/.local/share/vicinae/scripts"
+        mkdir -p "$HOME/.local/share/vicinae/scripts"
 
-    cat > "$HOME/.local/share/vicinae/scripts/reboot-uefi.sh" << 'EOF'
-#!/usr/bin/env bash
-# @vicinae.schemaVersion 1
-# @vicinae.title Reboot to UEFI
-# @vicinae.mode silent
+        cat > "$HOME/.local/share/vicinae/scripts/reboot-uefi.sh" << 'EOF'
+    #!/usr/bin/env bash
+    # @vicinae.schemaVersion 1
+    # @vicinae.title Reboot to UEFI
+    # @vicinae.mode silent
 
-exec reboot-uefi
-EOF
+    exec reboot-uefi
+    EOF
 
-    cat > "$HOME/.local/share/vicinae/scripts/reboot-windows.sh" << 'EOF'
-#!/usr/bin/env bash
-# @vicinae.schemaVersion 1
-# @vicinae.title Reboot to Windows
-# @vicinae.mode silent
+        cat > "$HOME/.local/share/vicinae/scripts/reboot-windows.sh" << 'EOF'
+    #!/usr/bin/env bash
+    # @vicinae.schemaVersion 1
+    # @vicinae.title Reboot to Windows
+    # @vicinae.mode silent
 
-exec reboot-windows
-EOF
+    exec reboot-windows
+    EOF
 
-    chmod +x "$HOME/.local/share/vicinae/scripts/reboot-uefi.sh" \
-           "$HOME/.local/share/vicinae/scripts/reboot-windows.sh"
+        chmod +x "$HOME/.local/share/vicinae/scripts/reboot-uefi.sh" \
+               "$HOME/.local/share/vicinae/scripts/reboot-windows.sh"
   '';
+
+  services.linux-wallpaperengine.enable = true;
 }

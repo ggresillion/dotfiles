@@ -8,7 +8,7 @@ auto_hide = false
 background_opacity = 0.0
 capsule = false
 center = [ "workspaces" ]
-end = [ "tray", "wallhaven", "mpvpaper", "weather", "clock", "notifications" ]
+end = [ "tray", "nix-monitor", "w-engine-widget", "wallhaven", "mpvpaper", "weather", "clock", "notifications" ]
 margin_edge = 4
 margin_ends = 0
 padding = 14
@@ -122,11 +122,14 @@ scale = 1.0
     volume_output = true
     wifi = true
 
+[plugin_settings."avivbintangaringga/nix-monitor"]
+update_command = "nix flake update --flake /home/guillaume/nixos && pkexec /run/current-system/sw/bin/nixos-rebuild switch --flake /home/guillaume/nixos#desktop"
+
 [plugin_settings."noctalia/mpvpaper"]
 mpv_options = ""
 
 [plugins]
-enabled = [ "noctalia/wallhaven", "noctalia/kaomoji", "noctalia/screen_recorder", "noctalia/bongocat", "noctalia/mpvpaper" ]
+enabled = [ "noctalia/screen_recorder", "avivbintangaringga/nix-monitor", "tadomika_ari/w-engine" ]
 
 [shell]
 avatar_path = "/home/guillaume/.face"
@@ -181,6 +184,15 @@ wallpaper_scheme = "m3-rainbow"
     enable_builtin_templates = true
     enable_community_templates = true
 
+        [theme.templates.user.rgb_debug]
+        input_path = "$XDG_CONFIG_HOME/noctalia/templates/rgb-debug.txt"
+        output_path = "$XDG_STATE_HOME/noctalia/rgb-debug.txt"
+
+        [theme.templates.user.rgb_sync]
+        input_path = "$XDG_CONFIG_HOME/noctalia/templates/rgb-sync.txt"
+        output_path = "$XDG_STATE_HOME/noctalia/rgb-sync-color.txt"
+        post_hook = "rgb-sync {{ colors.primary_container.default.hex_stripped }}"
+
 [wallpaper]
 directory = "/home/guillaume/Pictures/Wallpapers"
 edge_smoothness = 0.050000000000000003
@@ -197,13 +209,13 @@ transition_on_startup = false
     recursive = true
 
     [wallpaper.default]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_3qrol9.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-q25ler.png"
 
     [wallpaper.last]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_3qrol9.jpg"
+    path = "/home/guillaume/.local/share/Steam/steamapps/workshop/content/431960/3217055838/preview.jpg"
 
     [wallpaper.monitors.DP-1]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven_3qrol9.jpg"
+    path = "/home/guillaume/.local/share/Steam/steamapps/workshop/content/431960/3217055838/preview.jpg"
 
 [weather]
 effects = true
@@ -230,8 +242,16 @@ type = "noctalia/mpvpaper:mpvpaper"
 [widget.network]
 show_label = false
 
+[widget.nix-monitor]
+colorize_glyph = false
+show_text = false
+type = "avivbintangaringga/nix-monitor:nix-monitor"
+
+[widget.w-engine-widget]
+type = "tadomika_ari/w-engine:w-engine-widget"
+
 [widget.wallhaven]
 type = "noctalia/wallhaven:wallhaven"
 
 [widget.workspaces]
-display = "none"
+show_labels = false
