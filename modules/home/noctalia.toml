@@ -129,7 +129,7 @@ update_command = "nix flake update --flake /home/guillaume/nixos && pkexec /run/
 mpv_options = ""
 
 [plugins]
-enabled = [ "noctalia/screen_recorder", "avivbintangaringga/nix-monitor", "tadomika_ari/w-engine" ]
+enabled = [ "noctalia/screen_recorder", "avivbintangaringga/nix-monitor", "noctalia/wallhaven" ]
 
 [shell]
 avatar_path = "/home/guillaume/.face"
@@ -204,18 +204,18 @@ transition_duration = 1500
 transition_on_startup = false
 
     [wallpaper.automation]
-    enabled = true
+    enabled = false
     order = "random"
     recursive = true
 
     [wallpaper.default]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-q25ler.png"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-1qgv2g.jpg"
 
     [wallpaper.last]
-    path = "/home/guillaume/.local/share/Steam/steamapps/workshop/content/431960/3217055838/preview.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-1qgv2g.jpg"
 
     [wallpaper.monitors.DP-1]
-    path = "/home/guillaume/.local/share/Steam/steamapps/workshop/content/431960/3217055838/preview.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-1qgv2g.jpg"
 
 [weather]
 effects = true
