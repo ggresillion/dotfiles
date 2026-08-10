@@ -113,6 +113,7 @@
       "htop"
       "p7zip"
       "stripe/stripe-cli/stripe"
+			"rainfrog"
     ];
 
     casks = [
