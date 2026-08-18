@@ -16,5 +16,6 @@
     ./vr.nix
     ./llm.nix
     ./network.nix
+    ./torrent.nix
   ];
 }

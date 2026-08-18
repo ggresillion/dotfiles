@@ -182,7 +182,7 @@ in
     }
   ];
 
-  programs.coolercontrol.enable = true;
+  services.jackett.enable = true;
 
   system.stateVersion = "26.05";
 }

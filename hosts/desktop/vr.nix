@@ -12,11 +12,6 @@
     autoStart = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    opencomposite
-    xrizer
-  ];
-
   programs.steam.package = lib.mkDefault (
     pkgs.steam.override (prev: {
       extraEnv = {
