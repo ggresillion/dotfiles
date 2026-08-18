@@ -44,8 +44,8 @@
       };
 
       keyboard = {
-        layout = "fr";
-        variant = "";
+        layout = "us";
+        variant = "intl";
       };
 
       idle.timeout = 300;
