@@ -27,6 +27,7 @@ local config = {
 	keys = {
 		{ key = "q", mods = "CMD",       action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 		{ key = "w", mods = "CMD|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
+		{ key = "Enter", mods = "ALT",   action = wezterm.action.DisableDefaultAssignment },
 	},
 	max_fps = 240,
 }

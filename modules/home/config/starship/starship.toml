@@ -1,20 +1,21 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[ ](fg:os bg:os)\
+[](fg:os)\
 $os\
 [ ](fg:os bg:os)\
 $username\
-[](fg:os bg:directory)\
+[](fg:os bg:directory)\
 $directory\
-[](fg:directory bg:git)\
+[](fg:directory bg:git)\
 $git_branch$git_status\
+[](fg:git bg:lang)\
 $c$rust$golang$nodejs$php$java$kotlin$haskell$python\
+[](fg:lang bg:env)\
 $conda$nix_shell\
-[](fg:env bg:time)\
+[](fg:env bg:time)\
 $time\
-[ ](fg:time)\
-$cmd_duration\
+[](fg:time)\
 $line_break\
 $character
 """
@@ -89,7 +90,7 @@ truncate_to_repo = false
 # GIT
 # -------------------
 [git_branch]
-symbol = ""
+symbol = ""
 style = "bg:git"
 format = '[[ $symbol $branch ](fg:text bg:git)]($style)'
 [git_status]
@@ -99,63 +100,61 @@ format = '[[($all_status$ahead_behind )](fg:text bg:git)]($style)'
 
 # -------------------
 # LANGUAGES
-# Each module carries its own entry separator (fg:git bg:lang).
-# If a module doesn't activate, neither the arrow nor its content prints,
-# so an empty lang cluster leaves no orphan arrow.
+# Entry separator (fg:git bg:lang) lives in the top-level format, once,
+# so it always renders even if no language is detected — no color mismatch
+# on the next arrow, at the cost of a visible arrow with nothing behind it.
 # Modules share bg:lang so back-to-back arrows (if multiple langs detected)
 # blend rather than clash.
 # -------------------
 [c]
-symbol = " "
+symbol = " "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [rust]
-symbol = ""
+symbol = "󱘗 "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [golang]
-symbol = ""
+symbol = " "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [nodejs]
-symbol = ""
+symbol = " "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [php]
-symbol = ""
+symbol = " "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [java]
-symbol = " "
+symbol = " "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [kotlin]
-symbol = ""
+symbol = " "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [haskell]
-symbol = ""
+symbol = " "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version) ](fg:text bg:lang)]($style)'
 [python]
-symbol = ""
+symbol = " "
 style = "bg:lang"
-format = '[](fg:git bg:lang)[[ $symbol( $version)(\(#$virtualenv\)) ](fg:text bg:lang)]($style)'
+format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:text bg:lang)]($style)'
 
 # -------------------
 # CONTAINERS / ENV
-# Same self-contained separator approach. Entry arrow assumes lang's bg
-# as its fg, which is a reasonable approximation whether or not a
-# language segment actually rendered (both fg:lang here).
+# Same top-level entry separator approach as LANGUAGES, always fg:lang bg:env.
 # -------------------
 [docker_context]
-symbol = ""
+symbol = " "
 style = "bg:env"
-format = '[](fg:lang bg:env)[[ $symbol( $context) ](fg:text bg:env)]($style)'
+format = '[[ $symbol( $context) ](fg:text bg:env)]($style)'
 [conda]
-symbol = "  "
+symbol = " "
 style = "fg:text bg:env"
-format = '[](fg:lang bg:env)[$symbol$environment ]($style)'
+format = '[$symbol$environment ]($style)'
 ignore_base = true
 [nix_shell]
 disabled = false
@@ -163,7 +162,7 @@ style = "fg:text bg:env"
 impure_msg = "🛠️"
 pure_msg = "🧪"
 unknown_msg = "❓"
-format = '[](fg:lang bg:env)[ $state $name ]($style)'
+format = '[ $state $name ]($style)'
 
 # -------------------
 # TIME
@@ -172,7 +171,7 @@ format = '[](fg:lang bg:env)[ $state $name ]($style)'
 disabled = false
 time_format = "%R"
 style = "bg:time"
-format = '[[  $time ](fg:text bg:time)]($style)'
+format = '[[ $time ](fg:text bg:time)]($style)'
 
 # -------------------
 # CMD DURATION
