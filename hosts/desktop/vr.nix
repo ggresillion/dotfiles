@@ -20,4 +20,6 @@
       // (prev.extraEnv or { });
     })
   );
+
+  environment.systemPackages = [ pkgs.android-tools ];
 }

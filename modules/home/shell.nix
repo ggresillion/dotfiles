@@ -14,6 +14,7 @@
       carapace
       starship
       zoxide
+      xclip
     ]
     ++ pkgs.lib.optionals (!pkgs.stdenv.isDarwin) [
       inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap

@@ -2,11 +2,15 @@
 let
   rgb-sync = pkgs.writeShellApplication {
     name = "rgb-sync";
-    runtimeInputs = [ pkgs.openrgb ];
+    runtimeInputs = [
+      pkgs.openrgb
+      pkgs.netcat-gnu
+    ];
     text = ''
       hex="''${1:?usage: rgb-sync <hex> (no leading #)}"
       hex="''${hex#\#}"
       echo "Applying primary color #$hex to all OpenRGB devices"
+      openrgb --mode direct --color "$hex"
       openrgb --mode static --color "$hex"
     '';
   };
