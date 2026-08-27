@@ -24,9 +24,6 @@
     helix
   ];
 
-  # Aerospace config (window manager)
-  home.file.".aerospace.toml".source = ../../modules/home/config/aerospace/.aerospace.toml;
-
   # OmniWM (window manager) config
   xdg.configFile."omniwm/settings.toml".source = ../../modules/home/config/omniwm/settings.toml;
 

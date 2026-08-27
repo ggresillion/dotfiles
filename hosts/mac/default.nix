@@ -69,7 +69,6 @@
     global.brewfile = true;
 
     taps = [
-      "nikitabobko/tap"
       "netbirdio/tap"
       "oven-sh/bun"
       "kopecmaciej/vi-mongo"

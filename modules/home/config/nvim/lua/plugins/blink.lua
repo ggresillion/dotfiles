@@ -1,30 +1,47 @@
 vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
-	{ src = "https://github.com/supermaven-inc/supermaven-nvim" },
-	{ src = "https://github.com/huijiro/blink-cmp-supermaven" },
-	{ src = "https://github.com/Exafunction/windsurf.nvim" },
-	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/hrsh7th/nvim-cmp" },
+	{ src = "https://github.com/monkoose/neocodeium" },
 })
 
--- fix supermaven-nvim complaining about missing cmp
--- package.preload["cmp"] = function()
--- 	return {
--- 		register_source = function() end,
--- 		setup = function() end,
--- 	}
--- end
+local neocodeium = require("neocodeium")
 
--- require("supermaven-nvim").setup({
--- 	disable_inline_completion = true,
--- 	disable_keymaps = true,
--- })
+neocodeium.setup({
+	silent = true,
+	filter = function()
+		return not require("blink.cmp").is_visible()
+	end,
+})
 
--- require("codeium").setup({})
+vim.keymap.set("i", "<A-w>", neocodeium.accept_word)
+vim.keymap.set("i", "<A-a>", neocodeium.accept_line)
+vim.keymap.set("i", "<A-e>", neocodeium.cycle_or_complete)
+vim.keymap.set("i", "<A-r>", function()
+	neocodeium.cycle_or_complete(-1)
+end)
+vim.keymap.set("i", "<A-c>", neocodeium.clear)
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "BlinkCmpMenuOpen",
+	callback = neocodeium.clear,
+})
 
 require("blink.cmp").setup({
 	keymap = {
 		preset = "super-tab",
+		["<Tab>"] = {
+			function(cmp)
+				if neocodeium.visible() then
+					neocodeium.accept()
+					return true
+				end
+				if cmp.snippet_active() then
+					return cmp.accept()
+				end
+				return cmp.select_and_accept()
+			end,
+			"snippet_forward",
+			"fallback",
+		},
 	},
 	appearance = {
 		nerd_font_variant = "mono",
@@ -37,8 +54,6 @@ require("blink.cmp").setup({
 		default = { "lsp", "path", "snippets", "buffer" },
 		providers = {
 			snippets = { min_keyword_length = 2, score_offset = 10 },
-			-- supermaven = { name = "supermaven", module = "blink-cmp-supermaven", async = true, score_offset = 4 },
-			-- codeium = { name = "Codeium", module = "codeium.blink", async = true, score_offset = 4 },
 			lsp = { score_offset = 3 },
 			path = { min_keyword_length = 3, score_offset = 2 },
 			buffer = { min_keyword_length = 3, score_offset = 1 },
