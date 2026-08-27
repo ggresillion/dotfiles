@@ -2,6 +2,15 @@ vim.pack.add({
 	{ src = "https://github.com/mistweaverco/kulala.nvim" },
 })
 
+-- Silence kulala's one-off "Tree-sitter parser is ready!" notification.
+local notify = vim.notify
+vim.notify = function(msg, ...)
+	if msg == "Tree-sitter parser is ready!" then
+		return
+	end
+	return notify(msg, ...)
+end
+
 require("kulala").setup({
 	global_keymaps = true,
 	global_keymaps_prefix = "<leader>r",
