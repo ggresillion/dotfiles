@@ -10,7 +10,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://github.com/Tatayoyoh/deezer-tui/releases/latest/download/deezer-tui-linux-x86_64";
-    hash = "sha256-Kt59OuzF5W3lS9iBHFa+2sDuOEMJmdEd1hoj2/os3lc=";
+    hash = "sha256-8qJYAMACw1etp/0KKsehT9nswgkCmP6HXYK7XDw+VUE=";
   };
 
   dontUnpack = true;
