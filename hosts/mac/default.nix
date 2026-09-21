@@ -113,6 +113,9 @@
       "p7zip"
       "stripe/stripe-cli/stripe"
 			"rainfrog"
+
+      # Content type / language detection
+      "magika"
     ];
 
     casks = [
@@ -121,7 +124,6 @@
       "1password-cli"
 
       # Browsers
-      "chromium"
       "zen"
 
       # Dev tools

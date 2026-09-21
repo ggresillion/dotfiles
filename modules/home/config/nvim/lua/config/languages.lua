@@ -19,11 +19,10 @@ return {
   -- 	formatter = { "prettier" },
   -- 	parser = "typescript",
   -- },
-  -- json = {
-  -- 	lsp = "jsonls",
-  -- 	formatter = { "jq" },
-  -- 	parser = "json",
-  -- },
+  json = {
+    formatter = { "jq" },
+    parser = "json",
+  },
   -- rust = {
   -- 	lsp = "rust_analyzer",
   -- 	formatter = {},
