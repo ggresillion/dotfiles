@@ -6,6 +6,8 @@ binds {
 
     // === Application Launchers ===
     Mod+T hotkey-overlay-title="Open Terminal" { spawn "wezterm"; }
+    // autoclick only exists on the desktop (hosts/desktop/gaming.nix)
+    F6 repeat=false hotkey-overlay-title="Toggle Autoclicker" { spawn "autoclick"; }
 
     // === Noctalia ===
     Mod+Space repeat=false { spawn "vicinae" "toggle"; }
