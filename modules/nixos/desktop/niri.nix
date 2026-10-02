@@ -1,13 +1,24 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.niri.enable = true;
 
   services.displayManager.defaultSession = lib.mkForce "niri";
 
-  programs.noctalia-greeter = {
+  # Same command the upstream flake module used: the nixpkgs module doesn't
+  # expose the session .desktop files via XDG_DATA_DIRS.
+  services.greetd.settings.default_session.command =
+    "${lib.getExe' pkgs.coreutils "env"} "
+    + "XDG_DATA_DIRS=${config.services.displayManager.sessionData.desktops}/share "
+    + "${lib.getExe' config.services.displayManager.noctalia-greeter.package "noctalia-greeter-session"} -- --session niri";
+
+  services.displayManager.noctalia-greeter = {
     enable = true;
-    greeter-args = "--session niri";
 
     settings = {
       session.default = "niri";
@@ -68,8 +79,11 @@
 
   hardware.bluetooth.enable = true;
 
+  services.udisks2.enable = true;
+
   environment.systemPackages = [
     pkgs.xwayland-satellite
     pkgs.lxqt.lxqt-policykit
+    pkgs.udiskie
   ];
 }

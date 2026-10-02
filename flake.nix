@@ -3,16 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixwrap.url = "github:rti/nixwrap";
-    noctalia.url = "github:noctalia-dev/noctalia";
-    noctalia-greeter = {
-      url = "github:noctalia-dev/noctalia-greeter";
+    millennium = {
+      url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
-    nix-gaming.url = "github:fufexan/nix-gaming";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     disko = {
       url = "github:nix-community/disko/latest";
@@ -42,6 +37,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       nixpkgs-darwin,
       nix-darwin,
@@ -51,75 +47,73 @@
     }@inputs:
     let
       system = "x86_64-linux";
-    in
-    {
-      nixosConfigurations.guillaume-desktop = nixpkgs.lib.nixosSystem {
+      pkgs = import nixpkgs {
         inherit system;
-        specialArgs = { inherit inputs; };
-
-        modules = [
-          ./hosts/desktop
-          nix-index-database.nixosModules.default
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users = {
-              guillaume = import ./home/guillaume/default.nix;
-            };
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-            };
-          }
-        ];
+        overlays = [ self.overlays.default ];
       };
 
-      nixosConfigurations.guillaume-laptop = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; };
-
-        modules = [
-          ./hosts/laptop
-          nix-index-database.nixosModules.default
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users = {
-              guillaume = import ./home/guillaume_laptop/default.nix;
-            };
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-            };
-          }
-        ];
+      homeManagerConfig = home: {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.guillaume = import home;
+        home-manager.extraSpecialArgs = { inherit inputs; };
       };
 
-      darwinConfigurations.macbook =
-        let
-          system = "aarch64-darwin";
-        in
-        nix-darwin.lib.darwinSystem {
-          inherit system;
+      mkHost =
+        { host, home }:
+        nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
-          pkgs = import nixpkgs-darwin {
-            inherit system;
-            config.allowUnfree = true;
-          };
-
           modules = [
-            ./hosts/mac
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "bak";
-              home-manager.users.guillaume = import ./home/guillaume_mac/default.nix;
-              home-manager.extraSpecialArgs = {
-                inherit inputs;
-              };
-            }
+            host
+            nix-index-database.nixosModules.default
+            home-manager.nixosModules.home-manager
+            { nixpkgs.overlays = [ self.overlays.default ]; }
+            (homeManagerConfig home)
           ];
         };
+    in
+    {
+      overlays.default = import ./pkgs;
+
+      packages.${system} = {
+        inherit (pkgs) openrgb-git deezer-tui xrizer-git;
+      };
+
+      formatter.${system} = pkgs.nixfmt-tree;
+
+      # `nix flake check` builds every NixOS host and checks formatting.
+      checks.${system} = {
+        formatting = pkgs.runCommand "check-formatting" { } ''
+          find ${self} -name '*.nix' -exec ${pkgs.lib.getExe pkgs.nixfmt} --check {} +
+          touch $out
+        '';
+      }
+      // nixpkgs.lib.mapAttrs (_: host: host.config.system.build.toplevel) self.nixosConfigurations;
+
+      nixosConfigurations = {
+        guillaume-desktop = mkHost {
+          host = ./hosts/desktop;
+          home = ./home/guillaume;
+        };
+        guillaume-laptop = mkHost {
+          host = ./hosts/laptop;
+          home = ./home/guillaume_laptop;
+        };
+      };
+
+      darwinConfigurations.macbook = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit inputs; };
+        pkgs = import nixpkgs-darwin {
+          system = "aarch64-darwin";
+          config.allowUnfree = true;
+        };
+
+        modules = [
+          ./hosts/mac
+          home-manager.darwinModules.home-manager
+          (homeManagerConfig ./home/guillaume_mac)
+          { home-manager.backupFileExtension = "bak"; }
+        ];
+      };
     };
 }

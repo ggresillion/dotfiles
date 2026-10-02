@@ -10,11 +10,6 @@ let
 in
 
 {
-  # Extra cache for gaming-related packages (this host only)
-  nix.settings = {
-    substituters = [ "https://nix-gaming.cachix.org" ];
-    trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
-  };
 
   # Boot: theme + Windows dual-boot chainload (this machine's disk layout)
   boot.loader.limine = {
@@ -30,21 +25,11 @@ in
 
   networking.hostName = "guillaume-desktop";
 
-  # User
-  users.users = {
-    guillaume = {
-      isNormalUser = true;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-        "video"
-        "audio"
-        "docker"
-      ];
-      hashedPassword = "$6$QApRfgdVjtrm1BwC$/6fJuQSpiMFDExYF5G66nbL72/LqZvtHn.ThWKwt2AbmxxUyezr/nhMEsMymteyyvCdnYDI8lSlrfJ6X8Un7u.";
-      shell = "${pkgs.nushell}/bin/nu";
-    };
-  };
+  users.users.guillaume.extraGroups = [
+    "video"
+    "audio"
+    "docker"
+  ];
 
   # AMD
   services.xserver.videoDrivers = [ "amdgpu" ];
@@ -58,7 +43,8 @@ in
   # 32-bit audio for gaming
   services.pipewire.alsa.support32Bit = true;
 
-  # Plasma (available alongside niri at the SDDM session picker)
+  # Plasma: available at the greeter, and also what pulls in Dolphin, Ark,
+  # Breeze icons, kwallet, power-profiles-daemon and fwupd for the niri session.
   services.desktopManager.plasma6.enable = true;
 
   # Docker
@@ -67,13 +53,7 @@ in
   # KDE connect
   programs.kdeconnect.enable = true;
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      openrgb = final.callPackage ../../pkgs/openrgb-git { };
-    })
-  ];
-
-  # OpenRGB: run a persistent SDK server (uses the git package above, since
+  # OpenRGB: run a persistent SDK server (uses openrgb-git from ../../pkgs, since
   # nixpkgs' stable openrgb doesn't yet support this MSI B850 board's i2c
   # devices). This also wires up services.udev.packages so the udev rules
   # produced by the package's own build (60-openrgb.rules) actually get
@@ -82,10 +62,10 @@ in
   # couldn't see any devices without running as root.
   services.hardware.openrgb = {
     enable = true;
-    package = pkgs.openrgb;
+    package = pkgs.openrgb-git;
     motherboard = "amd";
   };
-  # Waits for every
+  # Wait for udev so the i2c/USB devices exist before the server scans them.
   systemd.services.openrgb.serviceConfig.ExecStartPre =
     "${pkgs.systemd}/bin/udevadm settle --timeout=30";
   programs.nix-ld = {
@@ -162,23 +142,25 @@ in
     '')
   ];
 
+  # Passwordless only for the exact invocations reboot-uefi/reboot-windows
+  # make. A bare `systemctl` or `efibootmgr` rule would be passwordless root
+  # (e.g. `systemctl edit` spawns an editor as root).
   security.sudo.extraRules = [
     {
       users = [ "guillaume" ];
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/efibootmgr";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/reboot";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/systemctl";
-          options = [ "NOPASSWD" ];
-        }
-      ];
+      commands =
+        map
+          (command: {
+            inherit command;
+            options = [ "NOPASSWD" ];
+          })
+          [
+            # `""` = no arguments allowed
+            ''/run/current-system/sw/bin/efibootmgr ""''
+            "/run/current-system/sw/bin/efibootmgr --bootnext [0-9A-F][0-9A-F][0-9A-F][0-9A-F]"
+            ''/run/current-system/sw/bin/reboot ""''
+            "/run/current-system/sw/bin/systemctl reboot --firmware-setup"
+          ];
     }
   ];
 

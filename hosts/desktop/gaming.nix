@@ -5,13 +5,15 @@
 }:
 
 {
-  # Disabled until fixed
-  # https://github.com/SteamClientHomebrew/Millennium/issues/551
   nixpkgs.overlays = [ inputs.millennium.overlays.default ];
 
   programs.steam = {
     enable = true;
-    package = pkgs.millennium-steam;
+    package = pkgs.millennium-steam.override {
+      # Let pressure-vessel (Proton's container) see the host's OpenXR
+      # runtime (WiVRn, see ./vr.nix).
+      extraEnv.PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
+    };
     remotePlay.openFirewall = true;
   };
 

@@ -6,11 +6,11 @@
 
 stdenv.mkDerivation {
   pname = "deezer-tui";
-  version = "unstable";
+  version = "1.18.0";
 
   src = fetchurl {
-    url = "https://github.com/Tatayoyoh/deezer-tui/releases/latest/download/deezer-tui-linux-x86_64";
-    hash = "sha256-8qJYAMACw1etp/0KKsehT9nswgkCmP6HXYK7XDw+VUE=";
+    url = "https://github.com/Tatayoyoh/deezer-tui/releases/download/v1.18.0/deezer-tui-linux-x86_64";
+    hash = "sha256-Pdq7L5RAN0CvRuuUG/Fa8+M7xnbn6gINjyH8y54g804=";
   };
 
   dontUnpack = true;

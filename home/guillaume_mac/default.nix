@@ -5,10 +5,7 @@
   ...
 }:
 {
-  imports = [
-    ../../modules/home/shell.nix
-    ../../modules/home/dev.nix
-  ];
+  imports = [ ../../modules/home ];
 
   home.username = "guillaume";
   home.homeDirectory = "/Users/guillaume";
@@ -28,7 +25,8 @@
   xdg.configFile."omniwm/settings.toml".source = ../../modules/home/config/omniwm/settings.toml;
 
   # Karabiner-Elements config
-  xdg.configFile."karabiner/karabiner.json".source = ../../modules/home/config/karabiner/karabiner.json;
+  xdg.configFile."karabiner/karabiner.json".source =
+    ../../modules/home/config/karabiner/karabiner.json;
 
   # Remove stale symlink left by older home-manager before copyApps creates real dir
   home.activation.removeHomeManagerAppsLink = lib.hm.dag.entryBefore [ "copyApps" ] ''

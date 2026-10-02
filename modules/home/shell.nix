@@ -14,9 +14,8 @@
       carapace
       starship
       zoxide
-      xclip
     ]
-    ++ pkgs.lib.optionals (!pkgs.stdenv.isDarwin) [
+    ++ pkgs.lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [
       inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap
     ];
 
@@ -26,12 +25,12 @@
     d = "docker";
     dc = "docker compose";
     nrs =
-      if pkgs.stdenv.isDarwin then
+      if pkgs.stdenv.hostPlatform.isDarwin then
         "sudo /run/current-system/sw/bin/darwin-rebuild switch --flake ${config.home.homeDirectory}/nixos#(hostname)"
       else
         "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#(hostname)";
     nrt =
-      if pkgs.stdenv.isDarwin then
+      if pkgs.stdenv.hostPlatform.isDarwin then
         "darwin-rebuild build --flake ${config.home.homeDirectory}/nixos#(hostname)"
       else
         "sudo nixos-rebuild test --flake ${config.home.homeDirectory}/nixos#(hostname)";
@@ -230,7 +229,7 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    package = pkgs.neovim-unwrapped;
     extraPackages = with pkgs; [
       nodejs
       python3
@@ -260,7 +259,7 @@
   };
 
   # WezTerm — package managed by homebrew on darwin
-  programs.wezterm = pkgs.lib.mkIf (!pkgs.stdenv.isDarwin) {
+  programs.wezterm = pkgs.lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
     enable = true;
   };
   xdg.configFile."wezterm/wezterm.lua" = {
@@ -271,7 +270,7 @@
   xdg.configFile."tridactyl/tridactylrc".source = ./config/tridactyl/tridactylrc;
 
   # Raycast script command — new WezTerm window without a cold process spawn
-  home.file."scripts/open-wezterm-window.sh" = pkgs.lib.mkIf pkgs.stdenv.isDarwin {
+  home.file."scripts/open-wezterm-window.sh" = pkgs.lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
     source = ./config/raycast/open-wezterm-window.sh;
     executable = true;
     force = true;

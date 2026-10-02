@@ -7,19 +7,6 @@
 {
   networking.hostName = "guillaume-laptop";
 
-  # User
-  users.users = {
-    guillaume = {
-      isNormalUser = true;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
-      hashedPassword = "$6$QApRfgdVjtrm1BwC$/6fJuQSpiMFDExYF5G66nbL72/LqZvtHn.ThWKwt2AbmxxUyezr/nhMEsMymteyyvCdnYDI8lSlrfJ6X8Un7u.";
-      shell = "${pkgs.nushell}/bin/nu";
-    };
-  };
-
   # Laptop battery management
   services.power-profiles-daemon.enable = true;
 

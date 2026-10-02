@@ -7,7 +7,7 @@
       "rw"
       "uid=1000"
       "gid=100"
-      "umask=000"
+      "umask=022"
       "nofail"
     ];
   };

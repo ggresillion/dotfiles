@@ -112,7 +112,7 @@
       "htop"
       "p7zip"
       "stripe/stripe-cli/stripe"
-			"rainfrog"
+      "rainfrog"
 
       # Content type / language detection
       "magika"
@@ -164,7 +164,7 @@
 
       # Fonts (nerd fonts)
       "font-jetbrains-mono-nerd-font"
-			"font-fira-code-nerd-font"
-   ];
+      "font-fira-code-nerd-font"
+    ];
   };
 }
