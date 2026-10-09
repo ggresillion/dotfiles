@@ -4,4 +4,5 @@ final: prev: {
   openrgb-git = final.callPackage ./openrgb-git { };
   deezer-tui = final.callPackage ./deezer-tui/package.nix { };
   xrizer-git = final.callPackage ./xrizer-git { };
+  rgb-sync = final.callPackage ./rgb-sync { };
 }

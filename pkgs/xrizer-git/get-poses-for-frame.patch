@@ -1,0 +1,24 @@
+--- a/src/compositor.rs	2026-10-08 16:48:35.053627930 +0200
++++ b/src/compositor.rs	2026-10-08 16:48:40.746777541 +0200
+@@ -307,10 +307,18 @@
+     fn GetPosesForFrame(
+         &self,
+         _unPosePredictionID: u32,
+-        _pPoseArray: *mut vr::TrackedDevicePose_t,
+-        _unPoseArrayCount: u32,
++        pose_array: *mut vr::TrackedDevicePose_t,
++        pose_count: u32,
+     ) -> vr::EVRCompositorError {
+-        todo!()
++        // Prediction IDs aren't tracked; hand back the current poses.
++        if pose_array.is_null() || pose_count == 0 {
++            return vr::EVRCompositorError::None;
++        }
++        let poses = unsafe { std::slice::from_raw_parts_mut(pose_array, pose_count as usize) };
++        self.input
++            .force(|_| Input::new(self.openxr.clone()))
++            .get_poses(poses, None);
++        vr::EVRCompositorError::None
+     }
+     fn GetLastPosePredictionIDs(
+         &self,

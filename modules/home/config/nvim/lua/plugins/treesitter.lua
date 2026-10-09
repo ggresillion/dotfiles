@@ -1,19 +1,9 @@
-local languages = require("config.languages")
-
 vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 })
 
-local parsers = {}
-for _, lang in pairs(languages) do
-	if lang.parser then
-		table.insert(parsers, lang.parser)
-	end
-end
-
 require("nvim-treesitter").setup({})
-require("nvim-treesitter").install(parsers)
-require("nvim-treesitter").install("vim")
+require("nvim-treesitter").install({ "vim", "lua", "nix", "go", "json", "javascript", "typescript" })
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",

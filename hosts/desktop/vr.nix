@@ -57,11 +57,26 @@ in
     openFirewall = true;
     package = pkgs.wivrn;
     autoStart = true;
+    # CAP_SYS_NICE lets the compositor take a high-priority GPU queue, so
+    # async reprojection keeps running while the game hitches.
+    highPriority = true;
+    # Sets PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES so Steam games see WiVRn
+    # without per-game launch options.
+    steam.importOXRRuntimes = true;
     config = {
       enable = true;
       json."openvr-compat-path" = "${pkgs.xrizer-git}/lib/xrizer";
     };
   };
+
+  # Stable path for ~/.config/wivrn/config.json's "openvr-compat-path":
+  # WiVRn prefers the user config over the -f one above, and falls back to
+  # its bundled xrizer 0.5 when the key is missing there. Lives in $HOME, not
+  # /etc: native games run in Steam's pressure-vessel container, which sees
+  # $HOME and /nix/store but not the host's /etc.
+  systemd.tmpfiles.rules = [
+    "L+ /home/guillaume/.local/share/xrizer - - - - ${pkgs.xrizer-git}/lib/xrizer"
+  ];
 
   environment.systemPackages = [
     pkgs.android-tools

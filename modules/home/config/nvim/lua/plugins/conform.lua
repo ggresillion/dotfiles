@@ -1,19 +1,13 @@
-local languages = require("config.languages")
-
 vim.pack.add({
 	{ src = "https://github.com/stevearc/conform.nvim" },
 })
 
-local formatters_by_ft = {}
-
-for ft, lang in pairs(languages) do
-	if lang.formatter then
-		formatters_by_ft[ft] = lang.formatter
-	end
-end
-
 require("conform").setup({
-	formatters_by_ft = formatters_by_ft,
+	formatters_by_ft = {
+		json = { "jq" },
+		nix = { "nixfmt" },
+		go = { "gofumpt", "goimports" },
+	},
 	notify_on_error = false,
 	format_on_save = function(bufnr)
 		if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then

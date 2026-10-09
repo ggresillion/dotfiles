@@ -237,6 +237,13 @@
       tree-sitter
       nixd
       nixfmt
+      lua-language-server
+      gopls
+      gofumpt
+      gotools
+      golangci-lint
+      golangci-lint-langserver
+      typescript-language-server
     ];
   };
   xdg.configFile = {

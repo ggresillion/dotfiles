@@ -43,9 +43,14 @@ in
   # 32-bit audio for gaming
   services.pipewire.alsa.support32Bit = true;
 
-  # Plasma: available at the greeter, and also what pulls in Dolphin, Ark,
-  # Breeze icons, kwallet, power-profiles-daemon and fwupd for the niri session.
-  services.desktopManager.plasma6.enable = true;
+  # No Plasma: its kded modules override Noctalia's dark theme. The KDE apps
+  # it used to pull in are listed in systemPackages below.
+  # Dolphin's "Open With" menu is empty without a menu definition.
+  environment.etc."xdg/menus/applications.menu".source =
+    "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+  services.power-profiles-daemon.enable = true;
+  services.fwupd.enable = true;
+  services.upower.enable = true;
 
   # Docker
   virtualisation.docker.enable = true;
@@ -68,6 +73,40 @@ in
   # Wait for udev so the i2c/USB devices exist before the server scans them.
   systemd.services.openrgb.serviceConfig.ExecStartPre =
     "${pkgs.systemd}/bin/udevadm settle --timeout=30";
+
+  # Apply the last noctalia color (persisted by the home rgb module) as soon
+  # as the server is up, so the lights are right from the greeter on, and
+  # again after resume since the controllers lose their state on suspend.
+  systemd.services.openrgb-color =
+    let
+      colorFile = "${config.users.users.guillaume.home}/.local/state/noctalia/rgb-sync-color.txt";
+      sleepTargets = [
+        "suspend.target"
+        "hibernate.target"
+        "hybrid-sleep.target"
+        "suspend-then-hibernate.target"
+      ];
+    in
+    {
+      description = "Apply the noctalia color to OpenRGB devices";
+      after = [ "openrgb.service" ] ++ sleepTargets;
+      requires = [ "openrgb.service" ];
+      wantedBy = [ "multi-user.target" ] ++ sleepTargets;
+      # The client writes its config/logs under XDG_CONFIG_HOME.
+      environment.XDG_CONFIG_HOME = "/run/openrgb-color";
+      serviceConfig = {
+        Type = "oneshot";
+        RuntimeDirectory = "openrgb-color";
+      };
+      script = ''
+        color=8caaee
+        if [ -r "${colorFile}" ]; then
+          color="$(tr -d "[:space:]#" < "${colorFile}")"
+        fi
+        exec ${pkgs.lib.getExe pkgs.rgb-sync} "$color"
+      '';
+    };
+
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -123,6 +162,17 @@ in
     wget
     vim
     efibootmgr
+
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.ark
+    kdePackages.breeze-icons
+    kdePackages.kio-extras
+    kdePackages.kio-fuse
+    kdePackages.ffmpegthumbs
+    kdePackages.kdegraphics-thumbnailers
+    kdePackages.qtsvg
+    kdePackages.kimageformats
 
     (writeShellScriptBin "reboot-uefi" ''
       exec sudo -n systemctl reboot --firmware-setup

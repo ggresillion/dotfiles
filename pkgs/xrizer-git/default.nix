@@ -4,6 +4,7 @@
   fetchFromGitHub,
   rustPlatform,
   libGL,
+  openxr-loader,
 }:
 
 # nixpkgs' xrizer (currently 0.5) doesn't yet implement OpenVR's
@@ -17,17 +18,20 @@ let
   src = fetchFromGitHub {
     owner = "Supreeeme";
     repo = "xrizer";
-    rev = "0989a7fac2d1efb7ea82f5fe1a8ed30c3eeb9596";
-    hash = "sha256-Rb1pssAq6Zx6VmQVQtGcThkA6zCwi5X7G7aHmdsDrJo=";
+    rev = "1511bbe75bfa38cb775dd0aae1bfc8d1b8d3efde";
+    hash = "sha256-3bp1JYNPUbNwBkjZG2Ex1jtj3L8Vt78wFKhHAPpTD58=";
   };
 in
 xrizer.overrideAttrs (old: {
-  version = "unstable-2026-09-03";
+  version = "unstable-2026-10-07";
   inherit src;
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit src;
-    hash = "sha256-JKQUrHGqnU5453iVKXnO51nX2NqcBYzsfvuu92WhLDE=";
+    hash = "sha256-F6ZTOCPih04tT0hlaso43/TNP5bahQkF8HOdjn7/bBc=";
   };
+  # IVRCompositor029::GetPosesForFrame is still todo!() upstream (as of
+  # 2026-10-07) and panics on launch in some games; return current poses instead.
+  patches = [ ./get-poses-for-frame.patch ];
   # Upstream renamed the "static"/"linked" openxr features to
   # "static-openxr" (dynamic is now the default), so the old feature
   # substitution in nixpkgs' postPatch no longer applies - only the
@@ -35,5 +39,12 @@ xrizer.overrideAttrs (old: {
   postPatch = ''
     substituteInPlace src/graphics_backends/gl.rs \
       --replace-fail 'libGLX.so.0' '${lib.getLib libGL}/lib/libGLX.so.0'
+  '';
+  # The default build dlopen()s libopenxr_loader.so by bare name, which
+  # isn't on the game's library path; dlopen also searches the calling
+  # library's RUNPATH, so add the loader there (after fixup's rpath shrink).
+  postFixup = (old.postFixup or "") + ''
+    patchelf --add-rpath ${lib.getLib openxr-loader}/lib \
+      $out/lib/xrizer/${old.platformPath}/vrclient.so
   '';
 })

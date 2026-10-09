@@ -24,6 +24,8 @@ widget_spacing = 12
 [brightness]
 enable_ddcutil = false
 
+[calendar]
+
 [config]
 
 [control_center]
@@ -82,13 +84,26 @@ widget_order = [ "lockscreen-login-box@DP-1" ]
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
-    box_height = 0.0
-    box_width = 0.0
+    box_height = 196.0
+    box_width = 810.0
     cx = 2560.0
     cy = 1317.0
     output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 5120.0
     rotation = 0.0
     type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
+        center_password_text = false
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
 
 [nightlight]
 enabled = false
@@ -209,13 +224,13 @@ transition_on_startup = false
     recursive = true
 
     [wallpaper.default]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-1qgv2g.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-zy9jrj.png"
 
     [wallpaper.last]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-1qgv2g.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-zy9jrj.png"
 
     [wallpaper.monitors.DP-1]
-    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-1qgv2g.jpg"
+    path = "/home/guillaume/Pictures/Wallpapers/wallhaven-zy9jrj.png"
 
 [weather]
 effects = true
@@ -232,7 +247,7 @@ width = 128
 type = "noctalia/bongocat:cat"
 
 [widget.control-center]
-custom_image = "/nix/store/8l4m9c2pygpv4xpn92vjx9il0x5apwj2-noctalia-5.0.0/share/noctalia/assets/images/distros/nixos.svg"
+custom_image = "/nix/store/pn9ps4w5j8d5nhc6rzvd8s3sgmrw32wv-nixos-icons-0-unstable-2025-06-28/share/icons/hicolor/scalable/apps/nix-snowflake.svg"
 custom_image_colorize = true
 scale = 1.3
 

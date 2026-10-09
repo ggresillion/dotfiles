@@ -78,6 +78,7 @@
   };
 
   hardware.bluetooth.enable = true;
+  hardware.xpadneo.enable = true;
 
   services.udisks2.enable = true;
 
