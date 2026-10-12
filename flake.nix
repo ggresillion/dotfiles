@@ -29,6 +29,10 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    apple-silicon = {
+      url = "github:nix-community/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     catppuccin-limine = {
       url = "github:catppuccin/limine";
       flake = false;
@@ -88,7 +92,11 @@
           touch $out
         '';
       }
-      // nixpkgs.lib.mapAttrs (_: host: host.config.system.build.toplevel) self.nixosConfigurations;
+      // nixpkgs.lib.mapAttrs (_: host: host.config.system.build.toplevel) (
+        nixpkgs.lib.filterAttrs (
+          _: host: host.config.nixpkgs.hostPlatform.system == system
+        ) self.nixosConfigurations
+      );
 
       nixosConfigurations = {
         guillaume-desktop = mkHost {
@@ -98,6 +106,10 @@
         guillaume-laptop = mkHost {
           host = ./hosts/laptop;
           home = ./home/guillaume_laptop;
+        };
+        guillaume-asahi = mkHost {
+          host = ./hosts/asahi;
+          home = ./home/guillaume_asahi;
         };
       };
 
