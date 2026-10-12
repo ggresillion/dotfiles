@@ -68,6 +68,10 @@
       url = "github:losnoco/smithay/spicy-master";
       flake = false;
     };
+    apple-silicon = {
+      url = "github:nix-community/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     catppuccin-limine = {
       url = "github:catppuccin/limine";
       flake = false;
@@ -147,6 +151,10 @@
         #   nix build .#nixosConfigurations.pi.config.system.build.sdImage
         pi = nixpkgs.lib.nixosSystem {
           modules = [ ./hosts/pi ];
+        };
+        guillaume-asahi = mkHost {
+          host = ./hosts/asahi;
+          home = ./home/guillaume_asahi;
         };
       };
 
