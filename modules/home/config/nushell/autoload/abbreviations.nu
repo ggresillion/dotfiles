@@ -42,7 +42,7 @@ $env.config = {
                 selected_text: green_reverse
                 description_text: yellow
             }
-            source: { |buffer, position|
+            source: { |buffer, place|
                 let match = $abbreviations | columns | where $it == $buffer
                 if ($match | is-empty) {
                     { value: $buffer }

@@ -79,6 +79,8 @@
 
   hardware.bluetooth.enable = true;
   hardware.xpadneo.enable = true;
+  # Lets `qmk flash` reach keyboard bootloaders without sudo.
+  hardware.keyboard.qmk.enable = true;
 
   services.udisks2.enable = true;
 

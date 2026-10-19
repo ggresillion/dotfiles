@@ -80,6 +80,7 @@ in
 
   environment.systemPackages = [
     pkgs.android-tools
+    pkgs.wayvr
     vrcd
   ];
 }

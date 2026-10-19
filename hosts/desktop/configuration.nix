@@ -58,28 +58,19 @@ in
   # KDE connect
   programs.kdeconnect.enable = true;
 
-  # OpenRGB: run a persistent SDK server (uses openrgb-git from ../../pkgs, since
-  # nixpkgs' stable openrgb doesn't yet support this MSI B850 board's i2c
-  # devices). This also wires up services.udev.packages so the udev rules
-  # produced by the package's own build (60-openrgb.rules) actually get
-  # installed system-wide, and loads i2c-piix4 for SMBus access to RAM on
-  # AMD platforms - both were previously missing, which is why OpenRGB
-  # couldn't see any devices without running as root.
+  # openrgb-git: nixpkgs' openrgb lacks this MSI B850 board's i2c devices.
   services.hardware.openrgb = {
     enable = true;
     package = pkgs.openrgb-git;
     motherboard = "amd";
   };
-  # Wait for udev so the i2c/USB devices exist before the server scans them.
+  # Let the devices appear before the server scans them.
   systemd.services.openrgb.serviceConfig.ExecStartPre =
     "${pkgs.systemd}/bin/udevadm settle --timeout=30";
 
-  # Apply the last noctalia color (persisted by the home rgb module) as soon
-  # as the server is up, so the lights are right from the greeter on, and
-  # again after resume since the controllers lose their state on suspend.
-  systemd.services.openrgb-color =
+  # Apply the RGB mode (pkgs/rgb) whenever the server starts and after resume.
+  systemd.services.rgb =
     let
-      colorFile = "${config.users.users.guillaume.home}/.local/state/noctalia/rgb-sync-color.txt";
       sleepTargets = [
         "suspend.target"
         "hibernate.target"
@@ -88,24 +79,24 @@ in
       ];
     in
     {
-      description = "Apply the noctalia color to OpenRGB devices";
       after = [ "openrgb.service" ] ++ sleepTargets;
       requires = [ "openrgb.service" ];
-      wantedBy = [ "multi-user.target" ] ++ sleepTargets;
-      # The client writes its config/logs under XDG_CONFIG_HOME.
-      environment.XDG_CONFIG_HOME = "/run/openrgb-color";
+      wantedBy = [ "openrgb.service" ] ++ sleepTargets;
+      environment = {
+        XDG_CONFIG_HOME = "/run/rgb";
+        XDG_STATE_HOME = "${config.users.users.guillaume.home}/.local/state";
+      };
       serviceConfig = {
         Type = "oneshot";
-        RuntimeDirectory = "openrgb-color";
+        RuntimeDirectory = "rgb";
+        ExecStart = "${pkgs.lib.getExe pkgs.rgb} apply --wait";
       };
-      script = ''
-        color=8caaee
-        if [ -r "${colorFile}" ]; then
-          color="$(tr -d "[:space:]#" < "${colorFile}")"
-        fi
-        exec ${pkgs.lib.getExe pkgs.rgb-sync} "$color"
-      '';
     };
+
+  # The server only detects devices at startup: restart it on keyboard replug.
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0e20", RUN+="${pkgs.systemd}/bin/systemctl --no-block try-restart openrgb.service"
+  '';
 
   programs.nix-ld = {
     enable = true;
@@ -115,7 +106,7 @@ in
       libGLU
       libglvnd # libEGL.so.1
       vulkan-loader
-      vulkan-validation-layers
+      # vulkan-validation-layers removed: only useful to debug Vulkan apps.
 
       # X11 family
       libx11 # also provides libX11-xcb.so.1

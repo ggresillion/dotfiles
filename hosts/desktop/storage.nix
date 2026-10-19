@@ -2,7 +2,11 @@
 {
   fileSystems."/mnt/hdd" = {
     device = "/dev/disk/by-label/HDD";
-    fsType = "ntfs-3g";
+    # ntfs3 is the in-kernel NTFS driver: much faster than ntfs-3g (FUSE).
+    # It refuses to mount read-write if Windows left the disk "dirty" (e.g.
+    # Fast Startup / hibernation): disable Fast Startup in Windows, or run
+    # `sudo ntfsfix -d /dev/disk/by-label/HDD` if the mount fails.
+    fsType = "ntfs3";
     options = [
       "rw"
       "uid=1000"

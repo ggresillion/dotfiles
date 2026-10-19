@@ -6,8 +6,8 @@ binds {
 
     // === Application Launchers ===
     Mod+T hotkey-overlay-title="Open Terminal" { spawn "wezterm"; }
-    // autoclick only exists on the desktop (hosts/desktop/gaming.nix)
-    F6 repeat=false hotkey-overlay-title="Toggle Autoclicker" { spawn "autoclick"; }
+    // Autoclicker, disabled (enableAutoclicker in hosts/desktop/gaming.nix)
+    // F6 repeat=false hotkey-overlay-title="Toggle Autoclicker" { spawn "autoclick"; }
 
     // === Noctalia ===
     Mod+Space repeat=false { spawn "vicinae" "toggle"; }
@@ -18,6 +18,8 @@ binds {
     XF86AudioMute { spawn-sh "noctalia msg volume-mute"; }
     XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
     XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
+    // Keychron K2 HE RGB key (firmware/keychron-k2-he)
+    F24 repeat=false hotkey-overlay-title="Cycle RGB: off / white / auto" { spawn "rgb" "next"; }
 
     // === Window Management ===
     Mod+Q repeat=false { close-window; }

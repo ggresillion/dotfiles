@@ -203,11 +203,6 @@ wallpaper_scheme = "m3-rainbow"
         input_path = "$XDG_CONFIG_HOME/noctalia/templates/rgb-debug.txt"
         output_path = "$XDG_STATE_HOME/noctalia/rgb-debug.txt"
 
-        [theme.templates.user.rgb_sync]
-        input_path = "$XDG_CONFIG_HOME/noctalia/templates/rgb-sync.txt"
-        output_path = "$XDG_STATE_HOME/noctalia/rgb-sync-color.txt"
-        post_hook = "rgb-sync {{ colors.primary_container.default.hex_stripped }}"
-
 [wallpaper]
 directory = "/home/guillaume/Pictures/Wallpapers"
 edge_smoothness = 0.050000000000000003
