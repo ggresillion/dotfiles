@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   lib,
@@ -21,8 +22,9 @@
     helix
   ];
 
-  # OmniWM (window manager) config
-  xdg.configFile."omniwm/settings.toml".source = ../../modules/home/config/omniwm/settings.toml;
+  # OmniWM (window manager) config, symlinked out of the store so OmniWM can write to it
+  xdg.configFile."omniwm/settings.toml".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/modules/home/config/omniwm/settings.toml";
 
   # Karabiner-Elements config
   xdg.configFile."karabiner/karabiner.json".source =
