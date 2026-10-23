@@ -160,7 +160,7 @@
       "vlc"
 
       # Remote / networking
-      "netbird-ui"
+      # "netbird-ui" # tap 0.81.3 postflight chmod fails on signed bundle
 
       # Other
       "android-platform-tools"

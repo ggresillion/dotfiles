@@ -1,13 +1,18 @@
 vim.pack.add({
 	{ src = "https://github.com/mrjones2014/smart-splits.nvim" },
 	{ src = "https://github.com/hiasr/vim-zellij-navigator.nvim" },
+	{ src = "https://github.com/smart-splits-nvim/backend-zellij-lua" },
 })
 
 require("vim-zellij-navigator").setup()
 
 local smart_splits = require("smart-splits")
+require("smart-splits-backend-zellij-lua").setup({
+	move_cursor = { pane_or_tab = true },
+})
 smart_splits.setup({
-	zellij_move_focus_or_tab = true,
+	-- Outside Zellij the backend fails detection and smart-splits warns on every start
+	mux = vim.env.ZELLIJ and { backend = "smart-splits-backend-zellij-lua" } or nil,
 })
 
 local map = vim.keymap.set
