@@ -1,10 +1,16 @@
 use std/util "path add"
 
-path add "~/.local/bin"
-path add "~/go/bin"
-path add "/opt/homebrew/bin"
-path add "~/.orbstack/bin"
-path add "~/scripts"
-path add "~/.cargo/bin"
-path add "/usr/local/bin"
-path add "~/.bun/bin"
+# In PATH precedence order (first wins)
+path add ...[
+    $"/etc/profiles/per-user/($env.USER)/bin"
+    "/run/current-system/sw/bin"
+    "/nix/var/nix/profiles/default/bin"
+    "~/.bun/bin"
+    "/usr/local/bin"
+    "~/.cargo/bin"
+    "~/scripts"
+    "~/.orbstack/bin"
+    "/opt/homebrew/bin"
+    "~/go/bin"
+    "~/.local/bin"
+]

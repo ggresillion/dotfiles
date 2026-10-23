@@ -12,7 +12,10 @@
   networking.computerName = "Guillaume's MacBook Pro";
 
   # System-level packages (prefer home-manager for user packages)
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [ nushell ];
+
+  # Adds /run/current-system/sw/bin/nu to /etc/shells (set it as login shell with chsh)
+  environment.shells = [ pkgs.nushell ];
 
   users.users.guillaume = {
     name = "guillaume";
