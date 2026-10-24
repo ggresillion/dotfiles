@@ -1,11 +1,9 @@
 let abbreviations = {
     "cd..": 'cd ..'
-    dc: 'docker compose'
 }
 
-$env.config = {
-    keybindings: [
-      {
+$env.config.keybindings ++= [
+    {
         name: abbr_menu_enter
         modifier: none
         keycode: enter
@@ -14,8 +12,8 @@ $env.config = {
             { send: menu name: abbr_menu }
             { send: enter }
         ]
-      }
-      {
+    }
+    {
         name: abbr_menu_space
         modifier: none
         keycode: space
@@ -24,32 +22,32 @@ $env.config = {
             { send: menu name: abbr_menu }
             { edit: insertchar value: ' '}
         ]
-      }
-    ]
-    menus: [
-        {
-            name: abbr_menu
-            only_buffer_difference: false
-            marker: none
-            type: {
-                layout: columnar
-                columns: 1
-                col_width: 20
-                col_padding: 2
-            }
-            style: {
-                text: green
-                selected_text: green_reverse
-                description_text: yellow
-            }
-            source: { |buffer, place|
-                let match = $abbreviations | columns | where $it == $buffer
-                if ($match | is-empty) {
-                    { value: $buffer }
-                } else {
-                    { value: ($abbreviations | get $match.0) }
-                }
+    }
+]
+
+$env.config.menus ++= [
+    {
+        name: abbr_menu
+        only_buffer_difference: false
+        marker: none
+        type: {
+            layout: columnar
+            columns: 1
+            col_width: 20
+            col_padding: 2
+        }
+        style: {
+            text: green
+            selected_text: green_reverse
+            description_text: yellow
+        }
+        source: { |buffer|
+            let match = $abbreviations | columns | where $it == $buffer
+            if ($match | is-empty) {
+                { value: $buffer }
+            } else {
+                { value: ($abbreviations | get $match.0) }
             }
         }
-    ]
-}
+    }
+]

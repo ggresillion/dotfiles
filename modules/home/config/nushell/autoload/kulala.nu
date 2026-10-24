@@ -1,6 +1,12 @@
 export def --wrapped kulala [...args] {
-    let kulala_path = $"($env.HOME)/.local/share/nvim/site/pack/core/opt/kulala.nvim/lua/cli/kulala_cli.lua"
+    let data_home = $env.XDG_DATA_HOME? | default ($env.HOME | path join ".local/share")
+    let kulala_path = $data_home | path join "nvim/site/pack/core/opt/kulala.nvim/lua/cli/kulala_cli.lua"
     ^$kulala_path -m ...$args | parse-kulala-output
+}
+
+# First capture group `v` of `pattern` in `line`, or `fallback`
+def capture [line: string, pattern: string, fallback: any] {
+    $line | parse -r $pattern | get 0?.v? | default $fallback
 }
 
 def parse-kulala-output [] {
@@ -18,43 +24,16 @@ def parse-kulala-output [] {
         let json_str = ($lines | slice $json_start..$json_end | str join "\n")
         try { $json_str | from json } catch { null }
     }
-    let http_status = if ($url_line | str contains "Status:") {
-        $url_line | parse -r 'Status:\s*(\d+)' | get capture0?.0? | default 0 | into int
-    } else { 0 }
-    let duration = if ($request_line | str contains "Duration:") {
-        $request_line | parse -r 'Duration:\s*([\d.]+)\s*ms' | get capture0?.0? | default 0 | into float
-    } else { 0.0 }
-    let code = if ($request_line | str contains "Code:") {
-        $request_line | parse -r 'Code:\s*(\d+)' | get capture0?.0? | default 0 | into int
-    } else { 0 }
-    let method = if ($url_line | str contains "URL:") {
-        $url_line | parse -r 'URL:\s*(\w+)' | get capture0?.0? | default ""
-    } else { "" }
-    let url = if ($url_line | str contains "URL:") {
-        $url_line | parse -r 'URL:\s*\w+\s+([^\s]+)' | get capture0?.0? | default ""
-    } else { "" }
-    let env_name = if ($url_line | str contains "Env:") {
-        $url_line | parse -r 'Env:\s*(\w+)' | get capture0?.0? | default ""
-    } else { "" }
-    let buffer_path = if ($buffer_line | str contains "Buffer:") {
-        $buffer_line | parse -r 'Buffer:\s*([^\s]+)' | get capture0?.0? | default ""
-    } else { "" }
-    let request_name = if ($buffer_line | str contains "Name:") {
-        $buffer_line | parse -r 'Name:\s*(.+)$' | get capture0?.0? | default ""
-    } else { "" }
-    let final_status = if ($status_line | str contains "Status:") {
-        $status_line | parse -r 'Status:\s*(\w+)' | get capture0?.0? | default ""
-    } else { "" }
     {
-        http_status: $http_status,
-        code: $code,
-        duration_ms: $duration,
-        method: $method,
-        url: $url,
-        env: $env_name,
-        buffer: $buffer_path,
-        name: $request_name,
-        status: $final_status,
+        http_status: (capture $url_line 'Status:\s*(?<v>\d+)' 0 | into int),
+        code: (capture $request_line 'Code:\s*(?<v>\d+)' 0 | into int),
+        duration_ms: (capture $request_line 'Duration:\s*(?<v>[\d.]+)\s*ms' 0 | into float),
+        method: (capture $url_line 'URL:\s*(?<v>\w+)' ""),
+        url: (capture $url_line 'URL:\s*\w+\s+(?<v>[^\s]+)' ""),
+        env: (capture $url_line 'Env:\s*(?<v>\w+)' ""),
+        buffer: (capture $buffer_line 'Buffer:\s*(?<v>[^\s]+)' ""),
+        name: (capture $buffer_line 'Name:\s*(?<v>.+)$' ""),
+        status: (capture $status_line 'Status:\s*(?<v>\w+)' ""),
         body: $body
     }
 }

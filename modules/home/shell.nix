@@ -11,16 +11,29 @@
       ripgrep
       fzf
       jq
-      carapace
-      starship
-      zoxide
     ]
     ++ pkgs.lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [
       inputs.nixwrap.packages.${pkgs.stdenv.hostPlatform.system}.wrap
     ];
 
-  # Aliases
-  home.shellAliases = {
+  # Direnv
+  programs.direnv = {
+    enable = true;
+    silent = true;
+    config = {
+      global = {
+        load_dotenv = true;
+      };
+    };
+  };
+
+  # Nushell
+  programs.nushell = {
+    enable = true;
+    loadSessionVariables = true;
+  };
+  # Aliases (nushell syntax)
+  programs.nushell.shellAliases = {
     g = "git";
     d = "docker";
     dc = "docker compose";
@@ -38,27 +51,15 @@
     nd = "nix develop path:. --command $env.SHELL";
   };
 
-  # Direnv
-  programs.direnv = {
-    enable = true;
-    silent = true;
-    # ponytail: custom mtime-cached hook in config/nushell/autoload/direnv.nu
-    # already covers this; home-manager's default hook re-runs `direnv export`
-    # on every single prompt with no caching.
-    enableNushellIntegration = false;
-    config = {
-      global = {
-        load_dotenv = true;
-      };
-    };
-  };
-
-  # Nushell
-  programs.nushell = {
-    enable = true;
-    loadSessionVariables = true;
-  };
   xdg.configFile."nushell/autoload".source = ./config/nushell/autoload;
+
+  # Shell integrations — init scripts are generated at build time into config.nu
+  programs.starship.enable = true;
+  programs.zoxide.enable = true;
+  programs.carapace = {
+    enable = true;
+    environment.CARAPACE_BRIDGES = "zsh,fish,bash";
+  };
 
   # Starship
   xdg.configFile."starship.toml" = {
