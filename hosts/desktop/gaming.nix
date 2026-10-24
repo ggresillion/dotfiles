@@ -34,10 +34,12 @@ in
 
   # sched_ext scheduler tuned for interactivity: prioritises the game's
   # latency-critical threads over background work (builds, browser, etc.).
-  # Check it is running with `scxctl get`.
+  # --performance: no core compaction/power saving, all cores stay ready.
+  # Check it is running with `cat /sys/kernel/sched_ext/root/ops`.
   services.scx = {
     enable = true;
     scheduler = "scx_lavd";
+    extraArgs = [ "--performance" ];
   };
 
   # Rebuilds and the weekly GC only use idle CPU/disk time, so a
@@ -63,14 +65,8 @@ in
     settings = {
       # Higher CPU priority for the game process (run with `gamemoderun`).
       general.renice = 10;
-      gpu = {
-        # Required for gamemode to touch GPU settings at all.
-        apply_gpu_optimisations = "accept-responsibility";
-        # /dev/dri/card1 is the RX 9070 (card0 is the iGPU).
-        gpu_device = 1;
-        # Keep GPU clocks high while gaming, avoiding clock ramp-up stutter.
-        amd_performance_level = "high";
-      };
+      # No GPU settings here: LACT manages the RX 9070's performance level
+      # (use its per-game profiles), and both writing it would conflict.
     };
   };
 

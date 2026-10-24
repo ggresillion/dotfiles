@@ -1,0 +1,4 @@
+.firstlaunch
+.changelog-*
+plugins/
+plugins.lock.json

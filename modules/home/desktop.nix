@@ -2,10 +2,21 @@
   config,
   pkgs,
   lib,
+  inputs,
+  osConfig,
   ...
 }:
 
 let
+  # Set in modules/nixos/desktop/niri.nix
+  shell = osConfig.desktop.shell or "noctalia";
+
+  # Shared by dms, dux-files and dank-calendar so home.packages gets a single
+  # quickshell; exposes QtWebSockets to its QML import path
+  quickshell = pkgs.quickshell.overrideAttrs (old: {
+    buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.qt6.qtwebsockets ];
+  });
+
   vicinaeScript = title: command: {
     executable = true;
     # replaces the copies the old activation script wrote
@@ -21,10 +32,18 @@ let
   };
 in
 {
+  imports = [
+    inputs.dux-shell.homeModules.default
+    inputs.dux-files.homeModules.default
+    inputs.dux-search.homeModules.default
+    inputs.dux-calendar.homeModules.default
+  ];
+
   config = lib.mkIf config.profiles.desktop.enable {
     home.packages = with pkgs; [
       wl-clipboard
       qt6.qttools
+      inputs.dux-gop.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
     home.sessionVariables = {
@@ -62,6 +81,18 @@ in
           ]
       )
       // {
+        # Shell-specific autostart, binds and colors.
+        "niri/shell.kdl" = {
+          source = ./config/niri/shell-${shell}.kdl;
+          force = true;
+        };
+        # Whole directory points into the repo: dms saves settings.json by
+        # replacing it, so a file-level symlink would be clobbered. Changes
+        # made in its settings show up in `git diff`.
+        "dms" = {
+          source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/modules/home/config/dms";
+          force = true;
+        };
         "qt6ct/qt6ct.conf".text = ''
           [Appearance]
           style=Fusion
@@ -76,6 +107,26 @@ in
       touch "$HOME/.config/niri/noctalia.kdl"
       chmod u+w "$HOME/.config/niri" "$HOME/.config/niri/noctalia.kdl"
     '';
+
+    # Both shells are installed; only the one picked by desktop.shell starts
+    # (noctalia from niri, dms from its systemd service).
+    programs.dank-material-shell = {
+      enable = true;
+      systemd.enable = shell == "dux";
+      # khal fails to build on current nixpkgs
+      enableCalendarEvents = false;
+      quickshell.package = quickshell;
+    };
+
+    programs.dux-files = {
+      enable = true;
+      quickshell.package = quickshell;
+    };
+    programs.dsearch.enable = true;
+    programs.dank-calendar = {
+      enable = true;
+      quickshell.package = quickshell;
+    };
 
     programs.vicinae.enable = true;
 

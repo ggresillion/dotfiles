@@ -43,6 +43,10 @@ in
   # 32-bit audio for gaming
   services.pipewire.alsa.support32Bit = true;
 
+  # "noctalia" or "dux"; the greeter follows the shell unless set.
+  desktop.shell = "dux";
+  desktop.greeter = "dux";
+
   # No Plasma: its kded modules override Noctalia's dark theme. The KDE apps
   # it used to pull in are listed in systemPackages below.
   # Dolphin's "Open With" menu is empty without a menu definition.

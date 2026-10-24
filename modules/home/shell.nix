@@ -54,7 +54,10 @@
   };
 
   # Nushell
-  programs.nushell.enable = true;
+  programs.nushell = {
+    enable = true;
+    loadSessionVariables = true;
+  };
   xdg.configFile."nushell/autoload".source = ./config/nushell/autoload;
 
   # Starship

@@ -9,15 +9,8 @@ binds {
     // Autoclicker, disabled (enableAutoclicker in hosts/desktop/gaming.nix)
     // F6 repeat=false hotkey-overlay-title="Toggle Autoclicker" { spawn "autoclick"; }
 
-    // === Noctalia ===
+    // === Launcher (shell binds live in shell-*.kdl) ===
     Mod+Space repeat=false { spawn "vicinae" "toggle"; }
-    Mod+S { spawn-sh "noctalia msg panel-toggle control-center"; }
-    Mod+Comma { spawn-sh "noctalia msg settings-toggle"; }
-    XF86AudioRaiseVolume { spawn-sh "noctalia msg volume-up"; }
-    XF86AudioLowerVolume { spawn-sh "noctalia msg volume-down"; }
-    XF86AudioMute { spawn-sh "noctalia msg volume-mute"; }
-    XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
-    XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
     // Keychron K2 HE RGB key (firmware/keychron-k2-he)
     F24 repeat=false hotkey-overlay-title="Cycle RGB: off / white / auto" { spawn "rgb" "next"; }
 
