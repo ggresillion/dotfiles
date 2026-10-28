@@ -74,7 +74,62 @@ in
   # used for per-game HDR: gamescope --hdr-enabled -- %command%
   programs.gamescope.enable = true;
 
-  services.lact.enable = true;
+  # Declarative LACT: /etc/lact/config.yaml becomes a read-only symlink, so
+  # changes made in the GUI are lost. Tune the values here instead.
+  services.lact = {
+    enable = true;
+    settings =
+      let
+        gpu = "1002:7550-1458:2424-0000:03:00.0"; # RX 9070 XT
+        # OC: the 9070 XT is power-limited, so max power cap + undervolt
+        # gives higher sustained clocks. If games crash, raise voltage_offset
+        # towards 0 / drop max_memory_clock first.
+        oc = {
+          fan_control_enabled = false;
+          power_cap = 374.0; # max allowed (stock 330)
+          performance_level = "manual";
+          power_profile_mode_index = 1; # 3D_FULL_SCREEN
+          voltage_offset = -50; # mV
+          max_memory_clock = 1300; # MHz (stock 1259)
+        };
+        stock = {
+          fan_control_enabled = false;
+          power_cap = 330.0;
+          performance_level = "auto";
+        };
+      in
+      {
+        version = 7;
+        daemon = {
+          log_level = "info";
+          admin_group = "wheel";
+          disable_clocks_cleanup = false;
+        };
+        apply_settings_timer = 5;
+        # OC is the default (applied when no profile rule matches).
+        gpus.${gpu} = oc;
+        profiles = {
+          VR = {
+            gpus.${gpu} = oc // {
+              power_profile_mode_index = 4; # VR
+              pmfw_options.zero_rpm = true;
+            };
+            rule = {
+              type = "process";
+              filter.name = ".wivrn-server-wrapped";
+            };
+          };
+          # Fallback to rule out the OC when debugging crashes:
+          # select it in the LACT GUI (disables auto-switching until reverted).
+          Stock.gpus.${gpu} = stock;
+        };
+        auto_switch_profiles = true;
+      };
+  };
+
+  # Split-lock detection slows down (or stutters) games doing split locked
+  # accesses, common under Proton. SteamOS disables it too.
+  boot.kernel.sysctl."kernel.split_lock_mitigate" = 0;
 
   # Autoclicker: ydotool works on Wayland (niri) via uinput, unlike the
   # X11-only xclicker/xdotool. `autoclick` toggles left-clicking on/off.
