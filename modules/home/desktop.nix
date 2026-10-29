@@ -43,6 +43,7 @@ in
     home.packages = with pkgs; [
       wl-clipboard
       qt6.qttools
+      linux-wallpaperengine
       inputs.dux-gop.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
@@ -93,6 +94,8 @@ in
           source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/modules/home/config/dms";
           force = true;
         };
+        # Scheme each shell renders into wezterm/colors.
+        "wezterm/color-scheme".text = if shell == "dux" then "dank-theme" else "Noctalia";
         "qt6ct/qt6ct.conf".text = ''
           [Appearance]
           style=Fusion
@@ -134,7 +137,5 @@ in
       "vicinae/scripts/reboot-uefi.sh" = vicinaeScript "Reboot to UEFI" "reboot-uefi";
       "vicinae/scripts/reboot-windows.sh" = vicinaeScript "Reboot to Windows" "reboot-windows";
     };
-
-    services.linux-wallpaperengine.enable = true;
   };
 }

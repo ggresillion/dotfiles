@@ -10,7 +10,8 @@ end
 
 local config = {
 	enable_wayland = false,
-	color_scheme = "Noctalia",
+	-- written by modules/home/desktop.nix for the running shell
+	color_scheme = read_file(wezterm.config_dir .. "/color-scheme") or "Noctalia",
 	font = wezterm.font("JetBrains Mono"),
 	font_size = 15,
 	window_padding = {

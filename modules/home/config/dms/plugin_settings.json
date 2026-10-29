@@ -45,7 +45,12 @@
     "enabled": true,
     "namedPlaylists": {
       "Default": []
-    }
+    },
+    "monitorScenes": {
+      "DP-1": "3701739398"
+    },
+    "activeType": "scene",
+    "generateStaticWallpaper": true
   },
   "discordVoice": {
     "enabled": false

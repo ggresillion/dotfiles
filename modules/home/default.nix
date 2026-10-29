@@ -11,6 +11,7 @@
     ./apps.nix
     ./gaming.nix
     ./rgb.nix
+    ./matugen.nix
   ];
 
   options.profiles = {

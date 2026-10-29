@@ -2,3 +2,4 @@
 .changelog-*
 plugins/
 plugins.lock.json
+zen.css

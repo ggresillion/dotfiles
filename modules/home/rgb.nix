@@ -19,5 +19,11 @@
       output_path = "$XDG_STATE_HOME/rgb-color"
       post_hook   = "rgb palette {{ colors.primary_container.default.hex_stripped }}"
     '';
+    # Same template for dms (see matugen.nix).
+    matugen.templates.rgb = {
+      input_path = "${config.xdg.configHome}/noctalia/templates/rgb.txt";
+      output_path = "${config.xdg.stateHome}/rgb-color";
+      post_hook = "rgb palette {{ colors.primary_container.default.hex_stripped }}";
+    };
   };
 }
