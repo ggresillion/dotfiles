@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   lib,
   pkgs,
@@ -21,7 +22,32 @@ in
       extraEnv.PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
     };
     remotePlay.openFirewall = true;
+    # SteamOS-like session ("Steam" in the greeter) for HDR: niri has no
+    # color management, so HDR only works with gamescope driving the display.
+    gamescopeSession = {
+      enable = true;
+      args = [
+        "-W"
+        "5120"
+        "-H"
+        "1440"
+        "-r"
+        "240"
+        "--hdr-enabled"
+        "--adaptive-sync"
+      ];
+    };
   };
+
+  # The Steam library is the @steam subvolume (see ./disko.nix), mounted as
+  # root: hand the mountpoint to the user so Steam can write to it.
+  systemd.tmpfiles.rules = [
+    "d /home/guillaume/.local/share/Steam/steamapps 0755 guillaume users -"
+  ];
+
+  # The DMS greeter lists sessions from XDG_DATA_DIRS: expose the session
+  # .desktop files (niri, steam) under /run/current-system/sw/share.
+  environment.pathsToLink = [ "/share/wayland-sessions" ];
 
   # Latest kernel instead of the default LTS: the RX 9070 (RDNA4) gets amdgpu
   # fixes and performance improvements with every kernel release.
@@ -139,6 +165,7 @@ in
   environment.systemPackages =
     with pkgs;
     [
+      config.services.displayManager.sessionData.desktops
       mangohud
       winetricks
       protontricks

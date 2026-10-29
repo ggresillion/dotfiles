@@ -51,6 +51,14 @@
                     "noatime"
                   ];
                 };
+                # Separate from @home so btrbk snapshots of /home skip game data.
+                "@steam" = {
+                  mountpoint = "/home/guillaume/.local/share/Steam/steamapps";
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                  ];
+                };
               };
             };
           };

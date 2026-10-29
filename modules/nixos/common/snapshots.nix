@@ -8,7 +8,7 @@
     onCalendar = "hourly";
     settings = {
       snapshot_preserve_min = "6h";
-      snapshot_preserve = "48h 14d 4w";
+      snapshot_preserve = "24h 7d";
       snapshot_dir = "/home/.snapshots";
       subvolume."/home" = { };
     };
