@@ -29,6 +29,30 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dux-shell = {
+      url = "github:duxlabs-dev/dux-shell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dux-greeter = {
+      url = "github:duxlabs-dev/dux-greeter/stable-2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dux-files = {
+      url = "github:duxlabs-dev/dux-files/stable-2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dux-search = {
+      url = "github:duxlabs-dev/dux-search/stable-2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dux-gop = {
+      url = "github:duxlabs-dev/dux-gop/stable-2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dux-calendar = {
+      url = "github:duxlabs-dev/dux-calendar/stable-2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     catppuccin-limine = {
       url = "github:catppuccin/limine";
       flake = false;

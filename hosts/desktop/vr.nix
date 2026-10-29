@@ -56,7 +56,9 @@ in
     enable = true;
     openFirewall = true;
     package = pkgs.wivrn;
-    autoStart = true;
+    # Off: a running server switches LACT to its VR profile (see gaming.nix).
+    # Start it with `systemctl --user start wivrn` before a VR session.
+    autoStart = false;
     # CAP_SYS_NICE lets the compositor take a high-priority GPU queue, so
     # async reprojection keeps running while the game hitches.
     highPriority = true;
@@ -80,6 +82,7 @@ in
 
   environment.systemPackages = [
     pkgs.android-tools
+    pkgs.wayvr
     vrcd
   ];
 }

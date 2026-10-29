@@ -28,7 +28,10 @@
   };
 
   # Nushell
-  programs.nushell.enable = true;
+  programs.nushell = {
+    enable = true;
+    loadSessionVariables = true;
+  };
   # Aliases (nushell syntax)
   programs.nushell.shellAliases = {
     g = "git";

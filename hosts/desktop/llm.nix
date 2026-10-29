@@ -13,11 +13,15 @@ let
   );
 in
 {
-  nixpkgs.config.rocmSupport = true;
+  # No global `nixpkgs.config.rocmSupport = true`: it rebuilt every package
+  # with optional ROCm support from source (not in the binary cache).
+  # llama-cpp-rocm already enables ROCm by itself.
   environment.systemPackages = [ pkgs.llama-cpp-rocm ];
 
   systemd.services.llama-server = {
     description = "llama.cpp server";
+    # Disabled: model removed from ~/models.
+    enable = false;
 
     after = [ "network.target" ];
 
