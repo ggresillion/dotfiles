@@ -13,7 +13,8 @@
   },
   "dankKDEConnect": {
     "enabled": true,
-    "selectedDeviceId": "3f271760ed5d4b31a244fa6405768370"
+    "selectedDeviceId": "3f271760ed5d4b31a244fa6405768370",
+    "enableClipboardAction": false
   },
   "homeAssistantMonitor": {
     "enabled": true

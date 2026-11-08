@@ -10,7 +10,11 @@ let
   cfg = config.desktop;
 in
 {
-  imports = [ inputs.dux-greeter.nixosModules.default ];
+  imports = [
+    inputs.dux-greeter.nixosModules.default
+    inputs.mango.nixosModules.mango
+    ./niri-spicy.nix
+  ];
 
   # Both shells and greeters are installed; these pick which one starts.
   # home-manager reads desktop.shell through osConfig.
@@ -39,6 +43,19 @@ in
       programs.niri.enable = true;
 
       services.displayManager.defaultSession = lib.mkForce "niri";
+
+      # Second session ("Mango" in the greeter) for desktop HDR: niri has no
+      # color management. HDR needs wlroots' Vulkan renderer, which must be
+      # set before mango starts, hence the wrapper. Config: modules/home/desktop.nix
+      programs.mango = {
+        enable = true;
+        package = inputs.mango.packages.${pkgs.stdenv.hostPlatform.system}.mango.overrideAttrs (old: {
+          nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.makeWrapper ];
+          postFixup = (old.postFixup or "") + ''
+            wrapProgram $out/bin/mango --set WLR_RENDERER vulkan
+          '';
+        });
+      };
 
       xdg.portal = {
         enable = true;

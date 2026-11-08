@@ -5,4 +5,5 @@ final: prev: {
   deezer-tui = final.callPackage ./deezer-tui/package.nix { };
   xrizer-git = final.callPackage ./xrizer-git { };
   rgb = final.callPackage ./rgb { };
+  gpu-oc = final.callPackage ./gpu-oc { };
 }

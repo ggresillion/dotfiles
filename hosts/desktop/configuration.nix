@@ -31,6 +31,9 @@ in
     "docker"
   ];
 
+  # Build the Raspberry Pi host (aarch64) locally through QEMU.
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # AMD
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.graphics = {
@@ -47,11 +50,6 @@ in
   desktop.shell = "dux";
   desktop.greeter = "dux";
 
-  # No Plasma: its kded modules override Noctalia's dark theme. The KDE apps
-  # it used to pull in are listed in systemPackages below.
-  # Dolphin's "Open With" menu is empty without a menu definition.
-  environment.etc."xdg/menus/applications.menu".source =
-    "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
   services.power-profiles-daemon.enable = true;
   services.fwupd.enable = true;
   services.upower.enable = true;
@@ -157,17 +155,6 @@ in
     wget
     vim
     efibootmgr
-
-    kdePackages.dolphin
-    kdePackages.dolphin-plugins
-    kdePackages.ark
-    kdePackages.breeze-icons
-    kdePackages.kio-extras
-    kdePackages.kio-fuse
-    kdePackages.ffmpegthumbs
-    kdePackages.kdegraphics-thumbnailers
-    kdePackages.qtsvg
-    kdePackages.kimageformats
 
     (writeShellScriptBin "reboot-uefi" ''
       exec sudo -n systemctl reboot --firmware-setup

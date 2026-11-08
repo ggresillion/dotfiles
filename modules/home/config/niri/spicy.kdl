@@ -1,0 +1,20 @@
+// niri-spicy session only (regular niri reads config.kdl and would reject
+// `hdr`/`vulkan-renderer`). Same as config.kdl, with outputs.kdl replaced.
+include "binds.kdl"
+include "inputs.kdl"
+include "rules.kdl"
+include "settings.kdl"
+include "layout.kdl"
+
+include "shell.kdl"
+
+output "DP-1" {
+    variable-refresh-rate
+    // Always in HDR: games (Wine/DXVK) read the screen's colour space once at
+    // startup and grey out HDR if it says SDR (what the default "auto" mode does).
+    hdr mode="on"
+}
+
+debug {
+    vulkan-renderer
+}

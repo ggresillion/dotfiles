@@ -30,7 +30,6 @@ in
       home.packages = with pkgs; [
         vesktop
         gocryptfs
-        kdePackages.gwenview
         nvtopPackages.amd
         tor-browser
         qbittorrent

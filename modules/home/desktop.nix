@@ -37,6 +37,7 @@ in
     inputs.dux-files.homeModules.default
     inputs.dux-search.homeModules.default
     inputs.dux-calendar.homeModules.default
+    inputs.mango.hmModules.mango
   ];
 
   config = lib.mkIf config.profiles.desktop.enable {
@@ -48,7 +49,7 @@ in
     ];
 
     home.sessionVariables = {
-      # Required for Qt/KDE apps (Dolphin, Gwenview, etc.) to use
+      # Required for Qt apps to use
       # Noctalia's generated dark theme via qt6ct
       QT_QPA_PLATFORMTHEME = "qt6ct";
       # Prefer Wayland, fallback to X11 if unavailable
@@ -79,6 +80,7 @@ in
             "rules.kdl"
             "settings.kdl"
             "layout.kdl"
+            "spicy.kdl"
           ]
       )
       // {
@@ -129,6 +131,25 @@ in
     programs.dank-calendar = {
       enable = true;
       quickshell.package = quickshell;
+    };
+
+    # HDR session next to niri. Its systemd target pulls graphical-session.target,
+    # so dms (dux) starts by itself; noctalia is started from the config.
+    wayland.windowManager.mango = {
+      enable = true;
+      # Same Vulkan-wrapped build as the session (per-user profile wins in PATH).
+      package = osConfig.programs.mango.package;
+      extraConfig = ''
+        ${builtins.readFile ./config/mango/config.conf}
+
+        # HDR on the ultrawide. Toggle at runtime: mmsg dispatch togglehdr
+        # Add hdr_max_lum/hdr_max_avg_lum from `di-edid-decode` if highlights look off.
+        monitor_rule=name:^DP-1$,width:5120,height:1440,refresh:240,x:0,y:0,scale:1,vrr:1,hdr:1
+        hdr_depth=2
+      ''
+      + lib.optionalString (shell == "noctalia") ''
+        exec_once=noctalia
+      '';
     };
 
     programs.vicinae.enable = true;

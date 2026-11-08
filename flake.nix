@@ -53,6 +53,21 @@
       url = "github:duxlabs-dev/dux-calendar/stable-2.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # mango compositor, wl-only branch: the only one with HDR (Vulkan renderer).
+    mango = {
+      url = "github:mangowm/mango/wl-only";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # niri-spicy: niri + feature branches (Vulkan renderer, HDR). It builds
+    # against a patched smithay checked out next to it (Cargo `path` patch).
+    niri-spicy = {
+      url = "github:losnoco/niri/spicy-main";
+      flake = false;
+    };
+    smithay-spicy = {
+      url = "github:losnoco/smithay/spicy-master";
+      flake = false;
+    };
     catppuccin-limine = {
       url = "github:catppuccin/limine";
       flake = false;
@@ -112,7 +127,12 @@
           touch $out
         '';
       }
-      // nixpkgs.lib.mapAttrs (_: host: host.config.system.build.toplevel) self.nixosConfigurations;
+      # (only hosts of this system: the aarch64 pi would build under emulation)
+      // nixpkgs.lib.mapAttrs (_: host: host.config.system.build.toplevel) (
+        nixpkgs.lib.filterAttrs (
+          _: host: host.pkgs.stdenv.hostPlatform.system == system
+        ) self.nixosConfigurations
+      );
 
       nixosConfigurations = {
         guillaume-desktop = mkHost {
@@ -122,6 +142,11 @@
         guillaume-laptop = mkHost {
           host = ./hosts/laptop;
           home = ./home/guillaume_laptop;
+        };
+        # Headless Docker host, no home-manager. SD image:
+        #   nix build .#nixosConfigurations.pi.config.system.build.sdImage
+        pi = nixpkgs.lib.nixosSystem {
+          modules = [ ./hosts/pi ];
         };
       };
 

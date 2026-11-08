@@ -11,7 +11,7 @@ binds {
 
     // === Launcher (shell binds live in shell-*.kdl) ===
     Mod+Space repeat=false { spawn "vicinae" "toggle"; }
-    // Keychron K2 HE RGB key (firmware/keychron-k2-he)
+    // Keychron K2 HE RGB key, mapped to F24 in Keychron Launcher
     F24 repeat=false hotkey-overlay-title="Cycle RGB: off / white / auto" { spawn "rgb" "next"; }
 
     // === Window Management ===
