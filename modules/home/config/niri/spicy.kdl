@@ -12,7 +12,10 @@ output "DP-1" {
     variable-refresh-rate
     // Always in HDR: games (Wine/DXVK) read the screen's colour space once at
     // startup and grey out HDR if it says SDR (what the default "auto" mode does).
-    hdr mode="on"
+    hdr mode="on" {
+        // Brightness of SDR white (desktop, windows) in nits. Default: 203.
+        reference-luminance 250
+    }
 }
 
 debug {
