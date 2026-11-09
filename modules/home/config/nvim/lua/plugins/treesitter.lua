@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd("User", {
 	callback = function()
 		require("nvim-treesitter.parsers").bruno = {
 			install_info = {
-				url = "https://codeberg.org/kristoferssolo/tree-sitter-bruno",
+				url = "https://github.com/Scalamando/tree-sitter-bruno",
 				queries = "queries",
 			},
 		}
@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 require("nvim-treesitter").setup({})
-require("nvim-treesitter").install({ "vim", "lua", "nix", "go", "json", "javascript", "typescript", "bruno" })
+require("nvim-treesitter").install({ "vim", "lua", "nix", "go", "json", "javascript", "typescript", "http", "bruno" })
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",

@@ -5,6 +5,8 @@ vim.pack.add({
 require("conform").setup({
 	formatters_by_ft = {
 		json = { "jq" },
+		-- formats the embedded blocks (body:json, …) with their language's formatter
+		bruno = { "injected" },
 		nix = { "nixfmt" },
 		go = { "gofumpt", "goimports" },
 	},
