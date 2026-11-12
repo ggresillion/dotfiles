@@ -1,16 +1,11 @@
-monitorBarOverrides = []
-monitorDwindleOverrides = []
-monitorGapOverrides = []
-monitorNiriOverrides = []
-monitorOrientationOverrides = []
-schemaVersion = 4
+schemaVersion = 5
 
 [appearance]
 mode = "dark"
 tabRailAppIcons = false
 
 [borders]
-enabled = true
+enabled = false
 width = 2.0
 
 [borders.color]
@@ -35,11 +30,13 @@ splitWidthMultiplier = 1.0
 useGlobalGaps = true
 
 [focus]
-crossesMonitorAtEdge = false
+crossesMonitorAtEdge = true
+edgeNavigationInterval = 1.5
 followsMouse = false
-followsWindowToMonitor = false
+followsMouseOnlyFullyVisible = false
+followsWindowToMonitor = true
 lockModifier = "off"
-moveCrossesMonitorAtEdge = false
+moveCrossesMonitorAtEdge = true
 moveMouseToFocusedWindow = false
 raiseOnMouseFocus = false
 
@@ -54,22 +51,29 @@ right = 0.0
 top = 0.0
 
 [general]
+animationSpeed = 1.0
 animationsEnabled = true
 defaultLayoutType = "niri"
 hotkeysEnabled = true
 hyperKeyModifiers = "Control+Option+Shift+Command"
 ipcEnabled = false
-preventSleepEnabled = false
+preventSleepEnabled = true
 systemHyperTrigger = "None"
 updateChecksEnabled = true
+workspaceAutoBackAndForth = false
 
 [gestures]
+adoptNativeMoveAcrossDisplays = false
+adoptNativeResize = false
+dwindleGroupDragAcrossDisplays = "group"
 fingerCount = 3
 invertDirection = true
 mouseMoveModifierKey = "option"
 mouseResizeModifierKey = "option"
+mouseWheelSensitivity = 1.0
 overviewGestureEnabled = false
 overviewGestureFingerCount = 4
+resizePreviewStyle = "live"
 scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
@@ -80,13 +84,27 @@ windowMoveFingerCount = 4
 windowResizeEnabled = false
 windowResizeFingerCount = 3
 workspaceSwipeAxis = "vertical"
+workspaceSwipeEdgeBehavior = "cycle"
 workspaceSwipeEnabled = false
 workspaceSwipeFingerCount = 3
 
 [hiddenBar]
 enabled = true
-hiddenBundleIDs = []
+hiddenBundleIDs = ["ai.devrev.desktop", "ai.storyteller.artcraft-launcher", "app.zen-browser.zen", "com.apple.ScriptMonitor", "com.carriez.rustdesk", "com.electron.gitify", "com.meta.virtualdesktop", "com.raycast.macos", "com.theron.UnnaturalScrollWheels", "com.tinyspeck.slackmacgap", "com.wireguard.macos", "dev.kdrag0n.MacVirt", "eu.exelban.Stats", "io.netbird.client", "org.hammerspoon.Hammerspoon", "org.pqrs.Karabiner-Console-User-Server", "de.jurekbarth.AdvancedScreenShare", "com.electron.ollama"]
 rehideIntervalSeconds = 5.0
+
+[island]
+enabled = false
+
+[keyboardModes]
+
+[launcher]
+appFolders = []
+cliFolders = []
+entries = []
+shell = "system"
+shellExecutable = ""
+terminal = "terminal"
 
 [mouseWarp]
 constrainToArrangement = false
@@ -94,12 +112,16 @@ enabled = true
 margin = 1
 
 [niri]
+allowOverscroll = false
 alwaysCenterSingleColumn = false
 centerFocusedColumn = "never"
 containerPrimarySpanPresets = [0.25, 0.3333333333333333, 0.5, 0.6666666666666666]
 defaultContainerPrimarySpan = 0.3333333333333333
 edgeGaps = true
 infiniteLoop = false
+moveWindowStacksIntoColumn = true
+overscrollVisibleStripPercent = 5
+resizeStepPercent = 5
 singleWindowFit = "fill"
 visibleContainerCount = 2
 
@@ -146,44 +168,84 @@ heightPercent = 50.0
 monitorMode = "focusedWindow"
 opacity = 1.0
 position = "center"
+provider = "ghostty"
 widthPercent = 50.0
 
 [routing]
-arrangements = []
 mode = "macOS"
+
+[[routing.arrangements]]
+id = "8BCBC595-885B-4329-8818-1AEE0B26BB1C"
+
+[[routing.arrangements.monitors]]
+gridColumn = 0
+gridRow = 0
+monitorDisplayUUID = "37D8832A-2D66-02CA-B9F7-8F30A301B230"
+monitorName = "Built-in Retina Display"
 
 [scratchpads]
 
 [scratchpads.labels]
 
+[shellPermissions]
+programs = []
+widgets = []
+
+[shellPermissions.services]
+lyrics = true
+weather = true
+
 [statusBar]
 showAppNames = false
+showIcon = true
 showWorkspaceName = false
 useWorkspaceId = false
 
+[statusMenu]
+hiddenControls = []
+hiddenMenuItems = []
+showControlHelp = true
+showControls = true
+showMenuItems = true
+
+[windowSwitcher]
+commandTab = "activeWorkspace"
+enabled = true
+optionTab = "allWorkspaces"
+order = "omniLayout"
+scope = "allWorkspaces"
+showFooter = true
+
 [workspaceBar]
-backgroundOpacity = 0.1
+autoHide = false
+autoHideHideDelayMilliseconds = 0.0
+autoHideRevealDelayMilliseconds = 0.0
+backgroundOpacity = 0.0
 deduplicateAppIcons = false
-enabled = false
+enabled = true
 excludedBundleIDs = []
-height = 24.0
-hideEmptyWorkspaces = false
+fullWidth = false
+fullWidthNotchMode = "rightOfNotch"
+height = 26.0
+hideEmptyWorkspaces = true
 hideInNativeFullscreen = false
 hoverPreviewsEnabled = true
 notchActiveZoneWidth = 180.0
-notchMode = "moveBelowMenuBar"
+notchMode = "rightOfNotch"
+notificationBadgeRefreshIntervalSeconds = 5.0
+notificationBadges = "off"
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
 revealHoldMilliseconds = 200.0
 revealModifier = "off"
 showAccentHighlights = true
 showFloatingWindows = false
-showItemBackgrounds = true
+showItemBackgrounds = false
 showLabels = true
 solidBlackBackground = false
-systemStatsButton = false
-transparentBackground = false
-windowLevel = "popup"
+systemStatsButton = true
+transparentBackground = true
+windowLevel = "normal"
 xOffset = 0.0
 yOffset = 0.0
 
@@ -656,23 +718,23 @@ binding = "Unassigned"
 id = "expelWindowFromColumn"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Command+L"
 id = "focusMonitorNext"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Command+H"
 id = "focusMonitorPrevious"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Command+O"
 id = "focusMonitorLast"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Option+Command+H"
 id = "moveWorkspaceToMonitor.left"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Option+Command+L"
 id = "moveWorkspaceToMonitor.right"
 
 [[hotkeys]]
@@ -684,19 +746,19 @@ binding = "Unassigned"
 id = "moveWorkspaceToMonitor.down"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Shift+Command+H"
 id = "moveWindowToMonitor.left"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Shift+Command+L"
 id = "moveWindowToMonitor.right"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Shift+Command+K"
 id = "moveWindowToMonitor.up"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Shift+Command+J"
 id = "moveWindowToMonitor.down"
 
 [[hotkeys]]
@@ -889,27 +951,27 @@ id = "resetWindowSecondarySpan"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setContainerPrimarySpan.decrease10Percent"
+id = "resizeContainerPrimarySpan.shrink"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setContainerPrimarySpan.increase10Percent"
+id = "resizeContainerPrimarySpan.grow"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setWindowPrimarySpan.decrease10Percent"
+id = "resizeWindowPrimarySpan.shrink"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setWindowPrimarySpan.increase10Percent"
+id = "resizeWindowPrimarySpan.grow"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setWindowSecondarySpan.decrease10Percent"
+id = "resizeWindowSecondarySpan.shrink"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setWindowSecondarySpan.increase10Percent"
+id = "resizeWindowSecondarySpan.grow"
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -973,11 +1035,87 @@ id = "preselectClear"
 
 [[hotkeys]]
 binding = "Unassigned"
+id = "volumeUp"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "volumeDown"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "volumeMute"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "mediaPlayPause"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "mediaNext"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "mediaPrevious"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShortcutPause"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "beginPrefix"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleWindowMode"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "exitKeyboardMode"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openShellApp.example"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "newShellAppWindow.example"
+
+[[hotkeys]]
+binding = "Unassigned"
 id = "openCommandPalette"
 
 [[hotkeys]]
 binding = "Unassigned"
+id = "openCommandPalette.windows"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.menu"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.clipboard"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.commands"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.applications"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.files"
+
+[[hotkeys]]
+binding = "Unassigned"
 id = "raiseAllFloatingWindows"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleFloatingFocus"
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -1027,9 +1165,56 @@ id = "toggleOverview"
 binding = "Unassigned"
 id = "toggleSystemStats"
 
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.battery-details"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.clock"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.control-center"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.hidden-bar"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.media"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.notifications"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.system-stats"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.volume"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.wifi"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.workspaces"
+
+[[monitorNiriOverrides]]
+defaultContainerPrimarySpan = "auto"
+id = "6D680A4B-884A-4A73-ACE3-4954B6763B7E"
+monitorDisplayUUID = "37D8832A-2D66-02CA-B9F7-8F30A301B230"
+monitorName = "Built-in Retina Display"
+visibleContainerCount = 1
+
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
-layoutType = "niri"
+layoutType = "default"
 name = "1"
 
 [workspaces.monitorAssignment]
@@ -1037,7 +1222,7 @@ type = "main"
 
 [[workspaces]]
 id = "454CECD4-5E9D-4ED1-95D7-979D48817F5F"
-layoutType = "niri"
+layoutType = "default"
 name = "2"
 
 [workspaces.monitorAssignment]
@@ -1045,58 +1230,24 @@ type = "main"
 
 [[workspaces]]
 id = "BEB842B5-E894-4791-9FD1-397C3CDD3538"
-layoutType = "niri"
+layoutType = "default"
 name = "3"
 
 [workspaces.monitorAssignment]
 type = "main"
 
 [[workspaces]]
-id = "248AA883-2261-4D45-943C-79C0E46A232B"
-layoutType = "niri"
+id = "84D411A9-B5AF-4EBB-B58D-3818C4DCF69F"
+layoutType = "default"
 name = "4"
 
 [workspaces.monitorAssignment]
 type = "main"
 
 [[workspaces]]
-id = "8B8C45D6-CE9E-41D9-BD50-BE4989D5E3DE"
-layoutType = "niri"
+id = "39633356-F13D-436B-96D9-5E3BBB0A8C6D"
+layoutType = "default"
 name = "5"
-
-[workspaces.monitorAssignment]
-type = "main"
-
-[[workspaces]]
-displayName = "❤️"
-id = "5953F2BF-A378-4266-91B2-287174C4FA4D"
-layoutType = "niri"
-name = "6"
-
-[workspaces.monitorAssignment]
-type = "secondary"
-
-[[workspaces]]
-displayName = "🚀"
-id = "A7D5E104-6985-4516-8ED5-07F144F2A33D"
-layoutType = "niri"
-name = "7"
-
-[workspaces.monitorAssignment]
-type = "secondary"
-
-[[workspaces]]
-id = "0E18F6B0-345A-4078-8B21-33641F07A861"
-layoutType = "niri"
-name = "8"
-
-[workspaces.monitorAssignment]
-type = "main"
-
-[[workspaces]]
-id = "8D4D711C-2B2F-4FEC-86BF-FA952037738A"
-layoutType = "niri"
-name = "9"
 
 [workspaces.monitorAssignment]
 type = "main"
