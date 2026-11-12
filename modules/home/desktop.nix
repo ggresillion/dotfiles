@@ -10,6 +10,7 @@
 let
   # Set in modules/nixos/desktop/niri.nix
   shell = osConfig.desktop.shell or "noctalia";
+  lite = osConfig.desktop.lite or false;
 
   # Shared by dms, dux-files and dank-calendar so home.packages gets a single
   # quickshell; exposes QtWebSockets to its QML import path
@@ -41,12 +42,14 @@ in
   ];
 
   config = lib.mkIf config.profiles.desktop.enable {
-    home.packages = with pkgs; [
-      wl-clipboard
-      qt6.qttools
-      linux-wallpaperengine
-      inputs.dux-gop.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ];
+    home.packages =
+      with pkgs;
+      [
+        wl-clipboard
+        qt6.qttools
+      ]
+      ++ lib.optional (!lite) linux-wallpaperengine
+      ++ [ inputs.dux-gop.packages.${pkgs.stdenv.hostPlatform.system}.default ];
 
     home.sessionVariables = {
       # Required for Qt apps to use
@@ -136,7 +139,7 @@ in
     # HDR session next to niri. Its systemd target pulls graphical-session.target,
     # so dms (dux) starts by itself; noctalia is started from the config.
     wayland.windowManager.mango = {
-      enable = true;
+      enable = !lite;
       # Same Vulkan-wrapped build as the session (per-user profile wins in PATH).
       package = osConfig.programs.mango.package;
       extraConfig = ''

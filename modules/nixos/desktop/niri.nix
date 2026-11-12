@@ -36,6 +36,11 @@ in
       defaultText = lib.literalExpression "config.desktop.shell";
       description = "greetd login greeter.";
     };
+    lite = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Skip the source-built extras: the HDR sessions (mango, niri-spicy) and linux-wallpaperengine.";
+    };
   };
 
   config = lib.mkMerge [
@@ -48,7 +53,7 @@ in
       # color management. HDR needs wlroots' Vulkan renderer, which must be
       # set before mango starts, hence the wrapper. Config: modules/home/desktop.nix
       programs.mango = {
-        enable = true;
+        enable = !cfg.lite;
         package = inputs.mango.packages.${pkgs.stdenv.hostPlatform.system}.mango.overrideAttrs (old: {
           nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.makeWrapper ];
           postFixup = (old.postFixup or "") + ''

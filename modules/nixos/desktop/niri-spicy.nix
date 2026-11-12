@@ -134,7 +134,7 @@ let
       '';
 in
 {
-  config = {
+  config = lib.mkIf (!config.desktop.lite) {
     services.displayManager.sessionPackages = [ sessionPackage ];
     systemd.packages = [ sessionPackage ];
   };

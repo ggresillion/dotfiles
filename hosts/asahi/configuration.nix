@@ -5,6 +5,10 @@
 
   hardware.asahi.enable = true;
 
+  # Faster first install: no source-built HDR sessions or wallpaper engine.
+  # Turn off once the base system boots.
+  desktop.lite = true;
+
   # m1n1 + U-Boot expose a bare UEFI: no Secure Boot and no writable EFI
   # variables, so limine's secure boot setup from common can't apply.
   boot.loader.limine.enable = lib.mkForce false;
