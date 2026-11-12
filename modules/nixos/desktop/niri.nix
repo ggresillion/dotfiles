@@ -12,11 +12,11 @@ in
 {
   imports = [
     inputs.dux-greeter.nixosModules.default
-    inputs.mango.nixosModules.mango
     ./niri-spicy.nix
   ];
 
-  # Both shells and greeters are installed; these pick which one starts.
+  # dux (dms) is the shell; noctalia stays available but is only installed
+  # when picked here.
   # home-manager reads desktop.shell through osConfig.
   options.desktop = {
     shell = lib.mkOption {
@@ -24,7 +24,7 @@ in
         "noctalia"
         "dux"
       ];
-      default = "noctalia";
+      default = "dux";
       description = "Desktop shell started with niri.";
     };
     greeter = lib.mkOption {
@@ -39,7 +39,7 @@ in
     lite = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "Skip the source-built extras: the HDR sessions (mango, niri-spicy) and linux-wallpaperengine.";
+      description = "Skip the source-built extras: the niri-spicy HDR session and linux-wallpaperengine.";
     };
   };
 
@@ -48,19 +48,6 @@ in
       programs.niri.enable = true;
 
       services.displayManager.defaultSession = lib.mkForce "niri";
-
-      # Second session ("Mango" in the greeter) for desktop HDR: niri has no
-      # color management. HDR needs wlroots' Vulkan renderer, which must be
-      # set before mango starts, hence the wrapper. Config: modules/home/desktop.nix
-      programs.mango = {
-        enable = !cfg.lite;
-        package = inputs.mango.packages.${pkgs.stdenv.hostPlatform.system}.mango.overrideAttrs (old: {
-          nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.makeWrapper ];
-          postFixup = (old.postFixup or "") + ''
-            wrapProgram $out/bin/mango --set WLR_RENDERER vulkan
-          '';
-        });
-      };
 
       xdg.portal = {
         enable = true;

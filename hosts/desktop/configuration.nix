@@ -46,10 +46,6 @@ in
   # 32-bit audio for gaming
   services.pipewire.alsa.support32Bit = true;
 
-  # "noctalia" or "dux"; the greeter follows the shell unless set.
-  desktop.shell = "dux";
-  desktop.greeter = "dux";
-
   services.power-profiles-daemon.enable = true;
   services.fwupd.enable = true;
   services.upower.enable = true;

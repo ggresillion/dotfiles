@@ -53,11 +53,6 @@
       url = "github:duxlabs-dev/dux-calendar/stable-2.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # mango compositor, wl-only branch: the only one with HDR (Vulkan renderer).
-    mango = {
-      url = "github:mangowm/mango/wl-only";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     # niri-spicy: niri + feature branches (Vulkan renderer, HDR). It builds
     # against a patched smithay checked out next to it (Cargo `path` patch).
     niri-spicy = {

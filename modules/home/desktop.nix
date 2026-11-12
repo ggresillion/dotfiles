@@ -9,7 +9,7 @@
 
 let
   # Set in modules/nixos/desktop/niri.nix
-  shell = osConfig.desktop.shell or "noctalia";
+  shell = osConfig.desktop.shell or "dux";
   lite = osConfig.desktop.lite or false;
 
   # Shared by dms, dux-files and dank-calendar so home.packages gets a single
@@ -38,7 +38,6 @@ in
     inputs.dux-files.homeModules.default
     inputs.dux-search.homeModules.default
     inputs.dux-calendar.homeModules.default
-    inputs.mango.hmModules.mango
   ];
 
   config = lib.mkIf config.profiles.desktop.enable {
@@ -61,7 +60,7 @@ in
     };
 
     programs.noctalia = {
-      enable = true;
+      enable = shell == "noctalia";
       settings = ./noctalia.toml;
     };
 
@@ -110,14 +109,15 @@ in
 
     # noctalia writes niri/noctalia.kdl at runtime, so it must be a real,
     # writable file rather than a store symlink.
-    home.activation.niriNoctalia = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p "$HOME/.config/niri"
-      touch "$HOME/.config/niri/noctalia.kdl"
-      chmod u+w "$HOME/.config/niri" "$HOME/.config/niri/noctalia.kdl"
-    '';
+    home.activation.niriNoctalia = lib.mkIf (shell == "noctalia") (
+      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p "$HOME/.config/niri"
+        touch "$HOME/.config/niri/noctalia.kdl"
+        chmod u+w "$HOME/.config/niri" "$HOME/.config/niri/noctalia.kdl"
+      ''
+    );
 
-    # Both shells are installed; only the one picked by desktop.shell starts
-    # (noctalia from niri, dms from its systemd service).
+    # dms starts from its systemd service; noctalia, when picked, from niri.
     programs.dank-material-shell = {
       enable = true;
       systemd.enable = shell == "dux";
@@ -134,25 +134,6 @@ in
     programs.dank-calendar = {
       enable = true;
       quickshell.package = quickshell;
-    };
-
-    # HDR session next to niri. Its systemd target pulls graphical-session.target,
-    # so dms (dux) starts by itself; noctalia is started from the config.
-    wayland.windowManager.mango = {
-      enable = !lite;
-      # Same Vulkan-wrapped build as the session (per-user profile wins in PATH).
-      package = osConfig.programs.mango.package;
-      extraConfig = ''
-        ${builtins.readFile ./config/mango/config.conf}
-
-        # HDR on the ultrawide. Toggle at runtime: mmsg dispatch togglehdr
-        # Add hdr_max_lum/hdr_max_avg_lum from `di-edid-decode` if highlights look off.
-        monitor_rule=name:^DP-1$,width:5120,height:1440,refresh:240,x:0,y:0,scale:1,vrr:1,hdr:1
-        hdr_depth=2
-      ''
-      + lib.optionalString (shell == "noctalia") ''
-        exec_once=noctalia
-      '';
     };
 
     programs.vicinae.enable = true;
