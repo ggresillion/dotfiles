@@ -67,6 +67,9 @@
       url = "github:nix-community/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # M3 GPU/display stack for the asahi host. Not following nixpkgs on
+    # purpose: the host builds on Aurora's pins to hit its binary cache.
+    aurora.url = "github:aurora-silicon/nixos-aurora/channel-testing";
     catppuccin-limine = {
       url = "github:catppuccin/limine";
       flake = false;
@@ -98,8 +101,12 @@
       };
 
       mkHost =
-        { host, home }:
-        nixpkgs.lib.nixosSystem {
+        {
+          host,
+          home,
+          lib ? nixpkgs.lib,
+        }:
+        lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
             host
@@ -150,6 +157,7 @@
         guillaume-asahi = mkHost {
           host = ./hosts/asahi;
           home = ./home/guillaume_asahi;
+          inherit (inputs.aurora.inputs.nixpkgs) lib;
         };
       };
 

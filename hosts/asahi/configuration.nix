@@ -11,9 +11,10 @@
 
   # m1n1 + U-Boot expose a bare UEFI: no Secure Boot and no writable EFI
   # variables, so limine's secure boot setup from common can't apply.
+  # Aurora's module boots through GRUB (removable EFI path).
   boot.loader.limine.enable = lib.mkForce false;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = false;
+  # The 476 MB ESP holds every listed generation's kernel and initrd.
+  boot.loader.grub.configurationLimit = 3;
 
   # Root is ext4, so there is no @home btrfs subvolume to snapshot.
   services.btrbk.instances = lib.mkForce { };
