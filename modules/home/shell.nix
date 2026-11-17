@@ -235,7 +235,6 @@
     vimAlias = true;
     package = pkgs.neovim-unwrapped;
     extraPackages = with pkgs; [
-      nodejs
       python3
       gcc
       tree-sitter

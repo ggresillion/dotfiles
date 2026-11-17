@@ -53,11 +53,6 @@
       url = "github:duxlabs-dev/dux-calendar/stable-2.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # mango compositor, wl-only branch: the only one with HDR (Vulkan renderer).
-    mango = {
-      url = "github:mangowm/mango/wl-only";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     # niri-spicy: niri + feature branches (Vulkan renderer, HDR). It builds
     # against a patched smithay checked out next to it (Cargo `path` patch).
     niri-spicy = {
@@ -68,6 +63,13 @@
       url = "github:losnoco/smithay/spicy-master";
       flake = false;
     };
+    apple-silicon = {
+      url = "github:nix-community/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # M3 GPU/display stack for the asahi host. Not following nixpkgs on
+    # purpose: the host builds on Aurora's pins to hit its binary cache.
+    aurora.url = "github:aurora-silicon/nixos-aurora/channel-testing";
     catppuccin-limine = {
       url = "github:catppuccin/limine";
       flake = false;
@@ -99,8 +101,12 @@
       };
 
       mkHost =
-        { host, home }:
-        nixpkgs.lib.nixosSystem {
+        {
+          host,
+          home,
+          lib ? nixpkgs.lib,
+        }:
+        lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
             host
@@ -147,6 +153,11 @@
         #   nix build .#nixosConfigurations.pi.config.system.build.sdImage
         pi = nixpkgs.lib.nixosSystem {
           modules = [ ./hosts/pi ];
+        };
+        guillaume-asahi = mkHost {
+          host = ./hosts/asahi;
+          home = ./home/guillaume_asahi;
+          inherit (inputs.aurora.inputs.nixpkgs) lib;
         };
       };
 
