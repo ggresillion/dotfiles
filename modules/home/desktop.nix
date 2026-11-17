@@ -44,6 +44,7 @@ in
     home.packages = with pkgs; [
       wl-clipboard
       qt6.qttools
+      papirus-icon-theme
       linux-wallpaperengine
       inputs.dux-gop.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
@@ -101,6 +102,7 @@ in
         "qt6ct/qt6ct.conf".text = ''
           [Appearance]
           style=Fusion
+          icon_theme=Papirus-Dark
           color_scheme_path=${config.home.homeDirectory}/.config/qt6ct/colors/noctalia.conf
         '';
       };
