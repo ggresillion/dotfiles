@@ -138,7 +138,11 @@ in
       quickshell.package = quickshell;
     };
 
-    programs.vicinae.enable = true;
+    # The launcher (Mod+Space) needs its server running.
+    programs.vicinae = {
+      enable = true;
+      systemd.enable = true;
+    };
 
     xdg.dataFile = {
       "vicinae/scripts/reboot-uefi.sh" = vicinaeScript "Reboot to UEFI" "reboot-uefi";

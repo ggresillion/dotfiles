@@ -9,9 +9,18 @@ input {
         numlock
     }
 
+    // macOS-like: acceleration (flat suits mice, not touchpads), content
+    // follows the fingers, two-finger right click, and the touchpad ignores
+    // touches while typing or while the trackpoint is in use.
     touchpad {
-        accel-speed 0
-        accel-profile "flat"
+        accel-profile "adaptive"
+        accel-speed 0.2
+        natural-scroll
+        scroll-method "two-finger"
+        scroll-factor 0.5
+        click-method "clickfinger"
+        dwt
+        dwtp
     }
 
     mouse {

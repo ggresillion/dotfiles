@@ -1,0 +1,11 @@
+--- a/drivers/gpu/drm/apple/iomfb_v14_7.c
++++ b/drivers/gpu/drm/apple/iomfb_v14_7.c
+@@ -159,6 +159,8 @@
+ 	.panel_width = 3024,
+ 	.panel_height = 1964,
+ 	.promotion = true,
++	/* The 14.7 firmware completes one unstamped swap per 16.7 ms: 60 fps on the 120 Hz panel. */
++	.swap_timestamps = true,
+ 	.log_bringup = true,
+ 	.panel_nits = true,
+ 	.ctm_set = A(421),

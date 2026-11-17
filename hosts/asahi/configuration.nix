@@ -5,6 +5,16 @@
 
   hardware.asahi.enable = true;
 
+  # The J504 panel runs at 120 Hz but its swaps go out unstamped, which the
+  # 14.7 DCP firmware completes at 60 fps. aurora-silicon/linux#1632 stamps
+  # the other 120 Hz M3 panels; the J504 record (linux#2147) missed it.
+  boot.kernelPatches = [
+    {
+      name = "j504-swap-timestamps";
+      patch = ./patches/j504-swap-timestamps.patch;
+    }
+  ];
+
   # Faster first install: no source-built HDR sessions or wallpaper engine.
   # Turn off once the base system boots.
   desktop.lite = true;
