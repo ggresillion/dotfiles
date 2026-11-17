@@ -148,7 +148,8 @@ in
           power_cap = 374.0; # max allowed (stock 330)
           performance_level = "manual"; # needed to force the power profile
           power_profile_mode_index = 0; # BOOTUP_DEFAULT
-          voltage_offset = -30; # mV
+          # voltage_offset removed 2026-11-11 (Portal 2 artifacts at -30 mV);
+          # "vo 0" is rejected by the kernel (EINVAL), so omit it instead.
         };
         stock = {
           fan_control_enabled = false;
