@@ -40,6 +40,14 @@
   # The 476 MB ESP holds every listed generation's kernel and initrd.
   boot.loader.grub.configurationLimit = 3;
 
+  # Experiment (2026-11-18): Aurora caps the M3 GPU at performance state 2
+  # (618 MHz) of 8 until its power management is validated; the driver
+  # accepts 1 to 5. Frequencies and voltages still come from Apple's table,
+  # and the driver's thermal limit still drops back to state 2 at 88 C.
+  # Risk: GPU firmware hangs (reboot needed) or resets under heavy load.
+  # Remove if the GPU hangs, or once upstream raises the default.
+  boot.kernelParams = [ "asahi.t8122_pstate_cap=3" ];
+
   hardware.xpadneo.enable = lib.mkForce false;
 
   services.power-profiles-daemon.enable = true;
