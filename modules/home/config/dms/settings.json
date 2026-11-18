@@ -284,5 +284,6 @@
   ],
   "audioShowStreamDevices": false,
   "terminalPalette": "default",
-  "matugenSourceMode": "dominant"
+  "matugenSourceMode": "dominant",
+  "osdAlwaysShowValue": false
 }
