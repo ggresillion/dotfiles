@@ -69,7 +69,14 @@ wezterm.on("window-focus-changed", function(window)
 	local id = window:window_id()
 	if niri and window:is_focused() and not niri_sized[id] then
 		niri_sized[id] = true
-		wezterm.background_child_process({ "niri", "msg", "action", "set-window-height", "100%" })
+		-- Once WezTerm has shrunk itself (the output scale arrives late). niri
+		-- ignores "100%" on a window already at its full (auto) height, so
+		-- change the height, then reset it to auto: niri resends the full size.
+		wezterm.time.call_after(0.3, function()
+			wezterm.background_child_process({
+				"sh", "-c", "niri msg action set-window-height 99% && niri msg action reset-window-height",
+			})
+		end)
 	end
 end)
 
