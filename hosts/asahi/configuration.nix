@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   networking.hostName = "guillaume-asahi";
@@ -8,12 +13,18 @@
   # The J504 panel runs at 120 Hz but its swaps go out unstamped, which the
   # 14.7 DCP firmware completes at 60 fps. aurora-silicon/linux#1632 stamps
   # the other 120 Hz M3 panels; the J504 record (linux#2147) missed it.
-  boot.kernelPatches = [
-    {
-      name = "j504-swap-timestamps";
-      patch = ./patches/j504-swap-timestamps.patch;
+  # Passed to the Asahi kernel directly: through boot.kernelPatches it would
+  # be applied twice (nixos-apple-silicon forwards them and NixOS adds them).
+  boot.kernelPackages = lib.mkForce (
+    config.hardware.asahi.pkgs.linux-asahi.override {
+      _kernelPatches = config.boot.kernelPatches ++ [
+        {
+          name = "j504-swap-timestamps";
+          patch = ./patches/j504-swap-timestamps.patch;
+        }
+      ];
     }
-  ];
+  );
 
   # Faster first install: no source-built HDR sessions or wallpaper engine.
   # Turn off once the base system boots.
