@@ -15,6 +15,17 @@
 #    drivers/gpu/drm/apple/iomfb_v14_7.c sets swap_timestamps upstream
 #    (aurora-silicon/linux#1632 covers the other M3s, not the J504); the
 #    patch then fails to apply.
+# 4. configuration.nix, t8122-pstate-cap-5 (experiment, 2026-11-18): Aurora
+#    caps the M3 GPU at state 2 (618 MHz) of 8 pending power-management
+#    validation; this makes the driver's highest admitted state, 5
+#    (1056 MHz), the default. The asahi.t8122_pstate_cap option cannot do it:
+#    the module was renamed aurora, so its dotted option name is cut at load
+#    ("unknown parameter 'asahi' ignored"). Voltages still come from Apple's
+#    table and the thermal limit still drops to state 2 when hot or without
+#    a reading. M3 Airs run state 5 daily (omacom/linux-aurora#164); watch
+#    temperatures under sustained 3D load (omacom/linux-aurora#500).
+#    Remove if the GPU hangs, or once upstream raises the default or the
+#    option reaches the module again.
 #
 # After removing one, check the panel (niri msg outputs, a vsynced app at
 # ~120 fps) and that aura still boots: a broken aura is recovered from macOS

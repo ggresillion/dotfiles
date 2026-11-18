@@ -1,0 +1,14 @@
+--- a/drivers/gpu/drm/asahi/m3/t8122_knobs.rs
++++ b/drivers/gpu/drm/asahi/m3/t8122_knobs.rs
+@@ -206,7 +206,10 @@
+     let unit_mask_b = given(raw.unit_mask_b, UNIT_MASK_B as u64)
+         .filter(|v| *v != 0 && *v & !UNIT_MASK_B_LIMIT == 0)
+         .ok_or(refuse("t8122_unit_mask_b", "nonzero, no bits outside 0x7"))? as u32;
+-    let pstate_cap = given(raw.pstate_cap, PSTATE_CAP as u64)
++    // Local default: the highest admitted state. The thermal limit still falls back to
++    // PSTATE_CAP when hot or without a reading. (asahi.t8122_pstate_cap cannot reach the
++    // module: its dotted name is cut at load time.)
++    let pstate_cap = given(raw.pstate_cap, PSTATE_CAP_MAX as u64)
+         .filter(|v| (1..=u64::from(PSTATE_CAP_MAX)).contains(v))
+         .ok_or(refuse("t8122_pstate_cap", "1 to 5"))? as u32;
+     Ok(Values {
