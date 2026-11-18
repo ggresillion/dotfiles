@@ -1,6 +1,9 @@
 window-rule {
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     default-column-width {}
+    // WezTerm is semi-transparent: without this niri paints the focus-ring
+    // colour behind it, so it looks grey.
+    draw-border-with-background false
 }
 
 window-rule {

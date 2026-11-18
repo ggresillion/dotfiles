@@ -51,10 +51,26 @@ local config = {
 	max_fps = 240,
 }
 
+
+-- niri (Linux): no client-side decorations, so niri draws the frame and the
+-- window stays resizable. WezTerm on Wayland reverts to its 80x24 grid once
+-- the output scale arrives and keeps that height in niri's tiled state;
+-- grow each new window to the column's full height once.
+local niri = wezterm.target_triple:find("linux") and os.getenv("NIRI_SOCKET")
+local niri_sized = {}
+if niri then
+	config.window_decorations = "NONE"
+end
+
 wezterm.on("window-focus-changed", function(window)
 	window:set_config_overrides({
 		window_background_opacity = window:is_focused() and 0.8 or 0.5,
 	})
+	local id = window:window_id()
+	if niri and window:is_focused() and not niri_sized[id] then
+		niri_sized[id] = true
+		wezterm.background_child_process({ "niri", "msg", "action", "set-window-height", "100%" })
+	end
 end)
 
 local scheme = shell_scheme()

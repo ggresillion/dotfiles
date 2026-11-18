@@ -282,5 +282,7 @@
       "small": true
     }
   ],
-  "audioShowStreamDevices": false
+  "audioShowStreamDevices": false,
+  "terminalPalette": "default",
+  "matugenSourceMode": "dominant"
 }
