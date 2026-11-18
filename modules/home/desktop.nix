@@ -60,6 +60,12 @@ in
       SDL_VIDEODRIVER = "wayland,x11";
     };
 
+    # dms runs as a user service: it never sees home.sessionVariables, and
+    # its quickshell has no qt6ct plugin, so tray icons only resolved from
+    # hicolor (the rest showed as missing-icon squares). Quickshell takes its
+    # icon theme from this variable instead.
+    systemd.user.sessionVariables.QS_ICON_THEME = "Papirus-Dark";
+
     programs.noctalia = {
       enable = shell == "noctalia";
       settings = ./noctalia.toml;
