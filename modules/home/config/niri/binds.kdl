@@ -149,6 +149,10 @@ binds {
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+    // Keyboards without Print (MacBook): the macOS copy-to-clipboard combos.
+    Mod+Ctrl+Shift+4 { screenshot; }
+    Mod+Ctrl+Shift+3 { screenshot-screen; }
+    Mod+Ctrl+Shift+5 { screenshot-window; }
     // === System Controls ===
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+Shift+P { power-off-monitors; }
