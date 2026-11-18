@@ -46,7 +46,9 @@
   # and the driver's thermal limit still drops back to state 2 at 88 C.
   # Risk: GPU firmware hangs (reboot needed) or resets under heavy load.
   # Remove if the GPU hangs, or once upstream raises the default.
-  boot.kernelParams = [ "asahi.t8122_pstate_cap=3" ];
+  # The GPU driver is the aurora module, which only receives boot options
+  # prefixed with its name; the parameter itself is named asahi.t8122_*.
+  boot.kernelParams = [ "aurora.asahi.t8122_pstate_cap=3" ];
 
   hardware.xpadneo.enable = lib.mkForce false;
 
