@@ -10,9 +10,12 @@
 
   hardware.asahi.enable = true;
 
-  # The J504 panel runs at 120 Hz but its swaps go out unstamped, which the
-  # 14.7 DCP firmware completes at 60 fps. aurora-silicon/linux#1632 stamps
-  # the other 120 Hz M3 panels; the J504 record (linux#2147) missed it.
+  # Workaround 3 (see default.nix): the J504 panel runs at 120 Hz but its
+  # swaps go out unstamped, which the 14.7 DCP firmware completes at 60 fps.
+  # aurora-silicon/linux#1632 stamps the other 120 Hz M3 panels; the J504
+  # record (linux#2147) missed it.
+  # Remove when upstream's J504 record sets swap_timestamps (the patch then
+  # fails to apply); drop this whole boot.kernelPackages override with it.
   # Passed to the Asahi kernel directly: through boot.kernelPatches it would
   # be applied twice (nixos-apple-silicon forwards them and NixOS adds them).
   boot.kernelPackages = lib.mkForce (

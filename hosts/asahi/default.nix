@@ -1,3 +1,24 @@
+# 14" M3 MacBook Pro (J504) on nixos-aurora.
+#
+# Temporary workarounds, each to remove once its fix is upstream (status as
+# of 2026-11-18):
+#
+# 1. aurora-pr.nix: kernel aurora-silicon/linux#2147 and aura#290, the J504
+#    display and GPU support. Without them the Mac boots on simpledrm.
+#    Remove when both are merged and the channel-testing pins carry them:
+#    import inputs.aurora directly again (see the let block below).
+# 2. The aura#233 overlay below: without it aura (from #290) boot-loops every
+#    M3 (aura#231). Remove when aura#233 is merged and pinned, or when the
+#    patch stops applying (it is then upstream).
+# 3. configuration.nix, j504-swap-timestamps: 120 Hz instead of 60 fps on the
+#    internal panel. Remove when the J504 record in
+#    drivers/gpu/drm/apple/iomfb_v14_7.c sets swap_timestamps upstream
+#    (aurora-silicon/linux#1632 covers the other M3s, not the J504); the
+#    patch then fails to apply.
+#
+# After removing one, check the panel (niri msg outputs, a vsynced app at
+# ~120 fps) and that aura still boots: a broken aura is recovered from macOS
+# by restoring m1n1/boot.bin.old on the ESP.
 { inputs, ... }:
 
 let
@@ -24,7 +45,10 @@ in
   nixpkgs.overlays = [
     upstream.inputs.apple-silicon.overlays.default
     (import "${aurora}/overlay.nix")
-    # aura#233 on top of aura#290 (see aurora-pr.nix).
+    # Workaround 2: aura#233 on top of aura#290. aura main (#217, in #290)
+    # has the boot core write its own RVBAR, which takes an SError on every
+    # M3 and reboots right after the Aurora logo (aura#231).
+    # Remove when aura#233 is merged and in the pinned aura.
     (final: prev: {
       m1n1 = prev.m1n1.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [

@@ -5,8 +5,14 @@
 #           without it every M3 boot-loops in aura (the boot core's RVBAR
 #           store takes an SError, aura#231).
 # Everything else (Mesa, firmware, services) stays on Aurora's pins and cache;
-# only the kernel and aura build locally. Drop this file once the channel
-# carries them, and import inputs.aurora directly again.
+# only the kernel and aura build locally.
+#
+# Workaround 1 (see default.nix). Remove when linux#2147 and aura#290 are
+# merged and inputs.aurora's sources.json pins commits that contain them:
+# delete this file and import inputs.aurora directly in default.nix. That
+# also drops the extra kernel options below (only needed because the PR
+# kernel is newer than Aurora's vendored config snapshot) and lets the kernel
+# and aura come from Aurora's binary cache again.
 { pkgs, src }:
 
 let
