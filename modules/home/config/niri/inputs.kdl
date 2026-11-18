@@ -17,7 +17,7 @@ input {
         accel-speed 0.2
         natural-scroll
         scroll-method "two-finger"
-        scroll-factor 0.5
+        scroll-factor 0.3
         click-method "clickfinger"
         dwt
         dwtp
