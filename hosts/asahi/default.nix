@@ -63,7 +63,7 @@ in
 
   # Hardware stack only: niri and the dux greeter stay the desktop.
   aurora.desktop = "minimal";
-  aurora.update.flake = "/etc/nixos#guillaume-asahi";
+  aurora.update.flake = "/home/guillaume/nixos#guillaume-asahi";
 
   # Aurora leaves sshd off and port 22 closed by default.
   aurora.openssh.startAtBoot = true;
