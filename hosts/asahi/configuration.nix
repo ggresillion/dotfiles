@@ -50,9 +50,13 @@
   # the thermal limit from stepping down (omacom/linux-aurora#500).
   # Risk: GPU firmware hangs (reboot needed) or resets under heavy load.
   # Remove if the GPU hangs, or once upstream raises the default.
-  # The GPU driver is the aurora module, which only receives boot options
-  # prefixed with its name; the parameter itself is named asahi.t8122_*.
-  boot.kernelParams = [ "aurora.asahi.t8122_pstate_cap=5" ];
+  # The GPU driver is the aurora module (loaded after switch-root) and the
+  # parameter is named asahi.t8122_pstate_cap. As a boot option, neither
+  # asahi.* (wrong module) nor aurora.asahi.* (kmod drops dotted names)
+  # reaches it, so it goes through modprobe.d.
+  boot.extraModprobeConfig = ''
+    options aurora asahi.t8122_pstate_cap=5
+  '';
 
   hardware.xpadneo.enable = lib.mkForce false;
 
