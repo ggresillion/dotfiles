@@ -21,8 +21,10 @@
 #    (1056 MHz), the default. The asahi.t8122_pstate_cap option cannot do it:
 #    the module was renamed aurora, so its dotted option name is cut at load
 #    ("unknown parameter 'asahi' ignored"). Voltages still come from Apple's
-#    table and the thermal limit still drops to state 2 when hot or without
-#    a reading. M3 Airs run state 5 daily (omacom/linux-aurora#164); watch
+#    table. States 1..=5 are the driver's safe cap (ADT_MAX_PSTATE_LIMIT, run
+#    without its thermal limit), which only steps 6..=8 down: at 5 the driver
+#    never lowers the GPU when hot; the fan, SMC and SoC protections remain.
+#    M3 Airs run state 5 daily (omacom/linux-aurora#164); watch
 #    temperatures under sustained 3D load (omacom/linux-aurora#500).
 #    Remove if the GPU hangs, or once upstream raises the default or the
 #    option reaches the module again.
