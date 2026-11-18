@@ -29,7 +29,7 @@ local function scheme_for_appearance(appearance)
 end
 
 local config = {
-	enable_wayland = false,
+	enable_wayland = true,
 	font = wezterm.font("JetBrains Mono"),
 	font_size = 15,
 	window_padding = {
