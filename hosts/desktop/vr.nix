@@ -77,7 +77,7 @@ in
   # /etc: native games run in Steam's pressure-vessel container, which sees
   # $HOME and /nix/store but not the host's /etc.
   systemd.tmpfiles.rules = [
-    "L+ /home/guillaume/.local/share/xrizer - - - - ${pkgs.xrizer-git}/lib/xrizer"
+    "L+ ${config.users.users.guillaume.home}/.local/share/xrizer - - - - ${pkgs.xrizer-git}/lib/xrizer"
   ];
 
   environment.systemPackages = [

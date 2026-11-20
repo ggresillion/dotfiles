@@ -9,6 +9,8 @@
     ./disko.nix
     ./storage.nix
     ./configuration.nix
+    ./reboot.nix
+    ./rgb.nix
     ./niri-spicy.nix
     ./gaming.nix
     ./vr.nix

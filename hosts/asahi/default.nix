@@ -32,7 +32,7 @@
 # After removing one, check the panel (niri msg outputs, a vsynced app at
 # ~120 fps) and that aura still boots: a broken aura is recovered from macOS
 # by restoring m1n1/boot.bin.old on the ESP.
-{ inputs, ... }:
+{ config, inputs, ... }:
 
 let
   upstream = inputs.aurora;
@@ -76,7 +76,7 @@ in
 
   # Hardware stack only: niri and the dux greeter stay the desktop.
   aurora.desktop = "minimal";
-  aurora.update.flake = "/home/guillaume/nixos#guillaume-asahi";
+  aurora.update.flake = "${config.users.users.guillaume.home}/nixos#guillaume-asahi";
 
   # Aurora leaves sshd off and port 22 closed by default.
   aurora.openssh.startAtBoot = true;

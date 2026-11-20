@@ -1,8 +1,9 @@
 { pkgs, ... }:
 
+# Every PC (desktop, laptop, asahi): base.nix plus boot, networking, snapshots.
 {
   imports = [
-    ./users.nix
+    ../base.nix
     ./snapshots.nix
   ];
 
@@ -18,18 +19,7 @@
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
   };
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
-  };
-  nixpkgs.config.allowUnfree = true;
 
   # Boot — hosts add their own extraConfig/theme/entries on top of this
   boot.loader.limine = {
@@ -42,13 +32,6 @@
       enable = true;
       autoGenerateKeys = true;
     };
-  };
-
-  # SSH
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-    openFirewall = true;
   };
 
   # Networking — use the local dnsmasq instance
@@ -90,9 +73,7 @@
   services.chrony.enable = true;
   systemd.oomd.enable = false;
 
-  # Time & Locale
-  time.timeZone = "Europe/Paris";
-  i18n.defaultLocale = "en_US.UTF-8";
+  # Dates as dd/mm/yyyy
   i18n.extraLocaleSettings.LC_TIME = "en_GB.UTF-8";
 
   environment.systemPackages = with pkgs; [

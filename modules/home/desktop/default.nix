@@ -14,20 +14,6 @@ let
     buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.qt6.qtwebsockets ];
   });
 
-  vicinaeScript = title: command: {
-    executable = true;
-    # replaces the copies the old activation script wrote
-    force = true;
-    text = ''
-      #!/usr/bin/env bash
-      # @vicinae.schemaVersion 1
-      # @vicinae.title ${title}
-      # @vicinae.mode silent
-
-      exec ${command}
-    '';
-  };
-
   # Every file of config/niri, linked one by one: dms writes its own files
   # (dms/*.kdl) next to them.
   niriFiles = lib.mapAttrs' (
@@ -109,10 +95,5 @@ in
   programs.vicinae = {
     enable = true;
     systemd.enable = true;
-  };
-
-  xdg.dataFile = {
-    "vicinae/scripts/reboot-uefi.sh" = vicinaeScript "Reboot to UEFI" "reboot-uefi";
-    "vicinae/scripts/reboot-windows.sh" = vicinaeScript "Reboot to Windows" "reboot-windows";
   };
 }

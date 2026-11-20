@@ -3,7 +3,7 @@
 {
   imports = [
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
-    ../../modules/nixos/common/users.nix
+    ../../modules/nixos/base.nix
     ./homeassistant.nix
   ];
 
@@ -16,36 +16,13 @@
   boot.supportedFilesystems.zfs = lib.mkForce false;
 
   networking.hostName = "pi";
-  time.timeZone = "Europe/Paris";
-  i18n.defaultLocale = "en_US.UTF-8";
 
   users.users.guillaume.extraGroups = [ "docker" ];
-  # The desktop deploys here.
-  users.users.guillaume.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKUNBPaqWpps7WUFwwC8b6h9NrvotiTv8yrZ/N+JcyQ guillaume@guillaume-desktop"
-  ];
   security.sudo.wheelNeedsPassword = false;
 
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-  };
-
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    # Accept unsigned paths pushed from the desktop.
-    trusted-users = [ "@wheel" ];
-  };
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
-  nixpkgs.config.allowUnfree = true;
+  # Accept unsigned paths pushed from the desktop.
+  nix.settings.trusted-users = [ "@wheel" ];
+  nix.gc.options = "--delete-older-than 7d";
 
   # 1 GB RAM and an SD card: swap in RAM, keep writes low.
   zramSwap = {
