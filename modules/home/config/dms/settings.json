@@ -85,6 +85,10 @@
       "showOnLastDisplay": true,
       "leftWidgets": [
         "controlCenterButton",
+        {
+          "id": "vpn",
+          "enabled": true
+        },
         "battery",
         "cpuUsage",
         {
@@ -103,6 +107,10 @@
           "clockCompactMode": false,
           "clockDateOrder": "dateFirst",
           "clockNotificationBadge": false
+        },
+        {
+          "id": "vpn",
+          "enabled": true
         }
       ],
       "spacing": 4,

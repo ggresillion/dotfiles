@@ -2,11 +2,11 @@
 
 {
   imports = [
-    ./hardware.nix
-    ./configuration.nix
-    ../../modules/nixos/common
-    ../../modules/nixos/desktop/niri.nix
     inputs.disko.nixosModules.default
+    ../../modules/nixos/common
+    ../../modules/nixos/desktop
+    ./hardware.nix
     ./disko.nix
+    ./configuration.nix
   ];
 }

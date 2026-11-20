@@ -1,16 +1,12 @@
 {
   config,
   pkgs,
-  inputs,
+
   lib,
   ...
 }:
 {
   imports = [ ../../modules/home ];
-
-  home.username = "guillaume";
-  home.homeDirectory = "/Users/guillaume";
-  home.stateVersion = "26.05";
 
   # Nix-only CLI packages (everything else is managed by homebrew in hosts/mac)
   home.packages = with pkgs; [

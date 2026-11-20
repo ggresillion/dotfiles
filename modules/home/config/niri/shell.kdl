@@ -1,4 +1,4 @@
-// Linked to niri/shell.kdl when desktop.shell = "dux".
+// dms binds and colors, included by config.kdl and spicy.kdl.
 // dms itself is started by its systemd user service.
 
 // Colors, written by `dms setup colors`.

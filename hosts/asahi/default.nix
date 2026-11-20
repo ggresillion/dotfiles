@@ -47,7 +47,7 @@ in
     ./hardware.nix
     ./configuration.nix
     ../../modules/nixos/common
-    ../../modules/nixos/desktop/niri.nix
+    ../../modules/nixos/desktop
     # Aurora: M3 (J504) GPU and display, on its own nixpkgs and
     # nixos-apple-silicon pins so its binary cache applies.
     upstream.inputs.apple-silicon.nixosModules.default

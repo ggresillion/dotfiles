@@ -1,16 +1,10 @@
 {
   config,
   inputs,
-  lib,
   pkgs,
   ...
 }:
 
-let
-  # Set to true to re-enable the F6 autoclicker (also uncomment its bind in
-  # modules/home/config/niri/binds.kdl).
-  enableAutoclicker = false;
-in
 {
   nixpkgs.overlays = [ inputs.millennium.overlays.default ];
 
@@ -191,33 +185,12 @@ in
   # accesses, common under Proton. SteamOS disables it too.
   boot.kernel.sysctl."kernel.split_lock_mitigate" = 0;
 
-  # Autoclicker: ydotool works on Wayland (niri) via uinput, unlike the
-  # X11-only xclicker/xdotool. `autoclick` toggles left-clicking on/off.
-  programs.ydotool.enable = enableAutoclicker;
-  users.users.guillaume.extraGroups = lib.optionals enableAutoclicker [ "ydotool" ];
-
-  environment.systemPackages =
-    with pkgs;
-    [
-      config.services.displayManager.sessionData.desktops
-      mangohud
-      gpu-oc # automatic search for the LACT `oc` values below (pkgs/gpu-oc)
-      winetricks
-      protontricks
-      wineWow64Packages.full
-    ]
-    ++ lib.optionals enableAutoclicker [
-      (writeShellApplication {
-        name = "autoclick";
-        runtimeInputs = [
-          ydotool
-          procps
-        ];
-        text = ''
-          # usage: autoclick [interval_ms]  (run again to stop)
-          if pkill -f "ydotool click --repeat"; then exit 0; fi
-          exec ydotool click --repeat 1000000 --next-delay "''${1:-50}" 0xC0
-        '';
-      })
-    ];
+  environment.systemPackages = with pkgs; [
+    config.services.displayManager.sessionData.desktops
+    mangohud
+    gpu-oc # automatic search for the LACT `oc` values below (pkgs/gpu-oc)
+    winetricks
+    protontricks
+    wineWow64Packages.full
+  ];
 }

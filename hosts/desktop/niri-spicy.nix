@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   inputs,
@@ -134,7 +133,7 @@ let
       '';
 in
 {
-  config = lib.mkIf (!config.desktop.lite) {
+  config = {
     services.displayManager.sessionPackages = [ sessionPackage ];
     systemd.packages = [ sessionPackage ];
   };

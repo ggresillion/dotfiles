@@ -4,9 +4,9 @@
   ...
 }:
 
-# Matugen templates for apps the shell has no built-in template for. dms runs
-# them on every palette change. They overwrite the files noctalia renders, so
-# the apps' own theme settings work under either shell.
+# Matugen templates for apps dms has no built-in template for. dms runs them
+# on every palette change. Output names still say "noctalia" (the previous
+# shell): the apps' theme settings point at them.
 let
   cfg = config.matugen;
   templates = "${config.xdg.configHome}/matugen/templates";
@@ -24,7 +24,7 @@ in
     description = "Entries of matugen's [templates] table (input_path, output_path, post_hook).";
   };
 
-  config = lib.mkIf config.profiles.desktop.enable {
+  config = {
     matugen.templates = {
       btop = {
         input_path = "${templates}/btop.theme";
@@ -67,7 +67,7 @@ in
     };
 
     xdg.configFile = {
-      "matugen/templates".source = ./config/matugen/templates;
+      "matugen/templates".source = ../config/matugen/templates;
       # dms only merges what follows the exact "[templates]" line.
       "matugen/config.toml".text =
         "[config]\n\n[templates]\n" + lib.concatStrings (lib.mapAttrsToList section cfg.templates);

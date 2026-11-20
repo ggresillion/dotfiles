@@ -1,29 +1,20 @@
-{ lib, ... }:
+{ pkgs, ... }:
 
-# Shell and dev tools are always on; everything else is opt-in per machine
-# via `profiles.<name>.enable` in home/<user>/default.nix.
+# Base home config, on every host (mac included): shell, editor and dev tools.
+# Hosts add the other modules here from their home.nix:
+#   ./desktop  niri + dux shell (Linux)
+#   ./apps.nix, ./extras.nix, ./gaming.nix, ./rgb.nix
 {
   imports = [
     ./shell.nix
     ./dev.nix
-    ./desktop.nix
-    ./keyboard-compose.nix
-    ./apps.nix
-    ./gaming.nix
-    ./rgb.nix
-    ./matugen.nix
   ];
 
-  options.profiles = {
-    desktop.enable = lib.mkEnableOption "the niri + noctalia Wayland desktop";
-    apps.enable = lib.mkEnableOption "everyday GUI and CLI apps";
-    apps.extras.enable = lib.mkEnableOption "extra apps (chat, torrents, media, monitoring)";
-    gaming.enable = lib.mkEnableOption "game launchers and tools";
-    rgb.enable = lib.mkEnableOption "OpenRGB color sync with the noctalia palette";
-  };
+  programs.home-manager.enable = true;
+  home.enableNixpkgsReleaseCheck = false;
 
-  config = {
-    programs.home-manager.enable = true;
-    home.enableNixpkgsReleaseCheck = false;
-  };
+  home.username = "guillaume";
+  home.homeDirectory =
+    if pkgs.stdenv.hostPlatform.isDarwin then "/Users/guillaume" else "/home/guillaume";
+  home.stateVersion = "26.05";
 }

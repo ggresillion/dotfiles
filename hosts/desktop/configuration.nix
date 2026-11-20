@@ -36,17 +36,13 @@ in
 
   # AMD
   services.xserver.videoDrivers = [ "amdgpu" ];
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  hardware.graphics.enable32Bit = true;
   # enable tweaking
   hardware.amdgpu.overdrive.enable = true;
 
   # 32-bit audio for gaming
   services.pipewire.alsa.support32Bit = true;
 
-  services.power-profiles-daemon.enable = true;
   services.fwupd.enable = true;
   services.upower.enable = true;
 
@@ -144,12 +140,7 @@ in
     ];
   };
 
-  # Basic packages
   environment.systemPackages = with pkgs; [
-    git
-    sbctl
-    wget
-    vim
     efibootmgr
 
     (writeShellScriptBin "reboot-uefi" ''
@@ -191,8 +182,6 @@ in
           ];
     }
   ];
-
-  services.jackett.enable = true;
 
   system.stateVersion = "26.05";
 }

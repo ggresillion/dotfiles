@@ -93,17 +93,18 @@
         overlays = [ self.overlays.default ];
       };
 
-      homeManagerConfig = home: {
+      # A host directory holds the system config (default.nix) and the
+      # home-manager config (home.nix).
+      homeManagerConfig = host: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.guillaume = import home;
+        home-manager.users.guillaume = import (host + "/home.nix");
         home-manager.extraSpecialArgs = { inherit inputs; };
       };
 
       mkHost =
         {
           host,
-          home,
           lib ? nixpkgs.lib,
         }:
         lib.nixosSystem {
@@ -113,7 +114,7 @@
             nix-index-database.nixosModules.default
             home-manager.nixosModules.home-manager
             { nixpkgs.overlays = [ self.overlays.default ]; }
-            (homeManagerConfig home)
+            (homeManagerConfig host)
           ];
         };
     in
@@ -141,14 +142,8 @@
       );
 
       nixosConfigurations = {
-        guillaume-desktop = mkHost {
-          host = ./hosts/desktop;
-          home = ./home/guillaume;
-        };
-        guillaume-laptop = mkHost {
-          host = ./hosts/laptop;
-          home = ./home/guillaume_laptop;
-        };
+        guillaume-desktop = mkHost { host = ./hosts/desktop; };
+        guillaume-laptop = mkHost { host = ./hosts/laptop; };
         # Headless Docker host, no home-manager. SD image:
         #   nix build .#nixosConfigurations.pi.config.system.build.sdImage
         pi = nixpkgs.lib.nixosSystem {
@@ -156,7 +151,6 @@
         };
         guillaume-asahi = mkHost {
           host = ./hosts/asahi;
-          home = ./home/guillaume_asahi;
           inherit (inputs.aurora.inputs.nixpkgs) lib;
         };
       };
@@ -171,7 +165,7 @@
         modules = [
           ./hosts/mac
           home-manager.darwinModules.home-manager
-          (homeManagerConfig ./home/guillaume_mac)
+          (homeManagerConfig ./hosts/mac)
           { home-manager.backupFileExtension = "bak"; }
         ];
       };

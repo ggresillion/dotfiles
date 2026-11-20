@@ -7,7 +7,7 @@
 }:
 
 # rgb                       print the mode
-# rgb off|white|auto|next   set a mode (auto = noctalia wallpaper color)
+# rgb off|white|auto|next   set a mode (auto = dms wallpaper color)
 # rgb apply [--wait]        re-apply the mode (--wait: server may still be detecting)
 # rgb palette <hex>         new wallpaper color, applied in auto mode
 writeShellApplication {
