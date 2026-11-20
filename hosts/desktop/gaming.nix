@@ -105,7 +105,7 @@
       let
         gpu = "1002:7550-1458:2424-0000:03:00.0"; # RX 9070 XT
         # OC: the 9070 XT is power-limited, so max power cap + undervolt
-        # gives higher sustained clocks. How these were found: docs/gpu-tuning.md
+        # gives higher sustained clocks.
         oc = {
           fan_control_enabled = false;
           pmfw_options.zero_rpm = true; # fans stop at idle
