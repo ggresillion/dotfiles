@@ -47,9 +47,7 @@
     "namedPlaylists": {
       "Default": []
     },
-    "monitorScenes": {
-      "DP-1": "2969383325"
-    },
+    "monitorScenes": {},
     "activeType": "scene",
     "generateStaticWallpaper": true
   },
